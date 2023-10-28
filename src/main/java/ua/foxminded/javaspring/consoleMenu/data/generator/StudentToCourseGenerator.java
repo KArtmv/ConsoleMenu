@@ -1,5 +1,6 @@
 package ua.foxminded.javaspring.consoleMenu.data.generator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.data.RandomNumber;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
@@ -14,13 +15,16 @@ import java.util.Set;
 public class StudentToCourseGenerator {
 
     private RandomNumber randomNumber;
+
     private CountConfig countConfig;
+
     private int countCourses;
 
     private int maxCountCoursesOfStudent;
 
     private List<StudentAtCourse> studentAtCourses = new ArrayList<>();
 
+    @Autowired
     public StudentToCourseGenerator(RandomNumber randomNumber, CountConfig countConfig) {
         this.randomNumber = randomNumber;
         this.countConfig = countConfig;
