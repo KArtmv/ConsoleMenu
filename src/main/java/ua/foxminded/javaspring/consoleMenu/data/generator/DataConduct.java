@@ -2,6 +2,7 @@ package ua.foxminded.javaspring.consoleMenu.data;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.data.generator.CourseGenerator;
 import ua.foxminded.javaspring.consoleMenu.data.generator.GroupGenerator;
 import ua.foxminded.javaspring.consoleMenu.data.generator.StudentGenerator;
@@ -22,6 +23,7 @@ public class DataConduct {
     private List<Course> courses;
     private List<Group> groups;
 
+    @Autowired
     public DataConduct(StudentGenerator studentGenerator, CourseGenerator courseGenerator,
                        GroupGenerator groupGenerator, StudentToCourseGenerator studentToCourse) {
         this.studentGenerator = studentGenerator;
