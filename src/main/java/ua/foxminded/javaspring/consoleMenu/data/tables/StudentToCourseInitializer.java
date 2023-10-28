@@ -1,7 +1,8 @@
 package ua.foxminded.javaspring.consoleMenu.data.tables;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
-import ua.foxminded.javaspring.consoleMenu.data.DataConduct;
+import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryIsTableExist;
 import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
@@ -23,6 +24,7 @@ public class StudentToCourseInitializer {
 
     private List<StudentAtCourse> studentAtCourses;
 
+    @Autowired
     public StudentToCourseInitializer(StudentAtCourseDAO studentAtCourseDAO, DataConduct dataConduct,
                                       ReadResourcesFile readResourcesFile, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
         this.studentAtCourseDAO = studentAtCourseDAO;

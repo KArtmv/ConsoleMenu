@@ -1,5 +1,6 @@
 package ua.foxminded.javaspring.consoleMenu.data;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 
 import java.io.BufferedReader;
@@ -13,6 +14,7 @@ public class ReadResourcesFile {
 
     private ResourceLoader resourceLoader;
 
+    @Autowired
     public ReadResourcesFile(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
