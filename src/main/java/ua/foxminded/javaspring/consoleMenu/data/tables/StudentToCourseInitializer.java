@@ -3,7 +3,6 @@ package ua.foxminded.javaspring.consoleMenu.data.tables;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
 import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryIsTableExist;
 import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
@@ -33,7 +32,7 @@ public class StudentToCourseInitializer {
 
     public void initialize() {
         if (studentAtCourseDAO.isStudentToCourseTableExist(queryIsTableExist.queryForStudentToCourseTable())) {
-            checkIsTableEmptyAndPopulate();
+            populateIfEmpty();
         } else {
             studentAtCourseDAO
                     .createStudentToCourseTable(queryOfCreateTable.getStudentToCourseTable());
@@ -41,7 +40,7 @@ public class StudentToCourseInitializer {
         }
     }
 
-    private void checkIsTableEmptyAndPopulate() {
+    private void populateIfEmpty() {
         if (studentAtCourseDAO.isStudentToCourseTableEmpty()) {
             populateTable();
         }
