@@ -1,15 +1,24 @@
 package ua.foxminded.javaspring.consoleMenu.options;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 
 @Component
 public class Menu {
 
-    @Value("${options.menu}")
-    private String menu;
+    private ReadResourcesFile readFile;
 
-    public String getOptions(){
-        return menu;
+    @Value("${options.menu}")
+    private String MENU_FILE_PATH;
+
+    @Autowired
+    public Menu(ReadResourcesFile readFile) {
+        this.readFile = readFile;
+    }
+
+    public String getOptions() {
+        return readFile.getScript(MENU_FILE_PATH);
     }
 }
