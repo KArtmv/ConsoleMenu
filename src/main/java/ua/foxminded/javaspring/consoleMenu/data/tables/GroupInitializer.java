@@ -3,7 +3,6 @@ package ua.foxminded.javaspring.consoleMenu.data.tables;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
 import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryIsTableExist;
 import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
@@ -32,14 +31,14 @@ public class GroupInitializer {
 
     public void initialize() {
         if (groupDAO.isTableExist(queryIsTableExist.queryForGroupTable())) {
-            checkIsTableEmptyAndPopulate();
+            populateIfEmpty();
         } else {
             groupDAO.createGroupTable(queryOfCreateTable.getGroupTable());
             populateTable();
         }
     }
 
-    private void checkIsTableEmptyAndPopulate() {
+    private void populateIfEmpty() {
         if (groupDAO.isGroupTableEmpty()) {
             populateTable();
         }
