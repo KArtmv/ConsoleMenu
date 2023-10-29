@@ -1,36 +1,49 @@
 package ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 
 @Component
 public class SQLQueryOfCreateTable {
 
-    @Value("${sqlQueryOfCreateTable.SQL_SCRIPT_FILE_STUDENT}")
-    private String SQL_SCRIPT_FILE_STUDENT;
+    private ReadResourcesFile readResourcesFile;
 
-    @Value("${sqlQueryOfCreateTable.SQL_SCRIPT_FILE_GROUP}")
-    private String SQL_SCRIPT_FILE_GROUP;
-
-    @Value("${sqlQueryOfCreateTable.SQL_SCRIPT_FILE_COURSE}")
-    private String SQL_SCRIPT_FILE_COURSE;
-
-    @Value("${sqlQueryOfCreateTable.SQL_SCRIPT_FILE_STUDENT_TO_COURSE}")
-    private String SQL_SCRIPT_FILE_STUDENT_TO_COURSE;
-
-    public String getStudentFilePath() {
-        return SQL_SCRIPT_FILE_STUDENT;
+    @Autowired
+    public SQLQueryOfCreateTable(ReadResourcesFile readResourcesFile) {
+        this.readResourcesFile = readResourcesFile;
     }
 
-    public String getGroupFilePath() {
-        return SQL_SCRIPT_FILE_GROUP;
+    @Value("${sqlQuery.OfCreateTable.SQL_SCRIPT_FILE_STUDENT}")
+    private String SQL_SCRIPT_STUDENT;
+
+    @Value("${sqlQuery.OfCreateTable.SQL_SCRIPT_FILE_GROUP}")
+    private String SQL_SCRIPT_GROUP;
+
+    @Value("${sqlQuery.OfCreateTable.SQL_SCRIPT_FILE_COURSE}")
+    private String SQL_SCRIPT_COURSE;
+
+    @Value("${sqlQuery.OfCreateTable.SQL_SCRIPT_FILE_STUDENT_TO_COURSE}")
+    private String SQL_SCRIPT_STUDENT_TO_COURSE;
+
+    public String getStudentTable() {
+        return getScript(SQL_SCRIPT_STUDENT);
     }
 
-    public String getCourseFilePath() {
-        return SQL_SCRIPT_FILE_COURSE;
+    public String getGroupTable() {
+        return getScript(SQL_SCRIPT_GROUP);
     }
 
-    public String getStudentToCourseFilePath() {
-        return SQL_SCRIPT_FILE_STUDENT_TO_COURSE;
+    public String getCourseTable() {
+        return getScript(SQL_SCRIPT_COURSE);
+    }
+
+    public String getStudentToCourseTable() {
+        return getScript(SQL_SCRIPT_STUDENT_TO_COURSE);
+    }
+
+    private String getScript(String filePath){
+        return readResourcesFile.getScript(filePath);
     }
 }
