@@ -7,10 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import ua.foxminded.javaspring.consoleMenu.data.generator.CourseGenerator;
-import ua.foxminded.javaspring.consoleMenu.data.generator.GroupGenerator;
-import ua.foxminded.javaspring.consoleMenu.data.generator.StudentGenerator;
-import ua.foxminded.javaspring.consoleMenu.data.generator.StudentToCourseGenerator;
+import ua.foxminded.javaspring.consoleMenu.data.generator.*;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
@@ -41,10 +38,6 @@ public class DataConductTest {
     @InjectMocks
     private DataConduct dataConduct;
 
-    private List<Student> students;
-    private List<Course> courses;
-    private List<Group> groups;
-
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
@@ -52,10 +45,8 @@ public class DataConductTest {
 
     @Test
     void createStudents_shouldReturnListOfStudent_whenIsRun() {
-        List<Student> students = new ArrayList<>();
-        for (int id = 1; id <= 3; id++) {
-            students.add(new Student((long) id, "firstName", "lastName", (long) id));
-        }
+        List<Student> students = studentsListInit();
+        List<Group> groups = groupsListInit();
 
         when(studentGenerator.generate(groups)).thenReturn(students);
         when(groupGenerator.generate()).thenReturn(groups);
@@ -69,11 +60,13 @@ public class DataConductTest {
             assertThat((student.getGroupID() > 0) && (student.getGroupID() <= 3)).isTrue();
         }
         verify(studentGenerator).generate(groups);
+        verify(groupGenerator).generate();
+
     }
 
     @Test
     void createGroups_shouldReturnListOfGroup_whenIsRun() {
-        groupsListInit();
+        List<Group> groups = groupsListInit();
 
         when(groupGenerator.generate()).thenReturn(groups);
 
@@ -89,7 +82,7 @@ public class DataConductTest {
 
     @Test
     void createCourses_shouldReturnListOfCourse_whenIsRun() {
-        coursesListInit();
+        List<Course> courses = coursesListInit();
 
         when(courseGenerator.generate()).thenReturn(courses);
 
@@ -106,15 +99,10 @@ public class DataConductTest {
 
     @Test
     void createRelationStudentCourse_shouldReturnListOfStudentAtCourse_whenIsRan() {
-        List<StudentAtCourse> studentAtCourses = new ArrayList<>();
-        for (int id = 1; id <= 3; id++) {
-            studentAtCourses.add(new StudentAtCourse((long) id, new Student((long) id, "firstname", "lastName"),
-                    new Course((long) id, "courseName", "courseDescription")));
-        }
-
-        studentsListInit();
-        groupsListInit();
-        coursesListInit();
+        List<StudentAtCourse> studentAtCourses = studentAtCourseListInit();
+        List<Student> students = studentsListInit();
+        List<Course> courses = coursesListInit();
+        List<Group> groups = groupsListInit();
 
         when(studentToCourse.addStudentToCourse(students, courses.size())).thenReturn(studentAtCourses);
         when(studentGenerator.generate(groups)).thenReturn(students);
@@ -142,26 +130,36 @@ public class DataConductTest {
         verify(studentGenerator).generate(groups);
     }
 
-    void studentsListInit() {
-        students = new ArrayList<>();
+    List<Student> studentsListInit() {
+       List<Student> students = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
             students.add(new Student((long) id, "firstName", "lastName", (long) id));
         }
+        return students;
     }
 
-    void coursesListInit() {
-        courses = new ArrayList<>();
-
+    List<Course> coursesListInit() {
+       List<Course> courses = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
             courses.add(new Course((long) id, "courseName", "courseDescription"));
         }
+        return courses;
     }
 
-    void groupsListInit() {
-        groups = new ArrayList<>();
-
+    List<Group> groupsListInit() {
+        List<Group> groups = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
             groups.add(new Group((long) id, "groupName"));
         }
+        return groups;
+    }
+
+    List<StudentAtCourse> studentAtCourseListInit(){
+        List<StudentAtCourse> studentAtCourses = new ArrayList<>();
+        for (int id = 1; id <= 3; id++) {
+            studentAtCourses.add(new StudentAtCourse((long) id, new Student((long) id, "firstname", "lastName"),
+                    new Course((long) id, "courseName", "courseDescription")));
+        }
+        return studentAtCourses;
     }
 }
