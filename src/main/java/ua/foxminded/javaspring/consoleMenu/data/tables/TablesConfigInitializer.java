@@ -14,22 +14,22 @@ import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCrea
 @Component
 public class TablesConfigInitializer {
     @Bean
-    public GroupInitializer groupInitializer(GroupDAO groupDAO, DataConduct dataConduct, ReadResourcesFile readResourcesFile, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
-        return new GroupInitializer(groupDAO, dataConduct, readResourcesFile, queryIsTableExist, queryOfCreateTable);
+    public GroupInitializer groupInitializer(GroupDAO groupDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
+        return new GroupInitializer(groupDAO, dataConduct, queryIsTableExist, queryOfCreateTable);
     }
 
     @Bean
-    public CourseInitializer courseInitializer(CourseDAO courseDAO, DataConduct dataConduct, ReadResourcesFile readResourcesFile, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
-        return new CourseInitializer(courseDAO, dataConduct, readResourcesFile, queryIsTableExist, queryOfCreateTable);
+    public CourseInitializer courseInitializer(CourseDAO courseDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
+        return new CourseInitializer(courseDAO, dataConduct, queryIsTableExist, queryOfCreateTable);
     }
 
     @Bean
-    public StudentInitializer studentInitializer(StudentDAO studentDAO, DataConduct dataConduct, ReadResourcesFile readResourcesFile, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
-        return new StudentInitializer(studentDAO, dataConduct, readResourcesFile, queryIsTableExist, queryOfCreateTable);
+    public StudentInitializer studentInitializer(StudentDAO studentDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
+        return new StudentInitializer(studentDAO, dataConduct, queryIsTableExist, queryOfCreateTable);
     }
 
     @Bean
-    public StudentToCourseInitializer studentToCourseInitializer(StudentAtCourseDAO studentAtCourseDAO, DataConduct dataConduct, ReadResourcesFile readResourcesFile, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
-        return new StudentToCourseInitializer(studentAtCourseDAO, dataConduct, readResourcesFile, queryIsTableExist, queryOfCreateTable);
+    public StudentToCourseInitializer studentToCourseInitializer(StudentAtCourseDAO studentAtCourseDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
+        return new StudentToCourseInitializer(studentAtCourseDAO, dataConduct, queryIsTableExist, queryOfCreateTable);
     }
 }

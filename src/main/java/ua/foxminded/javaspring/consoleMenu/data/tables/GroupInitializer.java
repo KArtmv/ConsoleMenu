@@ -16,8 +16,6 @@ public class GroupInitializer {
 
     private DataConduct dataConduct;
 
-    private ReadResourcesFile readResourcesFile;
-
     private SQLQueryIsTableExist queryIsTableExist;
 
     private SQLQueryOfCreateTable queryOfCreateTable;
@@ -25,11 +23,9 @@ public class GroupInitializer {
     private List<Group> groups;
 
     @Autowired
-    public GroupInitializer(GroupDAO groupDAO, DataConduct dataConduct, ReadResourcesFile readResourcesFile,
-                            SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
+    public GroupInitializer(GroupDAO groupDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
         this.groupDAO = groupDAO;
         this.dataConduct = dataConduct;
-        this.readResourcesFile = readResourcesFile;
         this.queryIsTableExist = queryIsTableExist;
         this.queryOfCreateTable = queryOfCreateTable;
     }
@@ -38,7 +34,7 @@ public class GroupInitializer {
         if (groupDAO.isTableExist(queryIsTableExist.queryForGroupTable())) {
             checkIsTableEmptyAndPopulate();
         } else {
-            groupDAO.createGroupTable(readResourcesFile.getScript(queryOfCreateTable.getGroupFilePath()));
+            groupDAO.createGroupTable(queryOfCreateTable.getGroupTable());
             populateTable();
         }
     }
