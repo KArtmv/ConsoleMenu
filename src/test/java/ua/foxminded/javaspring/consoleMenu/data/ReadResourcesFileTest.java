@@ -22,6 +22,8 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class ReadResourcesFileTest {
+    @Mock
+    private Resource resource;
 
     @Mock
     private ResourceLoader resourceLoader;
@@ -42,8 +44,10 @@ class ReadResourcesFileTest {
     @Test
     void getData_shouldReturnListOfString_whenIsValidDataProvided() throws IOException {
         List<String> expect = Arrays.asList(SCRIPT.split("\n"));
+        InputStream inputStream = new ByteArrayInputStream(SCRIPT.getBytes(StandardCharsets.UTF_8));
 
-        inputStream();
+        when(resourceLoader.getResource(FILE_PATH)).thenReturn(resource);
+        when(resource.getInputStream()).thenReturn(inputStream);
 
         List<String> result = resourcesFile.getData(FILE_PATH);
 
@@ -54,7 +58,10 @@ class ReadResourcesFileTest {
 
     @Test
     void getScript_shouldReturnScriptAsString_whenIsValidDataProvided() throws IOException {
-        inputStream();
+        InputStream inputStream = new ByteArrayInputStream(SCRIPT.getBytes(StandardCharsets.UTF_8));
+
+        when(resourceLoader.getResource(FILE_PATH)).thenReturn(resource);
+        when(resource.getInputStream()).thenReturn(inputStream);
 
         String result = resourcesFile.getScript(FILE_PATH).trim();
         assertEquals(SCRIPT, result);
@@ -64,21 +71,11 @@ class ReadResourcesFileTest {
 
     @Test
     void getData_shouldReturnRuntimeException_whenResourceIsNotFound() throws IOException {
-        Resource resource = mock(Resource.class);
-
         when(resourceLoader.getResource(FILE_PATH)).thenReturn(resource);
         when(resource.getInputStream()).thenThrow(new IOException());
 
         assertThrows(RuntimeException.class, () -> resourcesFile.getData(FILE_PATH));
 
         verify(resourceLoader).getResource(FILE_PATH);
-    }
-
-    void inputStream() throws IOException {
-        Resource resource = mock(Resource.class);
-        InputStream inputStream = new ByteArrayInputStream(SCRIPT.getBytes(StandardCharsets.UTF_8));
-
-        when(resourceLoader.getResource(FILE_PATH)).thenReturn(resource);
-        when(resource.getInputStream()).thenReturn(inputStream);
     }
 }
