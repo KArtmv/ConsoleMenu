@@ -1,11 +1,5 @@
 package ua.foxminded.javaspring.consoleMenu.data.tables;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -13,24 +7,26 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import ua.foxminded.javaspring.consoleMenu.dao.CourseDAO;
-import ua.foxminded.javaspring.consoleMenu.data.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
+import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryIsTableExist;
 import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
+import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+
+import java.util.List;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CourseInitializerTest {
 
     @Mock
     private CourseDAO courseDAO;
-    @Mock
-    private DataConduct dataConduct;
 
     @Mock
-    private ReadResourcesFile readResourcesFile;
+    private DataConduct dataConduct;
 
     @Mock
     private SQLQueryIsTableExist queryIsTableExist;
@@ -41,20 +37,18 @@ public class CourseInitializerTest {
     @InjectMocks
     private CourseInitializer initializer;
 
-    private List<Course> courses;
+    private InitializeObject initializeObject = new InitializeObject();
 
-    private String sqlQueryTableExist;
+    private static final String sqlQueryTableExist = "IsTableExist";
 
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
-        Course course = new Course("course", "description");
-        courses = Arrays.asList(course, course, course);
-        sqlQueryTableExist = "IsTableExist";
     }
 
     @Test
-    void initializeCourseTableAndData_shouldCreateCourseAndInsertIntoDatabaseTable_whenCourseTableExist() {
+    void initialize_shouldCreateCourseAndInsertIntoDatabaseTable_whenCourseTableExist() {
+    List<Course> courses = initializeObject.coursesListInit();
 
         when(queryIsTableExist.queryForCourseTable()).thenReturn(sqlQueryTableExist);
         when(courseDAO.isCourseTableExist(sqlQueryTableExist)).thenReturn(true);
@@ -70,24 +64,21 @@ public class CourseInitializerTest {
     }
 
     @Test
-    void initializeCourseTableAndData_shouldCreateTableCourseAndInsertIntoDatabaseTable_whenCourseTableNotExist() {
-        Course course = new Course("course", "description");
-        List<Course> courses = Arrays.asList(course, course, course);
-        String filePath = "table/course.txt";
+    void initialize_shouldCreateTableCourseAndInsertIntoDatabaseTable_whenCourseTableNotExist() {
         String sqlQueryCreateTable = "CreateTableQuery";
+        List<Course> courses = initializeObject.coursesListInit();
 
         when(queryIsTableExist.queryForCourseTable()).thenReturn(sqlQueryTableExist);
         when(courseDAO.isCourseTableExist(sqlQueryTableExist)).thenReturn(false);
-        when(queryOfCreateTable.getCourseFilePath()).thenReturn(filePath);
-        when(readResourcesFile.getScript(filePath)).thenReturn(sqlQueryCreateTable);
+        when(queryOfCreateTable.getCourseTable()).thenReturn(sqlQueryCreateTable);
         when(dataConduct.createCourses()).thenReturn(courses);
 
         initializer.initialize();
 
         verify(queryIsTableExist).queryForCourseTable();
         verify(courseDAO).isCourseTableExist(sqlQueryTableExist);
-        verify(queryOfCreateTable).getCourseFilePath();
-        verify(readResourcesFile).getScript(filePath);
+        verify(queryOfCreateTable).getCourseTable();
+        verify(courseDAO).createCourseTable(sqlQueryCreateTable);
         verify(dataConduct).createCourses();
     }
 }
