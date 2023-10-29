@@ -1,7 +1,6 @@
 package ua.foxminded.javaspring.consoleMenu.data.generator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 
@@ -20,7 +19,7 @@ public class GroupGenerator {
     }
 
     public List<Group> generate() {
-        List<String> groupNames = resourcesFiles.getGroupsFilePath();
+        List<String> groupNames = resourcesFiles.getGroups();
 
         Long groupID = 1L;
 

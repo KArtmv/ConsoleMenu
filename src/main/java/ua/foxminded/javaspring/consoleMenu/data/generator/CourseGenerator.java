@@ -1,7 +1,6 @@
 package ua.foxminded.javaspring.consoleMenu.data.generator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 
@@ -20,7 +19,7 @@ public class CourseGenerator {
     }
 
     public List<Course> generate() {
-        List<String> coursesName = resourcesFiles.getCoursesFilePath();
+        List<String> coursesName = resourcesFiles.getCourses();
 
         Long courseID = 1L;
 
