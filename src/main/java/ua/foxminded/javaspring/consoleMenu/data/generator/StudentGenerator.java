@@ -2,7 +2,6 @@ package ua.foxminded.javaspring.consoleMenu.data.generator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.data.RandomNumber;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
@@ -41,8 +40,8 @@ public class StudentGenerator {
     }
 
     private void studentNameRandomCombiner() {
-        List<String> firstNames = resourcesFiles.getFirstNameFilePath();
-        List<String> lastNames = resourcesFiles.getLastNameFilePath();
+        List<String> firstNames = resourcesFiles.getFirstNames();
+        List<String> lastNames = resourcesFiles.getLastNames();
 
         int countFirstNames = firstNames.size();
         int countLastNames = lastNames.size();
