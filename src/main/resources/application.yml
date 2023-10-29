@@ -28,3 +28,5 @@ sourceData:
   countConfig:
     MAX_COUNT_COURSES_OF_STUDENT: 3
     MAX_COUNT_OF_STUDENT: 200
+options:
+  menu: menu/menu.txt
