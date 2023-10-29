@@ -9,8 +9,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
+import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,12 +34,10 @@ public class GroupGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfGroup_whenProvidedDataIsValid() {
-        List<Group> expect = new ArrayList<>();
-        expect.add(new Group(1L, "test"));
-        expect.add(new Group(2L, "test"));
-        expect.add(new Group(3L, "test"));
+        InitializeObject initializeObject = new InitializeObject();
+        List<Group> expect = initializeObject.groupsListInit();
 
-        when(resourcesFiles.getGroups()).thenReturn(Arrays.asList("test", "test", "test"));
+        when(resourcesFiles.getGroups()).thenReturn(Arrays.asList("groupName", "groupName", "groupName"));
 
         List<Group> result = groupGenerator.generate();
 

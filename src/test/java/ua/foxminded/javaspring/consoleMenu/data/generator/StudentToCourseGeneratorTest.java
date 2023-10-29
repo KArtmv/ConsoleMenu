@@ -12,8 +12,8 @@ import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.CountConfig
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -37,10 +37,8 @@ public class StudentToCourseGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfStudentAtCourse_whenIsCorrect() {
-        List<Student> students = new ArrayList<>();
-        students.add(new Student(1L, "firstName", "lastName", 2L));
-        students.add(new Student(2L, "firstName", "lastName", 3L));
-        students.add(new Student(3L, "firstName", "lastName", 1L));
+        InitializeObject initializeObject = new InitializeObject();
+        List<Student> students = initializeObject.studentsListInit();
 
         int countCourses = 10;
         int maxCountCoursesOfStudent = 3;
