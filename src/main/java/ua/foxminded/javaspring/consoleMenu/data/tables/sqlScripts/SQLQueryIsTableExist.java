@@ -5,19 +5,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SQLQueryIsTableExist {
-    @Value("${sqlQueryIsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
+    @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
     private String SQL_CHECK_IS_TABLE_EXIST;
 
-    @Value("${sqlQueryIsTableExist.STUDENT_TABLE_NAME}")
+    @Value("${sqlQuery.IsTableExist.STUDENT_TABLE_NAME}")
     private String STUDENT_TABLE_NAME;
 
-    @Value("${sqlQueryIsTableExist.GROUP_TABLE_NAME}")
+    @Value("${sqlQuery.IsTableExist.GROUP_TABLE_NAME}")
     private String GROUP_TABLE_NAME;
 
-    @Value("${sqlQueryIsTableExist.COURSE_TABLE_NAME}")
+    @Value("${sqlQuery.IsTableExist.COURSE_TABLE_NAME}")
     private String COURSE_TABLE_NAME;
 
-    @Value("${sqlQueryIsTableExist.STUDENT_TO_COURSE_TABLE_NAME}")
+    @Value("${sqlQuery.IsTableExist.STUDENT_TO_COURSE_TABLE_NAME}")
     private String STUDENT_TO_COURSE_TABLE_NAME;
 
     public String queryForStudentTable() {
