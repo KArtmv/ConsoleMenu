@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 
@@ -23,9 +22,6 @@ import static org.mockito.Mockito.when;
 public class GroupGeneratorTest {
 
     @Mock
-    ReadResourcesFile readResourcesFile;
-
-    @Mock
     ResourcesFilesDatabaseData resourcesFiles;
 
     @InjectMocks
@@ -38,20 +34,17 @@ public class GroupGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfGroup_whenProvidedDataIsValid() {
-        String filePath = "test/group.txt";
         List<Group> expect = new ArrayList<>();
         expect.add(new Group(1L, "test"));
         expect.add(new Group(2L, "test"));
         expect.add(new Group(3L, "test"));
 
-        when(resourcesFiles.getGroupsFilePath()).thenReturn(filePath);
-        when(readResourcesFile.getData(filePath)).thenReturn(Arrays.asList("test", "test", "test"));
+        when(resourcesFiles.getGroups()).thenReturn(Arrays.asList("test", "test", "test"));
 
         List<Group> result = groupGenerator.generate();
 
         assertThat(result).usingRecursiveComparison().isEqualTo(expect);
 
-        verify(resourcesFiles).getGroupsFilePath();
-        verify(readResourcesFile).getData(filePath);
+        verify(resourcesFiles).getGroups();
     }
 }
