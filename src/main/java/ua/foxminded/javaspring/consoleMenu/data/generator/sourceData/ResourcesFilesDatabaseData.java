@@ -17,35 +17,35 @@ public class ResourcesFilesDatabaseData {
         this.readFile = readFile;
     }
 
-    @Value("${databaseResourceFilepath.GROUPS_FILE}")
+    @Value("${sourceData.DataFilePath.GROUPS_FILE}")
     private String GROUPS_FILE;
 
-    @Value("${databaseResourceFilepath.COURSES_FILE}")
+    @Value("${sourceData.DataFilePath.COURSES_FILE}")
     private String COURSES_FILE;
 
-    @Value("${databaseResourceFilepath.FIRST_NAME_FILE}")
+    @Value("${sourceData.DataFilePath.FIRST_NAME_FILE}")
     private String FIRST_NAME_FILE;
 
-    @Value("${databaseResourceFilepath.LAST_NAME_FILE}")
+    @Value("${sourceData.DataFilePath.LAST_NAME_FILE}")
     private String LAST_NAME_FILE;
 
-    public List<String> getGroupsFilePath() {
-        return getResourceData(GROUPS_FILE);
+    public List<String> getGroups() {
+        return getSourceData(GROUPS_FILE);
     }
 
-    public List<String> getCoursesFilePath() {
-        return getResourceData(COURSES_FILE);
+    public List<String> getCourses() {
+        return getSourceData(COURSES_FILE);
     }
 
-    public List<String> getFirstNameFilePath() {
-        return getResourceData(FIRST_NAME_FILE);
+    public List<String> getFirstNames() {
+        return getSourceData(FIRST_NAME_FILE);
     }
 
-    public List<String> getLastNameFilePath() {
-        return getResourceData(LAST_NAME_FILE);
+    public List<String> getLastNames() {
+        return getSourceData(LAST_NAME_FILE);
     }
 
-    private List<String> getResourceData(String filePath){
+    private List<String> getSourceData(String filePath){
         return readFile.getData(filePath);
     }
 }
