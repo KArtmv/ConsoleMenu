@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.data.RandomNumber;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
@@ -27,9 +26,6 @@ public class StudentGeneratorTest {
     RandomNumber randomNumber;
 
     @Mock
-    ReadResourcesFile readResourcesFile;
-
-    @Mock
     ResourcesFilesDatabaseData resourcesFiles;
 
     @Mock
@@ -45,9 +41,6 @@ public class StudentGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfStudents_whenIsOk() {
-        String firstNameFilePath = "test/firstName.txt";
-        String lastNameFilePath = "test/lastName.txt";
-
         List<String> firstNames = Arrays.asList("firstName1", "firstName2", "firstName3");
         List<String> lastNames = Arrays.asList("lastName1", "lastName2", "lastName3", "lastName4");
 
@@ -61,11 +54,8 @@ public class StudentGeneratorTest {
         groups.add(new Group(4L, "group4"));
         groups.add(new Group(5L, "group5"));
 
-        when(resourcesFiles.getFirstNameFilePath()).thenReturn(firstNameFilePath);
-        when(resourcesFiles.getLastNameFilePath()).thenReturn(lastNameFilePath);
-
-        when(readResourcesFile.getData(firstNameFilePath)).thenReturn(firstNames);
-        when(readResourcesFile.getData(lastNameFilePath)).thenReturn(lastNames);
+        when(resourcesFiles.getFirstNames()).thenReturn(firstNames);
+        when(resourcesFiles.getLastNames()).thenReturn(lastNames);
 
         when(countConfig.getMaxCountOfStudents()).thenReturn(3);
 
