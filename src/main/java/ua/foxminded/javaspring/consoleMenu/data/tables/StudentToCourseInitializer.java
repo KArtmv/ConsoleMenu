@@ -16,8 +16,6 @@ public class StudentToCourseInitializer {
 
     private DataConduct dataConduct;
 
-    private ReadResourcesFile readResourcesFile;
-
     private SQLQueryIsTableExist queryIsTableExist;
 
     private SQLQueryOfCreateTable queryOfCreateTable;
@@ -26,10 +24,9 @@ public class StudentToCourseInitializer {
 
     @Autowired
     public StudentToCourseInitializer(StudentAtCourseDAO studentAtCourseDAO, DataConduct dataConduct,
-                                      ReadResourcesFile readResourcesFile, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
+                                      SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
         this.studentAtCourseDAO = studentAtCourseDAO;
         this.dataConduct = dataConduct;
-        this.readResourcesFile = readResourcesFile;
         this.queryIsTableExist = queryIsTableExist;
         this.queryOfCreateTable = queryOfCreateTable;
     }
@@ -39,7 +36,7 @@ public class StudentToCourseInitializer {
             checkIsTableEmptyAndPopulate();
         } else {
             studentAtCourseDAO
-                    .createStudentToCourseTable(readResourcesFile.getScript(queryOfCreateTable.getStudentToCourseFilePath()));
+                    .createStudentToCourseTable(queryOfCreateTable.getStudentToCourseTable());
             populateTable();
         }
     }

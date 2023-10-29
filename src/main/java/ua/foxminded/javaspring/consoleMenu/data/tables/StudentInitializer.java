@@ -14,9 +14,8 @@ import java.util.List;
 public class StudentInitializer {
 
     private StudentDAO studentDAO;
-    private DataConduct dataConduct;
 
-    private ReadResourcesFile readResourcesFile;
+    private DataConduct dataConduct;
 
     private SQLQueryIsTableExist queryIsTableExist;
 
@@ -25,11 +24,9 @@ public class StudentInitializer {
     private List<Student> students = new ArrayList<>();
 
     @Autowired
-    public StudentInitializer(StudentDAO studentDAO, DataConduct dataConduct, ReadResourcesFile readResourcesFile,
-                              SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
+    public StudentInitializer(StudentDAO studentDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
         this.studentDAO = studentDAO;
         this.dataConduct = dataConduct;
-        this.readResourcesFile = readResourcesFile;
         this.queryIsTableExist = queryIsTableExist;
         this.queryOfCreateTable = queryOfCreateTable;
     }
@@ -38,7 +35,7 @@ public class StudentInitializer {
         if (studentDAO.isTableExist(queryIsTableExist.queryForStudentTable())) {
             checkIsTableEmptyAndPopulate();
         } else {
-            studentDAO.createStudentTable(readResourcesFile.getScript(queryOfCreateTable.getStudentFilePath()));
+            studentDAO.createStudentTable(queryOfCreateTable.getStudentTable());
             populateTable();
         }
     }
