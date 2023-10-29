@@ -1,13 +1,12 @@
 package ua.foxminded.javaspring.consoleMenu.repository;
 
-import java.sql.ResultSet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import ua.foxminded.javaspring.consoleMenu.dao.CourseDAO;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
+
+import java.sql.ResultSet;
 
 @Repository
 public class CourseRepo implements CourseDAO {

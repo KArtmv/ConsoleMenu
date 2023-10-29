@@ -48,7 +48,7 @@ public class CourseInitializerTest {
 
     @Test
     void initialize_shouldCreateCourseAndInsertIntoDatabaseTable_whenCourseTableExist() {
-    List<Course> courses = initializeObject.coursesListInit();
+        List<Course> courses = initializeObject.coursesListInit();
 
         when(queryIsTableExist.queryForCourseTable()).thenReturn(sqlQueryTableExist);
         when(courseDAO.isCourseTableExist(sqlQueryTableExist)).thenReturn(true);

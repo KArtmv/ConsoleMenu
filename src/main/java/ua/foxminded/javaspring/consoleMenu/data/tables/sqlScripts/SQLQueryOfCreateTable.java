@@ -43,7 +43,7 @@ public class SQLQueryOfCreateTable {
         return getScript(SQL_SCRIPT_STUDENT_TO_COURSE);
     }
 
-    private String getScript(String filePath){
+    private String getScript(String filePath) {
         return readResourcesFile.getScript(filePath);
     }
 }

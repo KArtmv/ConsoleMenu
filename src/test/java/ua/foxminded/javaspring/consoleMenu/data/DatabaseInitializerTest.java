@@ -12,7 +12,8 @@ import ua.foxminded.javaspring.consoleMenu.data.tables.GroupInitializer;
 import ua.foxminded.javaspring.consoleMenu.data.tables.StudentInitializer;
 import ua.foxminded.javaspring.consoleMenu.data.tables.StudentToCourseInitializer;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DatabaseInitializerTest {
@@ -33,34 +34,34 @@ public class DatabaseInitializerTest {
     private DatabaseInitializer databaseData;
 
     @BeforeEach
-    void init(){
+    void init() {
         MockitoAnnotations.openMocks(this);
         databaseData.initializeTables();
     }
 
     @Test
-    void initializeTables_shouldRunInitializeOfGroupInitializer_whenInitializeTablesIsRun(){
+    void initializeTables_shouldRunInitializeOfGroupInitializer_whenInitializeTablesIsRun() {
         doNothing().when(groupInitializer).initialize();
 
         verify(groupInitializer).initialize();
     }
 
     @Test
-    void initializeTables_shouldRunInitializeOfCourseInitializer_whenInitializeTablesIsRun(){
+    void initializeTables_shouldRunInitializeOfCourseInitializer_whenInitializeTablesIsRun() {
         doNothing().when(courseInitializer).initialize();
 
         verify(courseInitializer).initialize();
     }
 
     @Test
-    void initializeTables_shouldRunInitializeOfStudentInitializer_whenInitializeTablesIsRun(){
+    void initializeTables_shouldRunInitializeOfStudentInitializer_whenInitializeTablesIsRun() {
         doNothing().when(studentInitializer).initialize();
 
         verify(studentInitializer).initialize();
     }
 
     @Test
-    void initializeTables_shouldRunInitializeOfStudentToCourseInitializer_whenInitializeTablesIsRun(){
+    void initializeTables_shouldRunInitializeOfStudentToCourseInitializer_whenInitializeTablesIsRun() {
         doNothing().when(studentToCourseInitializer).initialize();
 
         verify(studentToCourseInitializer).initialize();

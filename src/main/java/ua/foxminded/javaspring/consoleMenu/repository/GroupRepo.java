@@ -1,16 +1,15 @@
 package ua.foxminded.javaspring.consoleMenu.repository;
 
-import java.sql.ResultSet;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.CountStudentAtGroupMapper;
+
+import java.sql.ResultSet;
+import java.util.List;
 
 @Repository
 public class GroupRepo implements GroupDAO {

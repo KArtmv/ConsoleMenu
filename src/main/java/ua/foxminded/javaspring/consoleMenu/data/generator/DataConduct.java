@@ -1,16 +1,12 @@
 package ua.foxminded.javaspring.consoleMenu.data.generator;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.foxminded.javaspring.consoleMenu.data.generator.CourseGenerator;
-import ua.foxminded.javaspring.consoleMenu.data.generator.GroupGenerator;
-import ua.foxminded.javaspring.consoleMenu.data.generator.StudentGenerator;
-import ua.foxminded.javaspring.consoleMenu.data.generator.StudentToCourseGenerator;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+
+import java.util.List;
 
 public class DataConduct {
 

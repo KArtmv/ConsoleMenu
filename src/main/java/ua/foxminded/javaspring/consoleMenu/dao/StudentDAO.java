@@ -1,10 +1,10 @@
 package ua.foxminded.javaspring.consoleMenu.dao;
 
-import java.util.List;
-import java.util.Optional;
-
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface StudentDAO {
 

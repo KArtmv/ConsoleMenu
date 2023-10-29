@@ -1,7 +1,5 @@
 package ua.foxminded.javaspring.consoleMenu.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
@@ -9,6 +7,8 @@ import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
+
+import java.util.List;
 
 @Service
 public class StudentAtCourseServiceImpl implements StudentAtCourseService {

@@ -20,7 +20,7 @@ public class DataConfigInitializer {
     }
 
     @Bean
-    public RandomNumber randomNumber(){
+    public RandomNumber randomNumber() {
         return new RandomNumber();
     }
 

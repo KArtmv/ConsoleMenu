@@ -1,9 +1,9 @@
 package ua.foxminded.javaspring.consoleMenu.dao;
 
-import java.util.List;
-
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
+
+import java.util.List;
 
 public interface GroupDAO {
     boolean addGroup(Group group);
