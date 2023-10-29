@@ -34,7 +34,7 @@ public class InitializeObject {
         return groups;
     }
 
-    public List<StudentAtCourse> studentAtCourseListInit(){
+    public List<StudentAtCourse> studentAtCourseListInit() {
         List<StudentAtCourse> studentAtCourses = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
             studentAtCourses.add(new StudentAtCourse((long) id, new Student((long) id, "firstname", "lastName"),

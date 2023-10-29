@@ -1,16 +1,15 @@
 package ua.foxminded.javaspring.consoleMenu.repository;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.stereotype.Repository;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.StudentAtCourseMapper;
+
+import java.util.List;
 
 @Repository
 public class StudentAtCourseRepo implements StudentAtCourseDAO {

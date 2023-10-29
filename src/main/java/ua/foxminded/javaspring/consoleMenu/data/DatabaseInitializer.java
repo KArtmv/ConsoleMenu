@@ -1,13 +1,13 @@
 package ua.foxminded.javaspring.consoleMenu.data;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.data.tables.CourseInitializer;
 import ua.foxminded.javaspring.consoleMenu.data.tables.GroupInitializer;
 import ua.foxminded.javaspring.consoleMenu.data.tables.StudentInitializer;
 import ua.foxminded.javaspring.consoleMenu.data.tables.StudentToCourseInitializer;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class DatabaseInitializer {

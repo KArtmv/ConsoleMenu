@@ -45,7 +45,7 @@ public class ResourcesFilesDatabaseData {
         return getSourceData(LAST_NAME_FILE);
     }
 
-    private List<String> getSourceData(String filePath){
+    private List<String> getSourceData(String filePath) {
         return readFile.getData(filePath);
     }
 }

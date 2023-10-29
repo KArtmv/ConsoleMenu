@@ -1,11 +1,10 @@
 package ua.foxminded.javaspring.consoleMenu.rowmapper;
 
+import org.springframework.jdbc.core.RowMapper;
+import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.springframework.jdbc.core.RowMapper;
-
-import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
 
 public class CountStudentAtGroupMapper implements RowMapper<CounterStudentsAtGroup> {
 

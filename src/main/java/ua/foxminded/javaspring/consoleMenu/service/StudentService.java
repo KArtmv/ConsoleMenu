@@ -1,11 +1,10 @@
 package ua.foxminded.javaspring.consoleMenu.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+
+import java.util.List;
 
 @Service
 public interface StudentService {
