@@ -2,33 +2,33 @@ package ua.foxminded.javaspring.consoleMenu.data.tables;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import ua.foxminded.javaspring.consoleMenu.dao.CourseDAO;
-import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
-import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
-import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
+import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryIsTableExist;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
+import ua.foxminded.javaspring.consoleMenu.model.Course;
+import ua.foxminded.javaspring.consoleMenu.model.Group;
+import ua.foxminded.javaspring.consoleMenu.model.Student;
+import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 
 @Component
 public class TablesConfigInitializer {
+
     @Bean
-    public GroupInitializer groupInitializer(GroupDAO groupDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
-        return new GroupInitializer(groupDAO, dataConduct, queryIsTableExist, queryOfCreateTable);
+    public TableInitializer<Course> courseTableInitializer(DAO<Course> dao, DataConduct dataConduct) {
+        return new TableInitializer<>(dao, dataConduct, Course.class);
     }
 
     @Bean
-    public CourseInitializer courseInitializer(CourseDAO courseDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
-        return new CourseInitializer(courseDAO, dataConduct, queryIsTableExist, queryOfCreateTable);
+    public TableInitializer<Group> groupTableInitializer(DAO<Group> dao, DataConduct dataConduct) {
+        return new TableInitializer<>(dao, dataConduct, Group.class);
     }
 
     @Bean
-    public StudentInitializer studentInitializer(StudentDAO studentDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
-        return new StudentInitializer(studentDAO, dataConduct, queryIsTableExist, queryOfCreateTable);
+    public TableInitializer<Student> studebtTableInitializer(DAO<Student> dao, DataConduct dataConduct) {
+        return new TableInitializer<>(dao, dataConduct, Student.class);
     }
 
     @Bean
-    public StudentToCourseInitializer studentToCourseInitializer(StudentAtCourseDAO studentAtCourseDAO, DataConduct dataConduct, SQLQueryIsTableExist queryIsTableExist, SQLQueryOfCreateTable queryOfCreateTable) {
-        return new StudentToCourseInitializer(studentAtCourseDAO, dataConduct, queryIsTableExist, queryOfCreateTable);
+    public TableInitializer<StudentAtCourse> studentAtCourseTableInitializer(DAO<StudentAtCourse> dao, DataConduct dataConduct) {
+        return new TableInitializer<>(dao, dataConduct, StudentAtCourse.class);
     }
 }
