@@ -6,6 +6,7 @@ import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 
+import java.util.Collections;
 import java.util.List;
 
 public class DataConduct {
@@ -28,7 +29,21 @@ public class DataConduct {
         this.studentToCourse = studentToCourse;
     }
 
-    public List<Student> createStudents() {
+    public List<?> generateItems(String dataType){
+        switch (dataType) {
+            case "students":
+                return createStudents();
+            case "courses":
+                return createCourses();
+            case "groups":
+                return createGroups();
+            case "studenttocourse":
+                return createRelationStudentCourse();
+        }
+        return Collections.emptyList();
+    }
+
+    private List<Student> createStudents() {
 
         if (students == null) {
             createGroups();
@@ -37,21 +52,21 @@ public class DataConduct {
         return students;
     }
 
-    public List<Group> createGroups() {
+    private List<Group> createGroups() {
         if (groups == null) {
             groups = groupGenerator.generate();
         }
         return groups;
     }
 
-    public List<Course> createCourses() {
+    private List<Course> createCourses() {
         if (courses == null) {
             courses = courseGenerator.generate();
         }
         return courses;
     }
 
-    public List<StudentAtCourse> createRelationStudentCourse() {
+    private List<StudentAtCourse> createRelationStudentCourse() {
         createCourses();
         createStudents();
         return studentToCourse.addStudentToCourse(students, courses.size());
