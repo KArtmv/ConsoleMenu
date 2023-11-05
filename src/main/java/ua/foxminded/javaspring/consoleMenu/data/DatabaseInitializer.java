@@ -2,46 +2,45 @@ package ua.foxminded.javaspring.consoleMenu.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.foxminded.javaspring.consoleMenu.data.tables.CourseInitializer;
-import ua.foxminded.javaspring.consoleMenu.data.tables.GroupInitializer;
-import ua.foxminded.javaspring.consoleMenu.data.tables.StudentInitializer;
-import ua.foxminded.javaspring.consoleMenu.data.tables.StudentToCourseInitializer;
+import ua.foxminded.javaspring.consoleMenu.data.tables.TableInitializer;
+import ua.foxminded.javaspring.consoleMenu.model.Course;
+import ua.foxminded.javaspring.consoleMenu.model.Group;
+import ua.foxminded.javaspring.consoleMenu.model.Student;
+import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.Menu;
 
 import javax.annotation.PostConstruct;
 
 @Component
 public class DatabaseInitializer {
-    private GroupInitializer groupInitializer;
+    private TableInitializer<Course> courseTableInitializer1;
 
-    private CourseInitializer courseInitializer;
+    private TableInitializer<Group> groupTableInitializer;
 
-    private StudentInitializer studentInitializer;
+    private TableInitializer<Student> studentTableInitializer;
 
-    private StudentToCourseInitializer studentToCourseInitializer;
+    private TableInitializer<StudentAtCourse> studentAtCourseTableInitializer;
 
     private Menu menu;
 
     @Autowired
-    public DatabaseInitializer(GroupInitializer groupInitializer, CourseInitializer courseInitializer,
-                               StudentInitializer studentInitializer,
-                               StudentToCourseInitializer studentToCourseInitializer, Menu menu) {
-        this.groupInitializer = groupInitializer;
-        this.courseInitializer = courseInitializer;
-        this.studentInitializer = studentInitializer;
-        this.studentToCourseInitializer = studentToCourseInitializer;
+    public DatabaseInitializer(TableInitializer<Course> courseTableInitializer1, TableInitializer<Group> groupTableInitializer, TableInitializer<Student> studentTableInitializer, TableInitializer<StudentAtCourse> studentAtCourseTableInitializer, Menu menu) {
+        this.courseTableInitializer1 = courseTableInitializer1;
+        this.studentTableInitializer = studentTableInitializer;
+        this.studentAtCourseTableInitializer = studentAtCourseTableInitializer;
+        this.groupTableInitializer = groupTableInitializer;
         this.menu = menu;
     }
 
     @PostConstruct
     public void initializeTables() {
-        groupInitializer.initialize();
+        groupTableInitializer.initialize();
 
-        courseInitializer.initialize();
+        courseTableInitializer1.initialize();
 
-        studentInitializer.initialize();
+        studentTableInitializer.initialize();
 
-        studentToCourseInitializer.initialize();
+        studentAtCourseTableInitializer.initialize();
 
         System.out.println(menu.getOptions());
     }
