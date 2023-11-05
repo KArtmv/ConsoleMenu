@@ -29,16 +29,15 @@ public class DataConduct {
         this.studentToCourse = studentToCourse;
     }
 
-    public List<?> generateItems(String dataType){
-        switch (dataType) {
-            case "students":
-                return createStudents();
-            case "courses":
-                return createCourses();
-            case "groups":
-                return createGroups();
-            case "studenttocourse":
-                return createRelationStudentCourse();
+    public List<?> generateItems(Class<?> dataType) {
+        if (dataType.equals(Student.class)) {
+            return createStudents();
+        } else if (dataType.equals(Course.class)) {
+            return createCourses();
+        } else if (dataType.equals(Group.class)) {
+            return createGroups();
+        } else if (dataType.equals(StudentAtCourse.class)) {
+            return createRelationStudentCourse();
         }
         return Collections.emptyList();
     }
