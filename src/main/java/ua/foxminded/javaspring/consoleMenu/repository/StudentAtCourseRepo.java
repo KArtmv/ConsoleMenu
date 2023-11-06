@@ -90,10 +90,4 @@ public class StudentAtCourseRepo implements DAO<StudentAtCourse>, StudentAtCours
     public List<StudentAtCourse> listOfItems(StudentAtCourse item) {
         return null;
     }
-
-
-    @Override
-    public String getTableName() {
-        return STUDENT_TO_COURSE_TABLE_NAME;
-    }
 }
