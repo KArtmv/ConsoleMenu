@@ -8,6 +8,8 @@ import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.Menu;
+import ua.foxminded.javaspring.consoleMenu.options.controller.groupOption.OutputStudentsAtGroupByCount;
+import ua.foxminded.javaspring.consoleMenu.options.input.TestCheck;
 
 import javax.annotation.PostConstruct;
 
@@ -22,14 +24,18 @@ public class DatabaseInitializer {
     private TableInitializer<StudentAtCourse> studentAtCourseTableInitializer;
 
     private Menu menu;
+    private OutputStudentsAtGroupByCount atGroupByCount;
+    private TestCheck testCheck;
 
     @Autowired
-    public DatabaseInitializer(TableInitializer<Course> courseTableInitializer1, TableInitializer<Group> groupTableInitializer, TableInitializer<Student> studentTableInitializer, TableInitializer<StudentAtCourse> studentAtCourseTableInitializer, Menu menu) {
+    public DatabaseInitializer(TableInitializer<Course> courseTableInitializer1, TableInitializer<Group> groupTableInitializer, TableInitializer<Student> studentTableInitializer, TableInitializer<StudentAtCourse> studentAtCourseTableInitializer, Menu menu, OutputStudentsAtGroupByCount atGroupByCount, TestCheck testCheck) {
         this.courseTableInitializer1 = courseTableInitializer1;
+        this.groupTableInitializer = groupTableInitializer;
         this.studentTableInitializer = studentTableInitializer;
         this.studentAtCourseTableInitializer = studentAtCourseTableInitializer;
-        this.groupTableInitializer = groupTableInitializer;
         this.menu = menu;
+        this.atGroupByCount = atGroupByCount;
+        this.testCheck = testCheck;
     }
 
     @PostConstruct
@@ -43,5 +49,9 @@ public class DatabaseInitializer {
         studentAtCourseTableInitializer.initialize();
 
         System.out.println(menu.getOptions());
+
+//        atGroupByCount.groupsByCount();
+
+        testCheck.testCheck();
     }
 }
