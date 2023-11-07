@@ -1,8 +1,8 @@
-package ua.foxminded.javaspring.consoleMenu.data.generator;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.foxminded.javaspring.consoleMenu.data.RandomNumber;
-import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.CountConfig;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.RandomNumber;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
