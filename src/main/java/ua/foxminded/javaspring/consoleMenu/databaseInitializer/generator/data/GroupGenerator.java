@@ -1,7 +1,7 @@
-package ua.foxminded.javaspring.consoleMenu.data.generator;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 
 import java.util.ArrayList;
