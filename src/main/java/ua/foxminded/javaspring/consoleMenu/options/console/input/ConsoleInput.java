@@ -6,7 +6,7 @@ public class ConsoleInput {
 
     private Scanner sc;
     private static final String regexForAlphabetic = "[^a-zA-Z]+";
-    private static final String regexForInteger = "-?\\d+";
+    private static final String regexForInteger = "[^-?\\d+]";
     private static final String regexForMenu = "[^1-9x]";
 
 
@@ -19,7 +19,7 @@ public class ConsoleInput {
             try {
                 receivedNumber = Integer.parseInt(input(regexForInteger));
             } catch (NumberFormatException e) {
-                System.out.println("Received is illegal argument. Try again.");
+                System.out.println("Failed to converted input number.");
             }
         return receivedNumber;
     }
