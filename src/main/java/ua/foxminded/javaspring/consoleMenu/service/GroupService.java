@@ -8,7 +8,5 @@ import java.util.List;
 
 @Service
 public interface GroupService {
-    List<CounterStudentsAtGroup> counterStudentsAtGroups(int count);
-
-    boolean isValidGroupID(Group group);
+    List<CounterStudentsAtGroup> counterStudentsAtGroups(Integer count);
 }
