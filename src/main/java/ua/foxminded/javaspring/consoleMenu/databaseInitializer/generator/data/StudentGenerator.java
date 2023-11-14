@@ -1,7 +1,8 @@
-package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.RandomNumber;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
@@ -11,32 +12,30 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class StudentGenerator {
+public class StudentGenerator implements DataGenerator<Student> {
 
     private RandomNumber randomNumber;
-
     private ResourcesFilesDatabaseData resourcesFiles;
-
     private CountConfig countConfig;
-
-    private int maxCountOfStudents;
-
+    private Integer maxCountOfStudents;
+    private DataConduct dataConduct;
     private HashSet<Student> studentsNames = new HashSet<>();
 
     @Autowired
-    public StudentGenerator(RandomNumber randomNumber, ResourcesFilesDatabaseData resourcesFiles, CountConfig countConfig) {
+    public StudentGenerator(RandomNumber randomNumber, ResourcesFilesDatabaseData resourcesFiles, CountConfig countConfig, DataConduct dataConduct) {
+        this.dataConduct = dataConduct;
         this.randomNumber = randomNumber;
         this.resourcesFiles = resourcesFiles;
         this.countConfig = countConfig;
     }
 
-    public List<Student> generate(List<Group> groups) {
+    @Override
+    public List<Student> generate() {
         maxCountOfStudents = countConfig.getMaxCountOfStudents();
 
         studentNameRandomCombiner();
-        int countOfGroups = groups.size();
 
-        return addRandomGroup(countOfGroups);
+        return addRandomGroup();
     }
 
     private void studentNameRandomCombiner() {
@@ -53,13 +52,15 @@ public class StudentGenerator {
             String firstName = firstNames.get(randomFirstNameIndex - 1);
             String lastName = lastNames.get(randomLastNameIndex - 1);
 
-            if (!firstName.equals(lastName)) {
-                studentsNames.add(new Student(firstName, lastName));
+            Student student = new Student(firstName, lastName);
+            if (!firstName.equals(lastName) && !studentsNames.contains(student)) {
+                studentsNames.add(student);
             }
         }
     }
 
-    private List<Student> addRandomGroup(int countOfGroups) {
+    private List<Student> addRandomGroup() {
+        int countOfGroups = dataConduct.getGroups().size();
         int randomGroupIndex;
 
         Long studentID = 1L;
@@ -74,6 +75,7 @@ public class StudentGenerator {
                     Long.valueOf(randomGroupIndex)));
             studentID++;
         }
+        dataConduct.setStudents(generatedStudents);
         return generatedStudents;
     }
 }
