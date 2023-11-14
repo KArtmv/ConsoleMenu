@@ -8,7 +8,7 @@ public class Student {
     private Long groupID;
     private String groupName;
 
-    public Student(long studentID) {
+    public Student(Long studentID) {
         this.studentID = studentID;
     }
 
