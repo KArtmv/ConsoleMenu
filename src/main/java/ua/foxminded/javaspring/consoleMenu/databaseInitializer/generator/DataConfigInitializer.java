@@ -1,22 +1,24 @@
-package ua.foxminded.javaspring.consoleMenu.data.generator;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import ua.foxminded.javaspring.consoleMenu.data.RandomNumber;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
-import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.CountConfig;
-import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.RandomNumber;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.*;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.CountConfig;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.model.Course;
+import ua.foxminded.javaspring.consoleMenu.model.Group;
+import ua.foxminded.javaspring.consoleMenu.model.Student;
+import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 
 @Component
 public class DataConfigInitializer {
 
-    private ReadResourcesFile readResourcesFile;
-
     @Bean
     public ReadResourcesFile readFile(ResourceLoader resourceLoader) {
-        readResourcesFile = new ReadResourcesFile(resourceLoader);
-        return readResourcesFile;
+        return new ReadResourcesFile(resourceLoader);
     }
 
     @Bean
@@ -25,28 +27,27 @@ public class DataConfigInitializer {
     }
 
     @Bean
-    public DataConduct dataConduct(StudentGenerator studentGenerator, CourseGenerator courseGenerator,
-                                   GroupGenerator groupGenerator, StudentToCourseGenerator studentToCourseGenerator) {
-        return new DataConduct(studentGenerator, courseGenerator, groupGenerator, studentToCourseGenerator);
+    public DataConduct dataConduct() {
+        return new DataConduct();
     }
 
     @Bean
-    public StudentGenerator studentGenerator(RandomNumber randomNumber, ResourcesFilesDatabaseData resourcesFiles, CountConfig countConfig) {
-        return new StudentGenerator(randomNumber, resourcesFiles, countConfig);
+    public DataGenerator<Student> studentGenerator(RandomNumber randomNumber, ResourcesFilesDatabaseData resourcesFiles, CountConfig countConfig, DataConduct dataConduct) {
+        return new StudentGenerator(randomNumber, resourcesFiles, countConfig, dataConduct);
     }
 
     @Bean
-    public CourseGenerator courseGenerator(ResourcesFilesDatabaseData resourcesFiles) {
-        return new CourseGenerator(resourcesFiles);
+    public DataGenerator<Course> courseGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+        return new CourseGenerator(resourcesFiles, dataConduct);
     }
 
     @Bean
-    public GroupGenerator groupGenerator(ResourcesFilesDatabaseData resourcesFiles) {
-        return new GroupGenerator(resourcesFiles);
+    public DataGenerator<Group> groupGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+        return new GroupGenerator(resourcesFiles, dataConduct);
     }
 
     @Bean
-    public StudentToCourseGenerator studentToCourseGenerator(RandomNumber randomNumber, CountConfig countConfig) {
-        return new StudentToCourseGenerator(randomNumber, countConfig);
+    public DataGenerator<StudentAtCourse> studentToCourseGenerator(RandomNumber randomNumber, CountConfig countConfig, DataConduct dataConduct) {
+        return new StudentToCourseGenerator(randomNumber, countConfig, dataConduct);
     }
 }
