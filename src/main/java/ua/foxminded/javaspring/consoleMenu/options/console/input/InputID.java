@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.options.input;
+package ua.foxminded.javaspring.consoleMenu.options.console.input;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.dao.DAO;
@@ -14,7 +14,7 @@ public class InputID<T> {
         this.dao = dao;
     }
 
-    public Long inputID(){
+    public Long inputID() {
         int receivedID;
         do {
             receivedID = consoleInput.inputNumbers();
@@ -22,8 +22,8 @@ public class InputID<T> {
         return (long) receivedID;
     }
 
-    private boolean isValidID(Integer receivedID){
-        if (dao.isValidItemID(receivedID)){
+    private boolean isValidID(Integer receivedID) {
+        if (dao.isValidItemID(receivedID)) {
             return true;
         } else {
             System.out.println("Invalid selected ID, is not exist. Please try again.");

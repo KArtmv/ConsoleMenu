@@ -5,7 +5,6 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.RandomNumber;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
-import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 
 import java.util.ArrayList;

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.options.input.InputID;
-import ua.foxminded.javaspring.consoleMenu.options.output.OutputListOfCourses;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
+import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfCourses;
 import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class AllStudentsFromCourse {
         this.outputListOfCourses = outputListOfCourses;
     }
 
-    public void showAllStudentsFromCourse(){
+    public void showAllStudentsFromCourse() {
         outputListOfCourses.viewAllCourses();
         List<StudentAtCourse> studentsFromCourse = studentAtCourseService.allStudentsFromCourse(new Course(inputID.inputID()));
 
@@ -34,7 +34,7 @@ public class AllStudentsFromCourse {
         }
     }
 
-    private void viewAllStudents(List<StudentAtCourse> studentsFromCourse){
+    private void viewAllStudents(List<StudentAtCourse> studentsFromCourse) {
         System.out.printf("At course: %s, study next students:\n", studentsFromCourse.get(0).getCourse().getCourseName());
 
         for (StudentAtCourse student : studentsFromCourse) {

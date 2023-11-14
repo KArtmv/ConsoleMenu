@@ -13,7 +13,6 @@ import ua.foxminded.javaspring.consoleMenu.rowmapper.GroupMapper;
 
 import java.sql.ResultSet;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class GroupRepo implements GroupDAO {

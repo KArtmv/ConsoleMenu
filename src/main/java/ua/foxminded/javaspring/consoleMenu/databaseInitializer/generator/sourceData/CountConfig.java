@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.data.generator.sourceData;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

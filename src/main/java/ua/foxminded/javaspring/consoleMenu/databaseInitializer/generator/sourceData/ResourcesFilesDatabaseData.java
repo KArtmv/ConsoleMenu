@@ -1,9 +1,9 @@
-package ua.foxminded.javaspring.consoleMenu.data.generator.sourceData;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 
 import java.util.List;
 

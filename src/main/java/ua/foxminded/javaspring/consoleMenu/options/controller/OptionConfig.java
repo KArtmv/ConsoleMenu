@@ -2,24 +2,22 @@ package ua.foxminded.javaspring.consoleMenu.options.controller;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
-import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
+import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfCourses;
+import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfGroup;
 import ua.foxminded.javaspring.consoleMenu.options.controller.courseOptions.AllStudentsFromCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.groupOption.OutputStudentsAtGroupByCount;
+import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.AddStudentToCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.RemoveStudentFromSpecifyCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.AddNewStudent;
-import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.AddStudentToCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.DeleteStudentByID;
-import ua.foxminded.javaspring.consoleMenu.options.input.ConsoleInput;
-import ua.foxminded.javaspring.consoleMenu.options.input.InputID;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
-import ua.foxminded.javaspring.consoleMenu.options.output.OutputListOfCourses;
-import ua.foxminded.javaspring.consoleMenu.options.output.OutputListOfGroup;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
@@ -55,12 +53,12 @@ public class OptionConfig {
     }
 
     @Bean
-    public OutputStudentsAtGroupByCount atGroupByCount(GroupService groupService, ConsoleInput consoleInput){
+    public OutputStudentsAtGroupByCount atGroupByCount(GroupService groupService, ConsoleInput consoleInput) {
         return new OutputStudentsAtGroupByCount(groupService, consoleInput);
     }
 
     @Bean
-    public AllStudentsFromCourse studentsFromCourse(StudentAtCourseService studentAtCourseService, InputID<Course> inputID, OutputListOfCourses listOfCourses){
+    public AllStudentsFromCourse studentsFromCourse(StudentAtCourseService studentAtCourseService, InputID<Course> inputID, OutputListOfCourses listOfCourses) {
         return new AllStudentsFromCourse(studentAtCourseService, inputID, listOfCourses);
     }
 }

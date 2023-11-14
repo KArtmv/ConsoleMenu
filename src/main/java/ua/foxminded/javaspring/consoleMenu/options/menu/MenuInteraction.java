@@ -1,13 +1,13 @@
 package ua.foxminded.javaspring.consoleMenu.options.menu;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
 import ua.foxminded.javaspring.consoleMenu.options.controller.courseOptions.AllStudentsFromCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.groupOption.OutputStudentsAtGroupByCount;
+import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.AddStudentToCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.RemoveStudentFromSpecifyCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.AddNewStudent;
-import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.AddStudentToCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.DeleteStudentByID;
-import ua.foxminded.javaspring.consoleMenu.options.input.ConsoleInput;
 
 public class MenuInteraction {
 
@@ -38,19 +38,19 @@ public class MenuInteraction {
         this.isExit = false;
     }
 
-    public void startMenu(){
+    public void startMenu() {
         do {
             viewMenu();
             chooseOption();
         } while (!isExit);
     }
 
-    private void viewMenu(){
+    private void viewMenu() {
         System.out.println(menu.getOptions());
     }
 
-    private void chooseOption(){
-        switch (consoleInput.menuInput()){
+    private void chooseOption() {
+        switch (consoleInput.menuInput()) {
             case ("1"):
                 atGroupByCount.groupsByCount();
                 break;

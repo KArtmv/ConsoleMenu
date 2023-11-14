@@ -3,7 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.options.controller.groupOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
-import ua.foxminded.javaspring.consoleMenu.options.input.ConsoleInput;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 
 import java.util.List;
@@ -19,19 +19,19 @@ public class OutputStudentsAtGroupByCount {
         this.consoleInput = consoleInput;
     }
 
-    public void groupsByCount(){
+    public void groupsByCount() {
         System.out.println("Input count of students at course.");
         int receivedCountOfStudent = consoleInput.inputNumbers();
         List<CounterStudentsAtGroup> studentsAtGroups = groupService.counterStudentsAtGroups(receivedCountOfStudent);
 
-        if (CollectionUtils.isEmpty(studentsAtGroups)){
+        if (CollectionUtils.isEmpty(studentsAtGroups)) {
             System.out.printf("Could not find a group with %d or fewer students.\n", receivedCountOfStudent);
         } else {
             outputResult(studentsAtGroups);
         }
     }
 
-    private void outputResult(List<CounterStudentsAtGroup> studentsAtGroups){
+    private void outputResult(List<CounterStudentsAtGroup> studentsAtGroups) {
         for (CounterStudentsAtGroup studentsAtGroup : studentsAtGroups) {
             System.out.printf("%d of students at group: %s.\n",
                     studentsAtGroup.getStudentsCount(), studentsAtGroup.getGroupName());
