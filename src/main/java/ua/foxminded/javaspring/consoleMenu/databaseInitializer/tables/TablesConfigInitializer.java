@@ -1,9 +1,10 @@
-package ua.foxminded.javaspring.consoleMenu.data.tables;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.dao.DAO;
-import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
@@ -13,22 +14,22 @@ import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 public class TablesConfigInitializer {
 
     @Bean
-    public TableInitializer<Course> courseTableInitializer(DAO<Course> dao, DataConduct dataConduct) {
-        return new TableInitializer<>(dao, dataConduct, Course.class);
+    public TableInitializer<Course> courseTableInitializer(DAO<Course> dao, DataGenerator<Course> studentGenerator) {
+        return new TableInitializer<>(dao, studentGenerator);
     }
 
     @Bean
-    public TableInitializer<Group> groupTableInitializer(DAO<Group> dao, DataConduct dataConduct) {
-        return new TableInitializer<>(dao, dataConduct, Group.class);
+    public TableInitializer<Group> groupTableInitializer(DAO<Group> dao, DataGenerator<Group> groupGenerator) {
+        return new TableInitializer<>(dao, groupGenerator);
     }
 
     @Bean
-    public TableInitializer<Student> studebtTableInitializer(DAO<Student> dao, DataConduct dataConduct) {
-        return new TableInitializer<>(dao, dataConduct, Student.class);
+    public TableInitializer<Student> studebtTableInitializer(DAO<Student> dao, DataGenerator<Student> studentGenerator) {
+        return new TableInitializer<>(dao, studentGenerator);
     }
 
     @Bean
-    public TableInitializer<StudentAtCourse> studentAtCourseTableInitializer(DAO<StudentAtCourse> dao, DataConduct dataConduct) {
-        return new TableInitializer<>(dao, dataConduct, StudentAtCourse.class);
+    public TableInitializer<StudentAtCourse> studentAtCourseTableInitializer(DAO<StudentAtCourse> dao, DataGenerator<StudentAtCourse> studentToCourseGenerator) {
+        return new TableInitializer<>(dao, studentToCourseGenerator);
     }
 }
