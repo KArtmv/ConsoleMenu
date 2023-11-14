@@ -22,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean saveStudent(Student student) {
-        return studentDAO.addStudent(student);
+        return studentDAO.addItem(student);
     }
 
     @Override
@@ -32,12 +32,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean deleteStudent(Student studentID) {
-        return studentDAO.deleteStudent(studentID);
+        return studentDAO.removeStudent(studentID);
     }
 
     @Override
     public Student getStudentByID(Student student) {
-        Optional<Student> result = studentDAO.getStudentByID(student);
+        Optional<Student> result = studentDAO.getByItemID(student);
 
         Student resultStudent = null;
         if (result.isPresent()) {
