@@ -20,12 +20,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<CounterStudentsAtGroup> counterStudentsAtGroups(int count) {
+    public List<CounterStudentsAtGroup> counterStudentsAtGroups(Integer count) {
         return groupDAO.counterStudentsAtGroups(count);
-    }
-
-    @Override
-    public boolean isValidGroupID(Group group) {
-        return groupDAO.isValidGroupID(group);
     }
 }
