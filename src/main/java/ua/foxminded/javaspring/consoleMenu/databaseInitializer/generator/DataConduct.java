@@ -1,6 +1,10 @@
-package ua.foxminded.javaspring.consoleMenu.data.generator;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.CourseGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.GroupGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.StudentGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.StudentToCourseGenerator;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
@@ -11,63 +15,31 @@ import java.util.List;
 
 public class DataConduct {
 
-    private StudentGenerator studentGenerator;
-    private CourseGenerator courseGenerator;
-    private GroupGenerator groupGenerator;
-    private StudentToCourseGenerator studentToCourse;
-
     private List<Student> students;
     private List<Course> courses;
     private List<Group> groups;
 
-    @Autowired
-    public DataConduct(StudentGenerator studentGenerator, CourseGenerator courseGenerator,
-                       GroupGenerator groupGenerator, StudentToCourseGenerator studentToCourse) {
-        this.studentGenerator = studentGenerator;
-        this.courseGenerator = courseGenerator;
-        this.groupGenerator = groupGenerator;
-        this.studentToCourse = studentToCourse;
-    }
-
-    public List<?> generateItems(Class<?> dataType) {
-        if (dataType.equals(Student.class)) {
-            return createStudents();
-        } else if (dataType.equals(Course.class)) {
-            return createCourses();
-        } else if (dataType.equals(Group.class)) {
-            return createGroups();
-        } else if (dataType.equals(StudentAtCourse.class)) {
-            return createRelationStudentCourse();
-        }
-        return Collections.emptyList();
-    }
-
-    private List<Student> createStudents() {
-
-        if (students == null) {
-            createGroups();
-            students = studentGenerator.generate(groups);
-        }
+    public List<Student> getStudents() {
         return students;
     }
 
-    private List<Group> createGroups() {
-        if (groups == null) {
-            groups = groupGenerator.generate();
-        }
-        return groups;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
-    private List<Course> createCourses() {
-        if (courses == null) {
-            courses = courseGenerator.generate();
-        }
+    public List<Course> getCourses() {
         return courses;
     }
 
-    private List<StudentAtCourse> createRelationStudentCourse() {
-        createCourses();
-        createStudents();
-        return studentToCourse.addStudentToCourse(students, courses.size());
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 }
