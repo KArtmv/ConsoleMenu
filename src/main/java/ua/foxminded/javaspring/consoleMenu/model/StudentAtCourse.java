@@ -6,10 +6,6 @@ public class StudentAtCourse {
     private Student student;
     private Course course;
 
-    public StudentAtCourse(Student student) {
-        this.student = student;
-    }
-
     public StudentAtCourse(Student student, Course course) {
         this.student = student;
         this.course = course;
@@ -21,8 +17,8 @@ public class StudentAtCourse {
         this.course = course;
     }
 
-    public StudentAtCourse(Course course) {
-        this.course = course;
+    public StudentAtCourse(Long enrollmentID) {
+        this.enrollmentID = enrollmentID;
     }
 
     public Student getStudent() {
