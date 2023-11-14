@@ -1,7 +1,8 @@
-package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.RandomNumber;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
@@ -12,28 +13,30 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class StudentToCourseGenerator {
+public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> {
 
     private RandomNumber randomNumber;
-
     private CountConfig countConfig;
-
     private int countCourses;
-
     private int maxCountCoursesOfStudent;
+    private DataConduct dataConduct;
 
     private List<StudentAtCourse> studentAtCourses = new ArrayList<>();
 
     @Autowired
-    public StudentToCourseGenerator(RandomNumber randomNumber, CountConfig countConfig) {
+    public StudentToCourseGenerator(RandomNumber randomNumber, CountConfig countConfig, DataConduct dataConduct) {
+        this.dataConduct = dataConduct;
         this.randomNumber = randomNumber;
         this.countConfig = countConfig;
+
     }
 
-    public List<StudentAtCourse> addStudentToCourse(List<Student> students, int coursesCount) {
-        countCourses = coursesCount;
+    @Override
+    public List<StudentAtCourse> generate() {
+        countCourses = dataConduct.getCourses().size();
         maxCountCoursesOfStudent = countConfig.getMaxCountCoursesOfStudent();
 
+        List<Student> students = dataConduct.getStudents();
         students.forEach(this::addToCourseByIndex);
 
         return studentAtCourses;
