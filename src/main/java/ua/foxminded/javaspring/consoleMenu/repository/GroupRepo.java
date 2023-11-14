@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScripts.SQLQueryOfCreateTable;
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.CountStudentAtGroupMapper;
@@ -17,17 +16,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class GroupRepo implements DAO<Group>, GroupDAO {
+public class GroupRepo implements GroupDAO {
 
     private SQLQueryOfCreateTable queryOfCreateTable;
     private JdbcTemplate jdbcTemplate;
 
     private static final String SQL_CHECK_IS_GROUP_TABLE_EMPTY = "SELECT COUNT(*) FROM groups";
     private static final String SQL_ADD_NEW_GROUP = "insert into groups (group_name) values (?)";
-    private static final String SQL_COUNT_STUDENTS_BY_GROUPS = "select group_name, count(s.student_id) as student_count"
-            + "from students s" + "join groups g on s.group_id = g.group_id" + "group by g.group_name"
-            + "having count(s.student_id)<=21";
-    private static final String SQL_GET_GROUP_BY_ID = "select * from course where course_id=?";
+    private static final String SQL_COUNT_STUDENTS_BY_GROUPS = "SELECT g.group_name, COUNT(s.student_id) AS student_count\n"
+            + "FROM groups g\n"
+            + "LEFT JOIN students s ON g.group_id = s.group_id\n"
+            + "GROUP BY g.group_id\n"
+            + "HAVING COUNT(s.student_id) <=?";
+    private static final String SQL_GET_GROUP_BY_ID = "select * from groups where course_id=?";
+    private static final String SQL_CHECK_IS_GROUP_ID_EXIST = "select group_id from groups where group_id=?";
+    private static final String SQL_GET_LIST_OF_GROUPS = "select * from groups";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
     private String SQL_CHECK_IS_TABLE_EXIST;
@@ -41,13 +44,13 @@ public class GroupRepo implements DAO<Group>, GroupDAO {
     }
 
     @Override
-    public List<CounterStudentsAtGroup> counterStudentsAtGroups(int count) {
+    public List<CounterStudentsAtGroup> counterStudentsAtGroups(Integer count) {
         return jdbcTemplate.query(SQL_COUNT_STUDENTS_BY_GROUPS, new CountStudentAtGroupMapper(), count);
     }
 
     @Override
-    public boolean isValidItemID(Group group) {
-        return jdbcTemplate.query(SQL_COUNT_STUDENTS_BY_GROUPS, ResultSet::next, group.getGroupID());
+    public boolean isValidItemID(Integer groupID) {
+        return jdbcTemplate.query(SQL_CHECK_IS_GROUP_ID_EXIST, ResultSet::next, groupID);
     }
 
     @Override
@@ -71,18 +74,7 @@ public class GroupRepo implements DAO<Group>, GroupDAO {
     }
 
     @Override
-    public boolean removeItem(Group item) {
-        return false;
-    }
-
-    @Override
-    public Optional<Group> getByItemID(Group group) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_GROUP_BY_ID, new GroupMapper(),
-                group.getGroupID()));
-    }
-
-    @Override
-    public List<Group> listOfItems(Group item) {
-        return null;
+    public List<Group> listOfItems() {
+        return jdbcTemplate.query(SQL_GET_LIST_OF_GROUPS, new GroupMapper());
     }
 }
