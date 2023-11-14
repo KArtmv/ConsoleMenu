@@ -9,7 +9,7 @@ import java.util.List;
 public interface StudentAtCourseService {
     List<StudentAtCourse> allStudentsFromCourse(Course course);
 
-    boolean addStudentToCourse(Student student, Course course);
+    boolean addStudentToCourse(StudentAtCourse studentAtCourse);
 
     boolean removeStudentFromCourse(StudentAtCourse studentAtCourse);
 
