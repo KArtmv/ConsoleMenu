@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.data;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;

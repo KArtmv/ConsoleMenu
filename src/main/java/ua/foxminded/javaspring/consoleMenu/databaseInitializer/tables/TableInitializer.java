@@ -2,7 +2,6 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.dao.DAO;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
 
 import java.util.List;

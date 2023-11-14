@@ -1,9 +1,9 @@
-package ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScripts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ua.foxminded.javaspring.consoleMenu.data.ReadResourcesFile;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 
 @Component
 public class SQLQueryOfCreateTable {

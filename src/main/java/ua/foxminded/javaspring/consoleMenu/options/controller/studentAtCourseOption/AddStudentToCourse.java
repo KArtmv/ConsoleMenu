@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.options.input.InputID;
-import ua.foxminded.javaspring.consoleMenu.options.output.OutputListOfCourses;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
+import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfCourses;
 import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
 
 public class AddStudentToCourse {
@@ -24,23 +24,23 @@ public class AddStudentToCourse {
         this.studentInputID = studentInputID;
     }
 
-    public void addStudentToCourse(){
+    public void addStudentToCourse() {
         add(new StudentAtCourse(getStudent(), getCourse()));
     }
 
-    private Student getStudent(){
-        System.out.println("Input student ID.\n");
+    private Student getStudent() {
+        System.out.println("Input student ID.");
         return new Student(studentInputID.inputID());
     }
 
-    private Course getCourse(){
+    private Course getCourse() {
         outputListOfCourses.viewAllCourses();
-        System.out.println("Input course ID, choose from list.\n");
+        System.out.println("Input course ID, choose from list.");
         return new Course(courseInputID.inputID());
     }
 
-    private void add(StudentAtCourse studentAtCourse){
-        if (studentAtCourseService.addStudentToCourse(studentAtCourse)){
+    private void add(StudentAtCourse studentAtCourse) {
+        if (studentAtCourseService.addStudentToCourse(studentAtCourse)) {
             System.out.println("Success, the student had been added to course.");
         } else {
             System.out.println("Failed to add.");

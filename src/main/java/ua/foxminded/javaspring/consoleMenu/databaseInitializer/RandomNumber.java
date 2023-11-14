@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.data;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer;
 
 import java.util.Random;
 

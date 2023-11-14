@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.options.output;
+package ua.foxminded.javaspring.consoleMenu.options.console.output;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -16,9 +16,9 @@ public class OutputListOfGroup {
         this.groupDAO = groupDAO;
     }
 
-    public void viewAllGroups(){
+    public void viewAllGroups() {
         List<Group> groups = groupDAO.listOfItems();
-        if (!CollectionUtils.isEmpty(groups)){
+        if (!CollectionUtils.isEmpty(groups)) {
             output(groups);
         }
     }

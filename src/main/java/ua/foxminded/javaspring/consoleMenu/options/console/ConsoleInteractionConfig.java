@@ -18,31 +18,32 @@ import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfGr
 public class ConsoleInteractionConfig {
 
     @Bean
-    public ConsoleInput consoleInput(){
+    public ConsoleInput consoleInput() {
         return new ConsoleInput();
     }
 
     @Bean
-    public InputID<Group> inputGroupID(ConsoleInput consoleInput, DAO<Group> dao){
+    public InputID<Group> inputGroupID(ConsoleInput consoleInput, DAO<Group> dao) {
         return new InputID<>(consoleInput, dao);
     }
 
     @Bean
-    public InputID<Course> inputCourseID(ConsoleInput consoleInput, DAO<Course> dao){
+    public InputID<Course> inputCourseID(ConsoleInput consoleInput, DAO<Course> dao) {
         return new InputID<>(consoleInput, dao);
     }
 
     @Bean
-    public InputID<Student> inputStudentID(ConsoleInput consoleInput, DAO<Student> dao){
-        return new InputID<>(consoleInput, dao);
-    }
-    @Bean
-    public InputID<StudentAtCourse> enrollmentID(ConsoleInput consoleInput, DAO<StudentAtCourse> dao){
+    public InputID<Student> inputStudentID(ConsoleInput consoleInput, DAO<Student> dao) {
         return new InputID<>(consoleInput, dao);
     }
 
     @Bean
-    public OutputListOfCourses listOfCourses(CourseDAO courseDAO){
+    public InputID<StudentAtCourse> enrollmentID(ConsoleInput consoleInput, DAO<StudentAtCourse> dao) {
+        return new InputID<>(consoleInput, dao);
+    }
+
+    @Bean
+    public OutputListOfCourses listOfCourses(CourseDAO courseDAO) {
         return new OutputListOfCourses(courseDAO);
     }
 

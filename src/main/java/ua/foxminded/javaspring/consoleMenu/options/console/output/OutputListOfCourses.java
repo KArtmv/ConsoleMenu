@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.options.output;
+package ua.foxminded.javaspring.consoleMenu.options.console.output;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -16,15 +16,15 @@ public class OutputListOfCourses {
         this.courseDAO = courseDAO;
     }
 
-    public void viewAllCourses(){
+    public void viewAllCourses() {
         List<Course> courses = courseDAO.listOfItems();
-        if (!CollectionUtils.isEmpty(courses)){
+        if (!CollectionUtils.isEmpty(courses)) {
             output(courses);
         }
     }
 
-    private void output(List<Course> courses){
-        for (Course course: courses) {
+    private void output(List<Course> courses) {
+        for (Course course : courses) {
             System.out.printf("ID: %d, Course name: %s,\n   Course description: %s.\n",
                     course.getCourseID(), course.getCourseName(), course.getCourseDescription());
         }

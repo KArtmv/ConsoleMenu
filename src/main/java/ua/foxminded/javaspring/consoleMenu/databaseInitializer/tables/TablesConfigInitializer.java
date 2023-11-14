@@ -3,7 +3,6 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.dao.DAO;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
