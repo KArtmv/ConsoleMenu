@@ -10,6 +10,6 @@ public class CountStudentAtGroupMapper implements RowMapper<CounterStudentsAtGro
 
     @Override
     public CounterStudentsAtGroup mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new CounterStudentsAtGroup(rs.getInt("coutn"), rs.getString("course_name"));
+        return new CounterStudentsAtGroup(rs.getInt("student_count"), rs.getString("group_name"));
     }
 }
