@@ -26,8 +26,8 @@ public class StudentAtCourseServiceImpl implements StudentAtCourseService {
     }
 
     @Override
-    public boolean addStudentToCourse(Student student, Course course) {
-        return studentAtCourseDAO.addStudentToCourse(student, course);
+    public boolean addStudentToCourse(StudentAtCourse studentAtCourse) {
+        return studentAtCourseDAO.addItem(studentAtCourse);
     }
 
     @Override
