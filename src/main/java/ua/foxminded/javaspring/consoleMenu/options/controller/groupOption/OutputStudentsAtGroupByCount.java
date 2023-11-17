@@ -23,6 +23,7 @@ public class OutputStudentsAtGroupByCount {
         System.out.println("Input count of students at course.");
         int receivedCountOfStudent = consoleInput.inputNumbers();
         List<CounterStudentsAtGroup> studentsAtGroups = groupService.counterStudentsAtGroups(receivedCountOfStudent);
+        studentsAtGroups.sort((a, b) -> Long.compare(b.getStudentsCount(), a.getStudentsCount()));
 
         if (CollectionUtils.isEmpty(studentsAtGroups)) {
             System.out.printf("Could not find a group with %d or fewer students.\n", receivedCountOfStudent);
@@ -32,9 +33,8 @@ public class OutputStudentsAtGroupByCount {
     }
 
     private void outputResult(List<CounterStudentsAtGroup> studentsAtGroups) {
-        for (CounterStudentsAtGroup studentsAtGroup : studentsAtGroups) {
-            System.out.printf("%d of students at group: %s.\n",
-                    studentsAtGroup.getStudentsCount(), studentsAtGroup.getGroupName());
-        }
+        studentsAtGroups.forEach(studentsAtGroup ->
+                 System.out.printf("%d of students at group: %s.\n",
+                    studentsAtGroup.getStudentsCount(), studentsAtGroup.getGroupName()));
     }
 }
