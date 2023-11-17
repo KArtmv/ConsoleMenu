@@ -5,21 +5,14 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataCon
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class CourseGenerator implements DataGenerator<Course> {
 
     private ResourcesFilesDatabaseData resourcesFiles;
     private DataConduct dataConduct;
-
-//    private List<Course> courses = new ArrayList<>();
 
     @Autowired
     public CourseGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
