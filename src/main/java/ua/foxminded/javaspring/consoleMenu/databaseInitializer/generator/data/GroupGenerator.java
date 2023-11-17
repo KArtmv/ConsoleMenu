@@ -5,15 +5,14 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataCon
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class GroupGenerator implements DataGenerator<Group> {
 
     private ResourcesFilesDatabaseData resourcesFiles;
     private DataConduct dataConduct;
-
-    private List<Group> groups = new ArrayList<>();
 
     @Autowired
     public GroupGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
@@ -25,12 +24,10 @@ public class GroupGenerator implements DataGenerator<Group> {
     public List<Group> generate() {
         List<String> groupNames = resourcesFiles.getGroups();
 
-        Long groupID = 1L;
+        List<Group> groups = IntStream.range(0, groupNames.size())
+                .mapToObj(i -> new Group((long) (i + 1), groupNames.get(i)))
+                .collect(Collectors.toList());
 
-        for (String string : groupNames) {
-            groups.add(new Group(groupID, string));
-            groupID++;
-        }
         dataConduct.setGroups(groups);
         return groups;
     }
