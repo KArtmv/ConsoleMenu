@@ -16,7 +16,6 @@ import java.util.Set;
 public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> {
 
     private RandomNumber randomNumber;
-    private CountConfig countConfig;
     private int countCourses;
     private int maxCountCoursesOfStudent;
     private DataConduct dataConduct;
@@ -27,14 +26,12 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
     public StudentToCourseGenerator(RandomNumber randomNumber, CountConfig countConfig, DataConduct dataConduct) {
         this.dataConduct = dataConduct;
         this.randomNumber = randomNumber;
-        this.countConfig = countConfig;
-
+        this.maxCountCoursesOfStudent = countConfig.getMaxCountCoursesOfStudent();
     }
 
     @Override
     public List<StudentAtCourse> generate() {
-        countCourses = dataConduct.getCourses().size();
-        maxCountCoursesOfStudent = countConfig.getMaxCountCoursesOfStudent();
+        getCoursesCount();
 
         List<Student> students = dataConduct.getStudents();
         students.forEach(this::addToCourseByIndex);
@@ -44,20 +41,22 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
 
     private void addToCourseByIndex(Student student) {
         Set<Integer> courseIndices = randomlyCoursesIndex();
-
-        for (Integer courseIndex : courseIndices) {
-            studentAtCourses.add(new StudentAtCourse(student, new Course(Long.valueOf(courseIndex))));
-        }
+        courseIndices.forEach(index ->
+                studentAtCourses.add(new StudentAtCourse(student, new Course(Long.valueOf(index)))));
     }
 
     private Set<Integer> randomlyCoursesIndex() {
         Set<Integer> indicesCoursesOfStudent = new HashSet<>();
 
-        int randomlyQuantityCoursesOfStudent = randomNumber.generateBetweenOneAndInputNumber(maxCountCoursesOfStudent);
+        int randomlyQuantityCoursesOfStudent = randomNumber.generateInRange(maxCountCoursesOfStudent);
 
         while (indicesCoursesOfStudent.size() < randomlyQuantityCoursesOfStudent) {
-            indicesCoursesOfStudent.add(randomNumber.generateBetweenOneAndInputNumber(countCourses));
+            indicesCoursesOfStudent.add(randomNumber.generateInRange(countCourses));
         }
         return indicesCoursesOfStudent;
+    }
+
+    private void getCoursesCount(){
+        countCourses = dataConduct.getCourses().size();
     }
 }
