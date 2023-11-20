@@ -6,7 +6,7 @@ public class RandomNumber {
 
     private final Random random = new Random();
 
-    public Integer generateBetweenOneAndInputNumber(int inputNumber) {
+    public Integer generateInRange(int inputNumber) {
         int randomNumber;
 
         do {
