@@ -11,8 +11,6 @@ public class TableInitializer<T> {
     private DAO<T> dao;
     private DataGenerator<T> generateItems;
 
-    private List<T> items;
-
     @Autowired
     public TableInitializer(DAO<T> dao, DataGenerator<T> generateItems) {
         this.dao = dao;
@@ -21,25 +19,25 @@ public class TableInitializer<T> {
 
     public void initialize() {
         if (dao.isTableExist()) {
-            populateIfEmpty();
+            toFillIfEmpty();
         } else {
             dao.createTable();
-            populateTable();
+            toFillTable();
         }
     }
 
-    private void populateIfEmpty() {
+    private void toFillIfEmpty() {
         if (dao.isTableEmpty()) {
-            populateTable();
+            toFillTable();
         }
     }
 
-    private void populateTable() {
-        generateData();
+    private void toFillTable() {
+        List<T> items = generateData();
         items.forEach(dao::addItem);
     }
 
-    private void generateData() {
-        items = generateItems.generate();
+    private List<T> generateData() {
+        return generateItems.generate();
     }
 }
