@@ -29,7 +29,7 @@ public class RemoveStudentFromSpecifyCourse {
     public void removeByEnrollmentID() {
         viewAllCoursesOfStudent(getStudentCourses(getStudentID()));
 
-        if (remove(chooseEnrollmentID())) {
+        if (studentAtCourseService.removeStudentFromCourse(chooseEnrollmentID())) {
             System.out.println("Success, the student was suspended from the course.");
         } else {
             System.out.println("Failed, student remained on course.");
@@ -50,19 +50,16 @@ public class RemoveStudentFromSpecifyCourse {
             Student student = studentAtCourses.get(0).getStudent();
             System.out.printf("Student: %s %s, studies at next courses:\n", student.getFirstName(), student.getLastName());
 
-            for (StudentAtCourse studentAtCourse : studentAtCourses) {
-                System.out.printf("ID: %d, course: %s,\n   Description of course: %s.\n", studentAtCourse.getEnrollmentID(),
-                        studentAtCourse.getCourse().getCourseName(), studentAtCourse.getCourse().getCourseDescription());
-            }
+            studentAtCourses.forEach(studentAtCourse -> System.out.printf(
+                    "ID: %d, course: %s,\n   Description of course: %s.\n",
+                    studentAtCourse.getEnrollmentID(),
+                    studentAtCourse.getCourse().getCourseName(),
+                    studentAtCourse.getCourse().getCourseDescription()));
         }
     }
 
     private StudentAtCourse chooseEnrollmentID() {
         System.out.println("Choose enrollment ID from the list to wish remove.");
         return new StudentAtCourse(studentAtCourseInputID.inputID());
-    }
-
-    private boolean remove(StudentAtCourse studentAtCourse) {
-        return studentAtCourseService.removeStudentFromCourse(studentAtCourse);
     }
 }
