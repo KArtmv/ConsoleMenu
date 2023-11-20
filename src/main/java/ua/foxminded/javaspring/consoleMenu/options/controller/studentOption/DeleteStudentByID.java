@@ -23,11 +23,13 @@ public class DeleteStudentByID {
     }
 
     public void remove() {
-        Student student;
-        do {
-            student = new Student(getStudentID());
-        } while (!isStudentCorrect(student));
-        removing(student);
+        Student student = new Student(getStudentID());
+
+        if (isStudentCorrect(student)) {
+            removing(student);
+        } else {
+            System.out.println("Removal canceled.");
+        }
     }
 
     private Long getStudentID() {
@@ -37,31 +39,23 @@ public class DeleteStudentByID {
 
     private boolean isStudentCorrect(Student student) {
         Student selectedStudent = studentService.getStudentByID(student);
-        System.out.printf("Received ID of student which should to remove: %s %s.\n", selectedStudent.getFirstName(), selectedStudent.getLastName());
-        System.out.println("If the student is correct insert: \"y\". Else insert: Any symbol.");
+        System.out.printf("Received ID of student which should to remove: %s %s.\n",
+                selectedStudent.getFirstName(), selectedStudent.getLastName());
+        System.out.print("Confirm removal (yes/no): ");
 
-        return consoleInput.inputCharacters().equals("y");
+        return consoleInput.inputCharacters().equalsIgnoreCase("yes");
     }
 
     private void removing(Student student) {
-        if (isStudentWithoutCourses(student)) {
-            removeStudent(student);
+        if (hasStudentCourses(student)) {
+            enrollmentService.removeStudentFromAllTheirCourses(student);
         }
+        System.out.println(studentService.deleteStudent(student)
+                ? "Success, the student had been removed."
+                : "Failed to remove the student.");
     }
 
-    private boolean isStudentWithoutCourses(Student student) {
-        return enrollmentService.removeStudentFromAllTheirCourses(student) || !doesStudentRelateToAnyCourse(student);
-    }
-
-    private boolean doesStudentRelateToAnyCourse(Student student) {
+    private boolean hasStudentCourses(Student student) {
         return !studentService.allCoursesOfStudent(student).isEmpty();
-    }
-
-    private void removeStudent(Student student) {
-        if (studentService.deleteStudent(student)) {
-            System.out.println("Success, the student had been removed.");
-        } else {
-            System.out.println("Failed to remove the student.");
-        }
     }
 }
