@@ -56,7 +56,7 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
         return indicesCoursesOfStudent;
     }
 
-    private void getCoursesCount(){
+    private void getCoursesCount() {
         countCourses = dataConduct.getCourses().size();
     }
 }

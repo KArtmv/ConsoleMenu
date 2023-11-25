@@ -34,7 +34,7 @@ public class OutputStudentsAtGroupByCount {
 
     private void outputResult(List<CounterStudentsAtGroup> studentsAtGroups) {
         studentsAtGroups.forEach(studentsAtGroup ->
-                 System.out.printf("%d of students at group: %s.\n",
-                    studentsAtGroup.getStudentsCount(), studentsAtGroup.getGroupName()));
+                System.out.printf("%d of students at group: %s.\n",
+                        studentsAtGroup.getStudentsCount(), studentsAtGroup.getGroupName()));
     }
 }
