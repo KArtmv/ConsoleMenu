@@ -1,9 +1,13 @@
 package ua.foxminded.javaspring.consoleMenu.options.console.input;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 
 public class InputID<T> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(InputID.class);
 
     private ConsoleInput consoleInput;
     private DAO<T> dao;
@@ -26,7 +30,7 @@ public class InputID<T> {
         if (dao.isValidItemID(receivedID)) {
             return true;
         } else {
-            System.out.println("Invalid selected ID, is not exist. Please try again.");
+            LOGGER.info("Invalid selected ID, is not exist.");
             return false;
         }
     }

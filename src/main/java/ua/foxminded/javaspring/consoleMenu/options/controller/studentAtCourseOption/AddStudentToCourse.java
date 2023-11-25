@@ -1,5 +1,7 @@
 package ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
@@ -9,6 +11,8 @@ import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfCo
 import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
 
 public class AddStudentToCourse {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddStudentToCourse.class);
 
     private OutputListOfCourses outputListOfCourses;
     private StudentAtCourseService studentAtCourseService;
@@ -43,7 +47,7 @@ public class AddStudentToCourse {
         if (studentAtCourseService.addStudentToCourse(studentAtCourse)) {
             System.out.println("Success, the student had been added to course.");
         } else {
-            System.out.println("Failed to add.");
+            LOGGER.info("Failed to add the student to course.");
         }
     }
 }
