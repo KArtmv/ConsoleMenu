@@ -1,6 +1,9 @@
 package ua.foxminded.javaspring.consoleMenu.options.controller.studentOption;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
@@ -8,6 +11,8 @@ import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 public class DeleteStudentByID {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeleteStudentByID.class);
 
     private InputID<Student> inputID;
     private StudentService studentService;
@@ -28,7 +33,7 @@ public class DeleteStudentByID {
         if (isStudentCorrect(student)) {
             removing(student);
         } else {
-            System.out.println("Removal canceled.");
+            LOGGER.info("Removal canceled.");
         }
     }
 
@@ -41,21 +46,23 @@ public class DeleteStudentByID {
         Student selectedStudent = studentService.getStudentByID(student);
         System.out.printf("Received ID of student which should to remove: %s %s.\n",
                 selectedStudent.getFirstName(), selectedStudent.getLastName());
-        System.out.print("Confirm removal (yes/no): ");
+        System.out.print("Confirm removal (yes/ or anything if no): ");
 
         return consoleInput.inputCharacters().equalsIgnoreCase("yes");
     }
 
     private void removing(Student student) {
-        if (hasStudentCourses(student)) {
+        if (!studentService.allCoursesOfStudent(student).isEmpty()) {
             enrollmentService.removeStudentFromAllTheirCourses(student);
         }
-        System.out.println(studentService.deleteStudent(student)
-                ? "Success, the student had been removed."
-                : "Failed to remove the student.");
+        tryDeleteStudent(student);
     }
 
-    private boolean hasStudentCourses(Student student) {
-        return !studentService.allCoursesOfStudent(student).isEmpty();
+    private void tryDeleteStudent(Student student) {
+        if (studentService.deleteStudent(student)) {
+            System.out.println("Success, the student had been removed.");
+        } else {
+            LOGGER.error("Failed to remove the student.");
+        }
     }
 }
