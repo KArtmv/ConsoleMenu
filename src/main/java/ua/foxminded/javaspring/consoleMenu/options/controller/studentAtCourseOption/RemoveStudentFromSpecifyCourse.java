@@ -1,38 +1,45 @@
 package ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
 import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
+import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 import java.util.List;
 
 public class RemoveStudentFromSpecifyCourse {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RemoveStudentFromSpecifyCourse.class);
+
     private StudentAtCourseService studentAtCourseService;
     private InputID<StudentAtCourse> studentAtCourseInputID;
     private InputID<Student> studentInputID;
-    private StudentDAO studentDAO;
+    private StudentService studentService;
 
     @Autowired
-    public RemoveStudentFromSpecifyCourse(StudentAtCourseService studentAtCourseService, InputID<StudentAtCourse> studentAtCourseInputID, InputID<Student> studentInputID, StudentDAO studentDAO) {
+    public RemoveStudentFromSpecifyCourse(StudentAtCourseService studentAtCourseService, InputID<StudentAtCourse> studentAtCourseInputID, InputID<Student> studentInputID, StudentService studentService) {
         this.studentAtCourseService = studentAtCourseService;
         this.studentAtCourseInputID = studentAtCourseInputID;
         this.studentInputID = studentInputID;
-        this.studentDAO = studentDAO;
+        this.studentService = studentService;
 
     }
 
     public void removeByEnrollmentID() {
-        viewAllCoursesOfStudent(getStudentCourses(getStudentID()));
+        Student removingStudent = getStudentID();
+        List<StudentAtCourse> allStudentCourses = getStudentCourses(removingStudent);
 
-        if (studentAtCourseService.removeStudentFromCourse(chooseEnrollmentID())) {
-            System.out.println("Success, the student was suspended from the course.");
+        if (CollectionUtils.isEmpty(allStudentCourses)) {
+            Student studentWithoutCourses = studentService.getStudentByID(removingStudent);
+            System.out.printf("The student: %s %s have not relate to any course.\n", studentWithoutCourses.getFirstName(), studentWithoutCourses.getLastName());
         } else {
-            System.out.println("Failed, student remained on course.");
+            viewAllCoursesOfStudent(allStudentCourses);
+            removing();
         }
     }
 
@@ -42,19 +49,25 @@ public class RemoveStudentFromSpecifyCourse {
     }
 
     private List<StudentAtCourse> getStudentCourses(Student student) {
-        return studentDAO.studentCourses(student);
+        return studentService.allCoursesOfStudent(student);
     }
 
     private void viewAllCoursesOfStudent(List<StudentAtCourse> studentAtCourses) {
-        if (!CollectionUtils.isEmpty(studentAtCourses)) {
-            Student student = studentAtCourses.get(0).getStudent();
-            System.out.printf("Student: %s %s, studies at next courses:\n", student.getFirstName(), student.getLastName());
+        Student student = studentAtCourses.get(0).getStudent();
+        System.out.printf("Student: %s %s, studies at next courses:\n", student.getFirstName(), student.getLastName());
 
-            studentAtCourses.forEach(studentAtCourse -> System.out.printf(
-                    "ID: %d, course: %s,\n   Description of course: %s.\n",
-                    studentAtCourse.getEnrollmentID(),
-                    studentAtCourse.getCourse().getCourseName(),
-                    studentAtCourse.getCourse().getCourseDescription()));
+        studentAtCourses.forEach(studentAtCourse -> System.out.printf(
+                "ID: %d, course: %s,\n   Description of course: %s.\n",
+                studentAtCourse.getEnrollmentID(),
+                studentAtCourse.getCourse().getCourseName(),
+                studentAtCourse.getCourse().getCourseDescription()));
+    }
+
+    private void removing() {
+        if (studentAtCourseService.removeStudentFromCourse(chooseEnrollmentID())) {
+            System.out.println("Success, the student was suspended from the course.");
+        } else {
+            LOGGER.info("Failed to removing, student remained on course.");
         }
     }
 
