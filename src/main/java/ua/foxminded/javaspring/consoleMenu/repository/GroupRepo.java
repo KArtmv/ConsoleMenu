@@ -27,7 +27,6 @@ public class GroupRepo implements GroupDAO {
             + "LEFT JOIN students s ON g.group_id = s.group_id\n"
             + "GROUP BY g.group_id\n"
             + "HAVING COUNT(s.student_id) <=?";
-    private static final String SQL_GET_GROUP_BY_ID = "select * from groups where course_id=?";
     private static final String SQL_CHECK_IS_GROUP_ID_EXIST = "select group_id from groups where group_id=?";
     private static final String SQL_GET_LIST_OF_GROUPS = "select * from groups";
 

@@ -21,7 +21,6 @@ public class CourseRepo implements CourseDAO {
     private static final String SQL_ADD_NEW_COURSE = "insert into courses (course_name, course_description) values (?, ?)";
     private static final String SQL_CHECK_IS_COURSE_ID_EXIST = "select course_id from courses where course_id=?";
     private static final String SQL_CHECK_IS_COURSE_TABLE_EMPTY = "SELECT COUNT(*) FROM courses";
-    private static final String SQL_GET_COURSE_BY_ID = "select * from courses where course_id=?";
     private static final String SQL_GET_LIST_OF_COURSE = "select * from courses";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
