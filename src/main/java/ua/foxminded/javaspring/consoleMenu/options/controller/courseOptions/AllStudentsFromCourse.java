@@ -36,9 +36,6 @@ public class AllStudentsFromCourse {
 
     private void viewAllStudents(List<StudentAtCourse> studentsFromCourse) {
         System.out.printf("At course: %s, study next students:\n", studentsFromCourse.get(0).getCourse().getCourseName());
-
-        for (StudentAtCourse student : studentsFromCourse) {
-            System.out.printf("%s %s\n", student.getStudent().getFirstName(), student.getStudent().getLastName());
-        }
+        studentsFromCourse.forEach(student -> System.out.printf("%s %s\n", student.getStudent().getFirstName(), student.getStudent().getLastName()));
     }
 }
