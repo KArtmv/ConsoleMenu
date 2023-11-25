@@ -1,24 +1,30 @@
 package ua.foxminded.javaspring.consoleMenu.options.console.input;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Scanner;
 
 public class ConsoleInput {
 
     private Scanner sc;
-    private static final String ALPHABETIC_PATTERN = "[^a-zA-Z]+";
-    private static final String INTEGER_PATTERN = "[^-?\\d+]";
-    private static final String MENU_PATTERN = "[^1-9x]";
+    private static final String ALPHABETIC_PATTERN = "\\p{Alpha}+";
+    private static final String INTEGER_PATTERN = "\\d+";
+    private static final String MENU_PATTERN = "[1-9x]";
+
+    private static final Logger logger = LoggerFactory.getLogger(ConsoleInput.class);
+
 
     public ConsoleInput() {
         this.sc = new Scanner(System.in);
     }
 
     public Integer inputNumbers() {
-        int receivedNumber = 0;
+        int receivedNumber;
         try {
             receivedNumber = Integer.parseInt(input(INTEGER_PATTERN));
         } catch (NumberFormatException e) {
-            System.out.println("Failed to converted input number.");
+            throw new IllegalArgumentException("Failed to converted input number.");
         }
         return receivedNumber;
     }
@@ -41,10 +47,9 @@ public class ConsoleInput {
 
     private boolean handleInvalidInput(String input, String regex) {
         boolean isValid = false;
-        if (input == null || input.isEmpty() || input.matches("\\s+") || input.matches(regex)) {
+        if (input == null || input.isEmpty() || input.matches("\\s+") || !input.matches(regex)) {
             isValid = true;
-
-            System.out.println("Received is illegal argument. Try again.");
+            logger.info("Received an illegal argument. Try again.");
         }
         return isValid;
     }
