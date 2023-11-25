@@ -3,7 +3,6 @@ package ua.foxminded.javaspring.consoleMenu.options.controller.studentOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;

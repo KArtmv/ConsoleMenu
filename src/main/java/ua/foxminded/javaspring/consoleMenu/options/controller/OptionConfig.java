@@ -2,7 +2,6 @@ package ua.foxminded.javaspring.consoleMenu.options.controller;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;

@@ -64,7 +64,7 @@ public class StudentGenerator implements DataGenerator<Student> {
         return (long) randomNumber.generateInRange(countOfGroups);
     }
 
-    private void getGroupCount(){
+    private void getGroupCount() {
         countOfGroups = dataConduct.getGroups().size();
     }
 
