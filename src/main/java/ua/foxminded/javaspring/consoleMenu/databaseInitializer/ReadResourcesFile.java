@@ -1,5 +1,7 @@
 package ua.foxminded.javaspring.consoleMenu.databaseInitializer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadResourcesFile {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReadResourcesFile.class);
 
     private ResourceLoader resourceLoader;
 
@@ -34,17 +38,17 @@ public class ReadResourcesFile {
                 lines.add(line);
             }
         } catch (IOException e) {
-            System.out.println("File is not found: " + filePath);
+            LOGGER.info("Failed to read file: " + filePath);
         }
         return lines;
     }
 
     private InputStream getDataResource(String filePath) {
-        InputStream inputStream;
+        InputStream inputStream = null;
         try {
             inputStream = resourceLoader.getResource(filePath).getInputStream();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOGGER.info("Failed to get resource from InputStream by read file:" + e);
         }
         return inputStream;
     }
