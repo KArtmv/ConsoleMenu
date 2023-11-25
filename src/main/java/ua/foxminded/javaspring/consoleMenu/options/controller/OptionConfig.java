@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
+import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
@@ -33,7 +34,7 @@ public class OptionConfig {
     }
 
     @Bean
-    public AddNewStudent newStudent(InputID<Student> inputID, ConsoleInput consoleInput, StudentService studentService, OutputListOfGroup listOfGroup) {
+    public AddNewStudent newStudent(InputID<Group> inputID, ConsoleInput consoleInput, StudentService studentService, OutputListOfGroup listOfGroup) {
         return new AddNewStudent(inputID, consoleInput, studentService, listOfGroup);
     }
 
@@ -48,8 +49,8 @@ public class OptionConfig {
     }
 
     @Bean
-    public RemoveStudentFromSpecifyCourse removeStudentFromSpecifyCourse(StudentAtCourseService atCourseService, InputID<StudentAtCourse> atCourseInputID, InputID<Student> studentInputID, StudentDAO studentDAO) {
-        return new RemoveStudentFromSpecifyCourse(atCourseService, atCourseInputID, studentInputID, studentDAO);
+    public RemoveStudentFromSpecifyCourse removeStudentFromSpecifyCourse(StudentAtCourseService atCourseService, InputID<StudentAtCourse> atCourseInputID, InputID<Student> studentInputID, StudentService studentService) {
+        return new RemoveStudentFromSpecifyCourse(atCourseService, atCourseInputID, studentInputID, studentService);
     }
 
     @Bean
