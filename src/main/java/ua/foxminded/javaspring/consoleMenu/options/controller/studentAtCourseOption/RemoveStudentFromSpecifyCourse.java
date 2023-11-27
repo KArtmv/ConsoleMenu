@@ -11,7 +11,9 @@ import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
 import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RemoveStudentFromSpecifyCourse {
 
@@ -40,8 +42,7 @@ public class RemoveStudentFromSpecifyCourse {
                 Student studentWithoutCourses = studentService.getStudentByID(removingStudent);
                 System.out.printf("The student: %s %s have not relate to any course.\n", studentWithoutCourses.getFirstName(), studentWithoutCourses.getLastName());
             } else {
-                viewAllCoursesOfStudent(allStudentCourses);
-                removing(chooseEnrollmentID());
+                removing(chooseEnrollmentID(viewAllCoursesOfStudent(allStudentCourses)));
             }
         } catch (InvalidIdException e) {
             LOGGER.info("Error getting ID: " + e.getMessage());
@@ -57,20 +58,32 @@ public class RemoveStudentFromSpecifyCourse {
         return studentService.allCoursesOfStudent(student);
     }
 
-    private void viewAllCoursesOfStudent(List<StudentAtCourse> studentAtCourses) {
+    private Set<Long> viewAllCoursesOfStudent(List<StudentAtCourse> studentAtCourses) {
         Student student = studentAtCourses.get(0).getStudent();
         System.out.printf("Student: %s %s, studies at next courses:\n", student.getFirstName(), student.getLastName());
+        Set<Long> availableEnrollmentCourse = new HashSet<>();
+        Long enrollmentID;
+        for (StudentAtCourse studentAtCourse : studentAtCourses) {
+            enrollmentID = studentAtCourse.getEnrollmentID();
+            availableEnrollmentCourse.add(enrollmentID);
 
-        studentAtCourses.forEach(studentAtCourse -> System.out.printf(
-                "ID: %d, course: %s,\n   Description of course: %s.\n",
-                studentAtCourse.getEnrollmentID(),
-                studentAtCourse.getCourse().getCourseName(),
-                studentAtCourse.getCourse().getCourseDescription()));
+                    System.out.printf(
+                    "ID: %d, course: %s,\n   Description of course: %s.\n",
+                    enrollmentID,
+                    studentAtCourse.getCourse().getCourseName(),
+                    studentAtCourse.getCourse().getCourseDescription());
+        }
+        return availableEnrollmentCourse;
     }
 
-    private StudentAtCourse chooseEnrollmentID() throws InvalidIdException {
+    private StudentAtCourse chooseEnrollmentID(Set<Long> availableEnrollmentCourse) throws InvalidIdException {
         System.out.println("Choose enrollment ID from the list to wish remove and press enter.");
-        return new StudentAtCourse(studentAtCourseInputID.inputID());
+        Long receivedID = studentAtCourseInputID.inputID();
+        if (availableEnrollmentCourse.contains(receivedID)){
+            return new StudentAtCourse(receivedID);
+        } else {
+            throw new InvalidIdException("The received enrollment ID does not relate to the student's courses.");
+        }
     }
 
     private void removing(StudentAtCourse enrollmentID) {
