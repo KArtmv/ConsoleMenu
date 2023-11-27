@@ -7,9 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import ua.foxminded.javaspring.consoleMenu.data.RandomNumber;
-import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.CountConfig;
-import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.RandomNumber;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.StudentGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.CountConfig;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 
@@ -24,12 +26,12 @@ import static org.mockito.Mockito.*;
 public class StudentGeneratorTest {
     @Mock
     RandomNumber randomNumber;
-
     @Mock
     ResourcesFilesDatabaseData resourcesFiles;
-
     @Mock
     CountConfig countConfig;
+    @Mock
+    DataConduct dataConduct;
 
     @InjectMocks
     private StudentGenerator studentGenerator;
@@ -59,11 +61,12 @@ public class StudentGeneratorTest {
 
         when(countConfig.getMaxCountOfStudents()).thenReturn(3);
 
-        when(randomNumber.generateBetweenOneAndInputNumber(countFirstNames)).thenReturn(1, 2, 3);
-        when(randomNumber.generateBetweenOneAndInputNumber(countLastNames)).thenReturn(1, 2, 3);
-        when(randomNumber.generateBetweenOneAndInputNumber(groups.size())).thenReturn(3, 2, 1);
+        when(randomNumber.generateInRange(countFirstNames)).thenReturn(1, 2, 3);
+        when(randomNumber.generateInRange(countLastNames)).thenReturn(1, 2, 3);
+        when(randomNumber.generateInRange(groups.size())).thenReturn(3, 2, 1);
+        when(dataConduct.getGroups()).thenReturn(groups);
 
-        List<Student> result = studentGenerator.generate(groups);
+        List<Student> result = studentGenerator.generate();
 
         for (Student student : result) {
             assertThat(student.getStudentID() > 0 && student.getStudentID() < 4).isTrue();
@@ -72,8 +75,10 @@ public class StudentGeneratorTest {
             assertThat(student.getGroupID() > 0 && student.getGroupID() <= 5).isTrue();
         }
 
-        verify(randomNumber, times(3)).generateBetweenOneAndInputNumber(countFirstNames);
-        verify(randomNumber, times(3)).generateBetweenOneAndInputNumber(countLastNames);
-        verify(randomNumber, times(3)).generateBetweenOneAndInputNumber(groups.size());
+        verify(randomNumber, times(3)).generateInRange(countFirstNames);
+        verify(randomNumber, times(3)).generateInRange(countLastNames);
+        verify(randomNumber, times(3)).generateInRange(groups.size());
+        verify(dataConduct).getGroups();
+        verify(dataConduct).setStudents(result);
     }
 }
