@@ -3,7 +3,6 @@ package ua.foxminded.javaspring.consoleMenu.options.controller.studentOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.foxminded.javaspring.consoleMenu.exception.DatabaseInteractionException;
 import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
@@ -53,7 +52,7 @@ public class DeleteStudentByID {
         return consoleInput.inputCharacters().equalsIgnoreCase("yes");
     }
 
-    private void removing(Student student){
+    private void removing(Student student) {
         try {
             if (!studentService.allCoursesOfStudent(student).isEmpty()) {
                 enrollmentService.removeStudentFromAllTheirCourses(student);

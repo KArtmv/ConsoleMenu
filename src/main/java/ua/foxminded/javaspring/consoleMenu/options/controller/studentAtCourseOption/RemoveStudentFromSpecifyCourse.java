@@ -50,7 +50,7 @@ public class RemoveStudentFromSpecifyCourse {
 
     private Student getStudentID() throws InvalidIdException {
         System.out.println("Input the ID of student which should be remove from course. Then press enter.");
-            return new Student(studentInputID.inputID());
+        return new Student(studentInputID.inputID());
     }
 
     private List<StudentAtCourse> getStudentCourses(Student student) {
@@ -70,13 +70,13 @@ public class RemoveStudentFromSpecifyCourse {
 
     private StudentAtCourse chooseEnrollmentID() throws InvalidIdException {
         System.out.println("Choose enrollment ID from the list to wish remove and press enter.");
-            return new StudentAtCourse(studentAtCourseInputID.inputID());
+        return new StudentAtCourse(studentAtCourseInputID.inputID());
     }
 
-    private void removing(StudentAtCourse enrollmentID){
+    private void removing(StudentAtCourse enrollmentID) {
         try {
             studentAtCourseService.removeStudentFromCourse(enrollmentID);
-        } catch (Exception e){
+        } catch (Exception e) {
             LOGGER.error("Failed removing student from course: " + e.getMessage());
         }
     }

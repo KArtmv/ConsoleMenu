@@ -30,9 +30,9 @@ public class ConsoleInput {
         return input(MENU_PATTERN);
     }
 
-    private String input(String regex){
+    private String input(String regex) {
         String s = sc.nextLine();
-        if (s.matches(regex)){
+        if (s.matches(regex)) {
             return s;
         } else {
             throw new InputMismatchException(String.format("Input: '%s', does not match the required pattern: '%s'.", s, regex));
