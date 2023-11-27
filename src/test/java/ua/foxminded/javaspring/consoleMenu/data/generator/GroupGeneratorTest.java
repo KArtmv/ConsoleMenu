@@ -7,7 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.GroupGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 
@@ -23,6 +25,8 @@ public class GroupGeneratorTest {
 
     @Mock
     ResourcesFilesDatabaseData resourcesFiles;
+    @Mock
+    DataConduct dataConduct;
 
     @InjectMocks
     private GroupGenerator groupGenerator;
@@ -34,15 +38,14 @@ public class GroupGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfGroup_whenProvidedDataIsValid() {
-        InitializeObject initializeObject = new InitializeObject();
-        List<Group> expect = initializeObject.groupsListInit();
+        List<Group> expect = new InitializeObject().groupsListInit();
 
         when(resourcesFiles.getGroups()).thenReturn(Arrays.asList("groupName", "groupName", "groupName"));
 
         List<Group> result = groupGenerator.generate();
-
         assertThat(result).usingRecursiveComparison().isEqualTo(expect);
 
         verify(resourcesFiles).getGroups();
+        verify(dataConduct).setGroups(result);
     }
 }
