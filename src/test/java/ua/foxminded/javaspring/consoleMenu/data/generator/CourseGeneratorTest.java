@@ -7,7 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import ua.foxminded.javaspring.consoleMenu.data.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.CourseGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 
@@ -23,7 +25,8 @@ public class CourseGeneratorTest {
 
     @Mock
     ResourcesFilesDatabaseData resourcesFiles;
-
+    @Mock
+    DataConduct dataConduct;
     @InjectMocks
     private CourseGenerator courseGenerator;
 
@@ -34,16 +37,15 @@ public class CourseGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfCourse_whenIsValidDataProvided() {
-        InitializeObject initializeObject = new InitializeObject();
-        List<Course> expected = initializeObject.coursesListInit();
+        List<Course> expected = new InitializeObject().coursesListInit();
 
         when(resourcesFiles.getCourses()).thenReturn(Arrays.asList("courseName_courseDescription",
                 "courseName_courseDescription", "courseName_courseDescription"));
 
         List<Course> result = courseGenerator.generate();
-
         assertThat(result).usingRecursiveComparison().isEqualTo(expected);
 
         verify(resourcesFiles).getCourses();
+        verify(dataConduct).setCourses(result);
     }
 }
