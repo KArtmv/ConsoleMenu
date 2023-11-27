@@ -1,13 +1,10 @@
 package ua.foxminded.javaspring.consoleMenu.options.console.input;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.dao.DAO;
+import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 
 public class InputID<T> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(InputID.class);
 
     private ConsoleInput consoleInput;
     private DAO<T> dao;
@@ -18,20 +15,13 @@ public class InputID<T> {
         this.dao = dao;
     }
 
-    public Long inputID() {
-        int receivedID;
-        do {
-            receivedID = consoleInput.inputNumbers();
-        } while (!isValidID(receivedID));
-        return (long) receivedID;
-    }
+    public Long inputID() throws InvalidIdException {
+        int receivedID = consoleInput.inputNumbers();
 
-    private boolean isValidID(Integer receivedID) {
         if (dao.isValidItemID(receivedID)) {
-            return true;
+            return (long) receivedID;
         } else {
-            LOGGER.info("Invalid selected ID, is not exist.");
-            return false;
+            throw new InvalidIdException(String.format("Invalid selected ID '%s', does not exist. Item: '%s'.", receivedID, dao.getClass()));
         }
     }
 }
