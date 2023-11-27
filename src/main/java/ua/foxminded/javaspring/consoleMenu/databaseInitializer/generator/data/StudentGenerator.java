@@ -16,8 +16,9 @@ public class StudentGenerator implements DataGenerator<Student> {
 
     private RandomNumber randomNumber;
     private ResourcesFilesDatabaseData resourcesFiles;
-    private Integer maxCountOfStudents;
     private DataConduct dataConduct;
+    private CountConfig countConfig;
+    private Integer maxCountOfStudents;
     private Integer countOfGroups;
 
     private Map<String, Student> studentMap = new HashMap<>();
@@ -27,12 +28,12 @@ public class StudentGenerator implements DataGenerator<Student> {
         this.dataConduct = dataConduct;
         this.randomNumber = randomNumber;
         this.resourcesFiles = resourcesFiles;
-        this.maxCountOfStudents = countConfig.getMaxCountOfStudents();
+        this.countConfig = countConfig;
     }
 
     @Override
     public List<Student> generate() {
-        getGroupCount();
+        getCounters();
 
         List<String> firstNames = resourcesFiles.getFirstNames();
         List<String> lastNames = resourcesFiles.getLastNames();
@@ -60,12 +61,13 @@ public class StudentGenerator implements DataGenerator<Student> {
         return generatedStudents;
     }
 
-    private Long generateRandomGroupId() {
-        return (long) randomNumber.generateInRange(countOfGroups);
+    private void getCounters() {
+        countOfGroups = dataConduct.getGroups().size();
+        maxCountOfStudents = countConfig.getMaxCountOfStudents();
     }
 
-    private void getGroupCount() {
-        countOfGroups = dataConduct.getGroups().size();
+    private Long generateRandomGroupId() {
+        return (long) randomNumber.generateInRange(countOfGroups);
     }
 
     private Long getNextStudentId() {
