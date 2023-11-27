@@ -1,7 +1,10 @@
 package ua.foxminded.javaspring.consoleMenu.options.controller.courseOptions;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
@@ -11,6 +14,8 @@ import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
 import java.util.List;
 
 public class AllStudentsFromCourse {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AllStudentsFromCourse.class);
 
     private StudentAtCourseService studentAtCourseService;
     private InputID<Course> inputID;
@@ -24,13 +29,18 @@ public class AllStudentsFromCourse {
     }
 
     public void showAllStudentsFromCourse() {
-        outputListOfCourses.viewAllCourses();
-        List<StudentAtCourse> studentsFromCourse = studentAtCourseService.allStudentsFromCourse(new Course(inputID.inputID()));
+        try {
+            outputListOfCourses.viewAllCourses();
+            System.out.println("Choose and input the ID of the course from the list to view all students enrolled in this course.");
+            List<StudentAtCourse> studentsFromCourse = studentAtCourseService.allStudentsFromCourse(new Course(inputID.inputID()));
 
-        if (!CollectionUtils.isEmpty(studentsFromCourse)) {
-            viewAllStudents(studentsFromCourse);
-        } else {
-            System.out.println("No students found for the selected course.");
+            if (!CollectionUtils.isEmpty(studentsFromCourse)) {
+                viewAllStudents(studentsFromCourse);
+            } else {
+                System.out.println("No found students for the selected course.");
+            }
+        } catch (InvalidIdException e) {
+            LOGGER.info("Error getting course ID: " + e.getMessage());
         }
     }
 
