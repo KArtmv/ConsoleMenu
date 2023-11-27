@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
@@ -31,21 +32,25 @@ public class RemoveStudentFromSpecifyCourse {
     }
 
     public void removeByEnrollmentID() {
-        Student removingStudent = getStudentID();
-        List<StudentAtCourse> allStudentCourses = getStudentCourses(removingStudent);
+        try {
+            Student removingStudent = getStudentID();
+            List<StudentAtCourse> allStudentCourses = getStudentCourses(removingStudent);
 
-        if (CollectionUtils.isEmpty(allStudentCourses)) {
-            Student studentWithoutCourses = studentService.getStudentByID(removingStudent);
-            System.out.printf("The student: %s %s have not relate to any course.\n", studentWithoutCourses.getFirstName(), studentWithoutCourses.getLastName());
-        } else {
-            viewAllCoursesOfStudent(allStudentCourses);
-            removing();
+            if (CollectionUtils.isEmpty(allStudentCourses)) {
+                Student studentWithoutCourses = studentService.getStudentByID(removingStudent);
+                System.out.printf("The student: %s %s have not relate to any course.\n", studentWithoutCourses.getFirstName(), studentWithoutCourses.getLastName());
+            } else {
+                viewAllCoursesOfStudent(allStudentCourses);
+                removing(chooseEnrollmentID());
+            }
+        } catch (InvalidIdException e) {
+            LOGGER.info("Error getting ID: " + e.getMessage());
         }
     }
 
-    private Student getStudentID() {
+    private Student getStudentID() throws InvalidIdException {
         System.out.println("Input the ID of student which should be remove from course. Then press enter.");
-        return new Student(studentInputID.inputID());
+            return new Student(studentInputID.inputID());
     }
 
     private List<StudentAtCourse> getStudentCourses(Student student) {
@@ -63,16 +68,16 @@ public class RemoveStudentFromSpecifyCourse {
                 studentAtCourse.getCourse().getCourseDescription()));
     }
 
-    private void removing() {
-        if (studentAtCourseService.removeStudentFromCourse(chooseEnrollmentID())) {
-            System.out.println("Success, the student was suspended from the course.");
-        } else {
-            LOGGER.info("Failed to removing, student remained on course.");
-        }
+    private StudentAtCourse chooseEnrollmentID() throws InvalidIdException {
+        System.out.println("Choose enrollment ID from the list to wish remove and press enter.");
+            return new StudentAtCourse(studentAtCourseInputID.inputID());
     }
 
-    private StudentAtCourse chooseEnrollmentID() {
-        System.out.println("Choose enrollment ID from the list to wish remove.");
-        return new StudentAtCourse(studentAtCourseInputID.inputID());
+    private void removing(StudentAtCourse enrollmentID){
+        try {
+            studentAtCourseService.removeStudentFromCourse(enrollmentID);
+        } catch (Exception e){
+            LOGGER.error("Failed removing student from course: " + e.getMessage());
+        }
     }
 }
