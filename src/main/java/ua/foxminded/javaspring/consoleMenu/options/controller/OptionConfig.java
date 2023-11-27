@@ -43,8 +43,8 @@ public class OptionConfig {
     }
 
     @Bean
-    public AddStudentToCourse addStudentToCourse(OutputListOfCourses courses, StudentAtCourseService studentAtCourseService, InputID<Course> courseInputID, InputID<Student> studentInputID) {
-        return new AddStudentToCourse(courses, studentAtCourseService, courseInputID, studentInputID);
+    public AddStudentToCourse addStudentToCourse(OutputListOfCourses courses, StudentAtCourseService studentAtCourseService, InputID<Course> courseInputID, InputID<Student> studentInputID, StudentService studentService, ConsoleInput consoleInput) {
+        return new AddStudentToCourse(courses, studentAtCourseService, courseInputID, studentInputID, studentService, consoleInput);
     }
 
     @Bean
