@@ -3,6 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.options.menu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
 import ua.foxminded.javaspring.consoleMenu.options.controller.courseOptions.AllStudentsFromCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.groupOption.OutputStudentsAtGroupByCount;
@@ -10,6 +11,8 @@ import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOpt
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.RemoveStudentFromSpecifyCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.AddNewStudent;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.DeleteStudentByID;
+
+import java.util.InputMismatchException;
 
 public class MenuInteraction {
 
@@ -54,30 +57,35 @@ public class MenuInteraction {
     }
 
     private void chooseOption() {
-        switch (consoleInput.menuInput()) {
-            case ("1"):
-                atGroupByCount.groupsByCount();
-                break;
-            case ("2"):
-                studentsFromCourse.showAllStudentsFromCourse();
-                break;
-            case ("3"):
-                newStudent.add();
-                break;
-            case ("4"):
-                deleteStudentByID.remove();
-                break;
-            case ("5"):
-                addStudentToCourse.addStudentToCourse();
-                break;
-            case ("6"):
-                removeStudentFromSpecifyCourse.removeByEnrollmentID();
-                break;
-            case OPTION_EXIT:
-                isExit = true;
-                break;
-            default:
-                LOGGER.info("Invalid option selected. Please try again.");
+        try {
+            switch (consoleInput.menuInput()) {
+                case "1":
+                    atGroupByCount.groupsByCount();
+                    break;
+                case "2":
+                    studentsFromCourse.showAllStudentsFromCourse();
+                    break;
+                case "3":
+                    newStudent.add();
+                    break;
+                case "4":
+                    deleteStudentByID.remove();
+                    break;
+                case "5":
+                    addStudentToCourse.addStudentToCourse();
+                    break;
+                case "6":
+                    removeStudentFromSpecifyCourse.removeByEnrollmentID();
+                    break;
+                case OPTION_EXIT:
+                    isExit = true;
+                    break;
+                default:
+                    LOGGER.info("Invalid option selected. Please try again.");
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            LOGGER.error("Exception: {}", e.getMessage());
         }
     }
 }
