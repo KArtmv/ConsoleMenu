@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 
-public class InputID<T> {
+public class ItemID<T> {
 
     private ConsoleInput consoleInput;
     private DAO<T> dao;
 
     @Autowired
-    public InputID(ConsoleInput consoleInput, DAO<T> dao) {
+    public ItemID(ConsoleInput consoleInput, DAO<T> dao) {
         this.consoleInput = consoleInput;
         this.dao = dao;
     }
