@@ -9,7 +9,6 @@ import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 
 import java.util.List;
 
-@Component
 public class ItemPrint<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemPrint.class);
