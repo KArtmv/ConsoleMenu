@@ -1,5 +1,7 @@
 package ua.foxminded.javaspring.consoleMenu.dao;
 
+import java.util.List;
+
 public interface DAO<T> {
     boolean addItem(T item);
 
@@ -10,4 +12,6 @@ public interface DAO<T> {
     void createTable();
 
     boolean isTableEmpty();
+
+    List<T> getAll();
 }

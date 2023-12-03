@@ -8,5 +8,5 @@ import java.util.List;
 public interface GroupDAO extends DAO<Group> {
     List<CounterStudentsAtGroup> counterStudentsAtGroups(Integer count);
 
-    List<Group> listOfItems();
+//    List<Group> getAll();
 }

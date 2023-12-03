@@ -32,9 +32,9 @@ public class StudentAtCourseRepo implements StudentAtCourseDAO {
     private static final String SQL_CHECK_IS_ENROLLMENT_ID_EXIST = "select enrollment_id from studenttocourse where enrollment_id=?";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
-    private String SQL_CHECK_IS_TABLE_EXIST;
+    private String sqlCheckIsTableExist;
     @Value("${sqlQuery.IsTableExist.STUDENT_TO_COURSE_TABLE_NAME}")
-    private String STUDENT_TO_COURSE_TABLE_NAME;
+    private String studentToCourseTableName;
 
     @Autowired
     public StudentAtCourseRepo(SQLQueryOfCreateTable queryOfCreateTable, JdbcTemplate jdbcTemplate) {
@@ -69,7 +69,7 @@ public class StudentAtCourseRepo implements StudentAtCourseDAO {
 
     @Override
     public boolean isTableExist() {
-        return jdbcTemplate.queryForObject(String.format(SQL_CHECK_IS_TABLE_EXIST, STUDENT_TO_COURSE_TABLE_NAME), Boolean.class);
+        return jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, studentToCourseTableName), Boolean.class);
     }
 
     @Override
@@ -80,5 +80,10 @@ public class StudentAtCourseRepo implements StudentAtCourseDAO {
     @Override
     public boolean isTableEmpty() {
         return jdbcTemplate.queryForObject(SQL_CHECK_IS_STUDENT_TO_COURSE_TABLE_EMPTY, Integer.class) == 0;
+    }
+
+    @Override
+    public List<StudentAtCourse> getAll() {
+        return null;
     }
 }

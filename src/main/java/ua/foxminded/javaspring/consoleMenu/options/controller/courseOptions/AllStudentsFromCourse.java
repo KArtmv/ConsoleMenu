@@ -7,9 +7,9 @@ import org.springframework.util.CollectionUtils;
 import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
-import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfCourses;
-import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.ItemID;
+import ua.foxminded.javaspring.consoleMenu.options.print.ItemPrint;
+import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 
 import java.util.List;
 
@@ -17,22 +17,22 @@ public class AllStudentsFromCourse {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AllStudentsFromCourse.class);
 
-    private StudentAtCourseService studentAtCourseService;
-    private InputID<Course> inputID;
-    private OutputListOfCourses outputListOfCourses;
+    private CourseService courseService;
+    private ItemID<Course> inputID;
+    private ItemPrint<Course> print;
 
     @Autowired
-    public AllStudentsFromCourse(StudentAtCourseService studentAtCourseService, InputID<Course> inputID, OutputListOfCourses outputListOfCourses) {
-        this.studentAtCourseService = studentAtCourseService;
+    public AllStudentsFromCourse(CourseService courseService, ItemID<Course> inputID, ItemPrint<Course> print) {
+        this.courseService = courseService;
         this.inputID = inputID;
-        this.outputListOfCourses = outputListOfCourses;
+        this.print = print;
     }
 
     public void showAllStudentsFromCourse() {
         try {
-            outputListOfCourses.viewAllCourses();
+            print.printAllAvailableItems();
             System.out.println("Choose and input the ID of the course from the list to view all students enrolled in this course.");
-            List<StudentAtCourse> studentsFromCourse = studentAtCourseService.allStudentsFromCourse(new Course(inputID.inputID()));
+            List<StudentAtCourse> studentsFromCourse = courseService.allStudentsFromCourse(new Course(inputID.inputID()));
 
             if (!CollectionUtils.isEmpty(studentsFromCourse)) {
                 viewAllStudents(studentsFromCourse);

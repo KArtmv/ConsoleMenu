@@ -34,9 +34,9 @@ public class StudentRepo implements StudentDAO {
     private static final String SQL_CHECK_IS_STUDENT_TABLE_EMPTY = "SELECT COUNT(*) FROM students";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
-    private String SQL_CHECK_IS_TABLE_EXIST;
+    private String sqlCheckIsTableExist;
     @Value("${sqlQuery.IsTableExist.STUDENT_TABLE_NAME}")
-    private String STUDENT_TABLE_NAME;
+    private String studentTableName;
 
     @Autowired
     public StudentRepo(SQLQueryOfCreateTable queryOfCreateTable, JdbcTemplate jdbcTemplate) {
@@ -73,7 +73,7 @@ public class StudentRepo implements StudentDAO {
 
     @Override
     public boolean isTableExist() {
-        return jdbcTemplate.queryForObject(String.format(SQL_CHECK_IS_TABLE_EXIST, STUDENT_TABLE_NAME), Boolean.class);
+        return jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, studentTableName), Boolean.class);
     }
 
     @Override
@@ -84,5 +84,10 @@ public class StudentRepo implements StudentDAO {
     @Override
     public boolean isTableEmpty() {
         return jdbcTemplate.queryForObject(SQL_CHECK_IS_STUDENT_TABLE_EMPTY, Integer.class) == 0;
+    }
+
+    @Override
+    public List<Student> getAll() {
+        return null;
     }
 }

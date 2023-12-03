@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ua.foxminded.javaspring.consoleMenu.dao.CourseDAO;
+import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScripts.SQLQueryOfCreateTable;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.CourseMapper;
@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 @Repository
-public class CourseRepo implements CourseDAO {
+public class CourseRepo implements DAO<Course> {
 
     private SQLQueryOfCreateTable queryOfCreateTable;
     private JdbcTemplate jdbcTemplate;
@@ -24,9 +24,9 @@ public class CourseRepo implements CourseDAO {
     private static final String SQL_GET_LIST_OF_COURSE = "select * from courses";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
-    private String SQL_CHECK_IS_TABLE_EXIST;
+    private String sqlCheckIsTableExist;
     @Value("${sqlQuery.IsTableExist.COURSE_TABLE_NAME}")
-    private String COURSE_TABLE_NAME;
+    private String courseTableName;
 
     @Autowired
     public CourseRepo(SQLQueryOfCreateTable queryOfCreateTable, JdbcTemplate jdbcTemplate) {
@@ -46,7 +46,7 @@ public class CourseRepo implements CourseDAO {
 
     @Override
     public boolean isTableExist() {
-        return jdbcTemplate.queryForObject(String.format(SQL_CHECK_IS_TABLE_EXIST, COURSE_TABLE_NAME), Boolean.class);
+        return jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, courseTableName), Boolean.class);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class CourseRepo implements CourseDAO {
     }
 
     @Override
-    public List<Course> listOfItems() {
+    public List<Course> getAll() {
         return jdbcTemplate.query(SQL_GET_LIST_OF_COURSE, new CourseMapper());
     }
 }

@@ -2,6 +2,7 @@ package ua.foxminded.javaspring.consoleMenu.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
@@ -14,15 +15,17 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
 
     private StudentDAO studentDAO;
+    private StudentAtCourseDAO studentAtCourseDAO;
 
     @Autowired
-    public StudentServiceImpl(StudentDAO studentDAO) {
+    public StudentServiceImpl(StudentDAO studentDAO, StudentAtCourseDAO studentAtCourseDAO) {
         this.studentDAO = studentDAO;
+        this.studentAtCourseDAO = studentAtCourseDAO;
     }
 
     @Override
-    public boolean saveStudent(Student student) {
-        return studentDAO.addItem(student);
+    public void saveStudent(Student student) {
+        studentDAO.addItem(student);
     }
 
     @Override
@@ -31,8 +34,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public boolean deleteStudent(Student studentID) {
-        return studentDAO.removeStudent(studentID);
+    public void deleteStudent(Student studentID) {
+        studentDAO.removeStudent(studentID);
     }
 
     @Override
@@ -44,5 +47,20 @@ public class StudentServiceImpl implements StudentService {
             resultStudent = result.get();
         }
         return resultStudent;
+    }
+
+    @Override
+    public boolean addStudentToCourse(StudentAtCourse studentAtCourse) {
+        return studentAtCourseDAO.addItem(studentAtCourse);
+    }
+
+    @Override
+    public void removeStudentFromCourse(StudentAtCourse studentAtCourse) {
+        studentAtCourseDAO.removeStudentFromCourse(studentAtCourse);
+    }
+
+    @Override
+    public void removeStudentFromAllTheirCourses(Student student) {
+        studentAtCourseDAO.removeStudentFromAllTheirCourses(student);
     }
 }
