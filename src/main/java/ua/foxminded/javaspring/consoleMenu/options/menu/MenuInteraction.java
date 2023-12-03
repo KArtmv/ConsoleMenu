@@ -2,14 +2,10 @@ package ua.foxminded.javaspring.consoleMenu.options.menu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
-import ua.foxminded.javaspring.consoleMenu.options.controller.courseOptions.AllStudentsFromCourse;
-import ua.foxminded.javaspring.consoleMenu.options.controller.groupOption.OutputStudentsAtGroupByCount;
-import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.AddStudentToCourse;
-import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.RemoveStudentFromSpecifyCourse;
-import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.AddNewStudent;
-import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.DeleteStudentByID;
+import ua.foxminded.javaspring.consoleMenu.service.CourseService;
+import ua.foxminded.javaspring.consoleMenu.service.GroupService;
+import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 import java.util.InputMismatchException;
 
@@ -18,30 +14,20 @@ public class MenuInteraction {
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuInteraction.class);
 
     private Menu menu;
-    private OutputStudentsAtGroupByCount atGroupByCount;
-    private AllStudentsFromCourse studentsFromCourse;
-    private AddNewStudent newStudent;
     private ConsoleInput consoleInput;
-    private DeleteStudentByID deleteStudentByID;
-    private AddStudentToCourse addStudentToCourse;
-    private RemoveStudentFromSpecifyCourse removeStudentFromSpecifyCourse;
+    private StudentService studentService;
+    private CourseService courseService;
+    private GroupService groupService;
 
     private boolean isExit;
     private static final String OPTION_EXIT = "x";
 
-    @Autowired
-    public MenuInteraction(Menu menu, OutputStudentsAtGroupByCount atGroupByCount, AllStudentsFromCourse studentsFromCourse,
-                           AddNewStudent newStudent, ConsoleInput consoleInput, DeleteStudentByID deleteStudentByID,
-                           AddStudentToCourse addStudentToCourse, RemoveStudentFromSpecifyCourse removeStudentFromSpecifyCourse) {
+    public MenuInteraction(Menu menu, ConsoleInput consoleInput, StudentService studentService, CourseService courseService, GroupService groupService) {
         this.menu = menu;
-        this.atGroupByCount = atGroupByCount;
-        this.studentsFromCourse = studentsFromCourse;
-        this.newStudent = newStudent;
         this.consoleInput = consoleInput;
-        this.deleteStudentByID = deleteStudentByID;
-        this.addStudentToCourse = addStudentToCourse;
-        this.removeStudentFromSpecifyCourse = removeStudentFromSpecifyCourse;
-        this.isExit = false;
+        this.studentService = studentService;
+        this.courseService = courseService;
+        this.groupService = groupService;
     }
 
     public void startMenu() {
@@ -59,22 +45,22 @@ public class MenuInteraction {
         try {
             switch (consoleInput.menuInput()) {
                 case "1":
-                    atGroupByCount.groupsByCount();
+                    groupService.counterStudentsAtGroups();
                     break;
                 case "2":
-                    studentsFromCourse.showAllStudentsFromCourse();
+                    courseService.allStudentsFromCourse();
                     break;
                 case "3":
-                    newStudent.add();
+                    studentService.addNewStudent();
                     break;
                 case "4":
-                    deleteStudentByID.remove();
+                    studentService.deleteStudent();
                     break;
                 case "5":
-                    addStudentToCourse.addStudentToCourse();
+                    studentService.addStudentToCourse();
                     break;
                 case "6":
-                    removeStudentFromSpecifyCourse.removeByEnrollmentID();
+                    studentService.removeStudentFromCourse();
                     break;
                 case OPTION_EXIT:
                     isExit = true;
