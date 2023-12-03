@@ -13,7 +13,6 @@ import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
-import ua.foxminded.javaspring.consoleMenu.options.print.ItemPrint;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
@@ -47,8 +46,8 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public NewStudentData newStudentData(ConsoleInput consoleInput, ItemID<Group> itemID, ItemPrint<Group> printAllGroups){
-        return new NewStudentData(consoleInput, itemID, printAllGroups);
+    public NewStudentData newStudentData(ConsoleInput consoleInput, ItemID<Group> itemID, ConsolePrinter consolePrinter){
+        return new NewStudentData(consoleInput, itemID, consolePrinter);
     }
 
     @Bean
@@ -57,7 +56,7 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public ConsolePrinter consolePrinter(){
-        return new ConsolePrinter();
+    public ConsolePrinter consolePrinter(DAO<Group> groupDAO, DAO<Course> courseDAO){
+        return new ConsolePrinter(groupDAO, courseDAO);
     }
 }
