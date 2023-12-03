@@ -52,7 +52,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addNewStudent(Student student) {
+    public void addNewStudent() {
         System.out.println("Input data of a student.");
         try {
             studentDAO.addItem(newStudentData.get());
@@ -63,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudent(Student studentID) {
+    public void deleteStudent() {
         try {
             System.out.println("Enter the ID of the student you want to remove.");
             Student student = new Student(studentItemID.inputID());
@@ -77,7 +77,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudentToCourse(StudentAtCourse studentAtCourse) {
+    public void addStudentToCourse() {
         try {
             System.out.println("Input student ID.");
             Student student = new Student(studentItemID.inputID());
@@ -92,7 +92,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void removeStudentFromCourse(StudentAtCourse studentAtCourse) {
+    public void removeStudentFromCourse() {
         try {
             System.out.println("Input the ID of student which should be remove from course. Then press enter.");
             Student student = new Student(studentItemID.inputID());

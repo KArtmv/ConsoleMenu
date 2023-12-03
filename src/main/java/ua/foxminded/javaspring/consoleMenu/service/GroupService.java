@@ -7,5 +7,5 @@ import java.util.List;
 
 @Service
 public interface GroupService {
-    void counterStudentsAtGroups(Integer count);
+    void counterStudentsAtGroups();
 }

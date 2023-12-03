@@ -6,11 +6,11 @@ import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 
 @Service
 public interface StudentService {
-    void addNewStudent(Student student);
+    void addNewStudent();
 
-    void deleteStudent(Student studentID);
+    void deleteStudent();
 
-    void addStudentToCourse(StudentAtCourse studentAtCourse);
+    void addStudentToCourse();
 
-    void removeStudentFromCourse(StudentAtCourse studentAtCourse);
+    void removeStudentFromCourse();
 }
