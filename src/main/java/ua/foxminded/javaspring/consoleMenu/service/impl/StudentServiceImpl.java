@@ -14,7 +14,6 @@ import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ItemID;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
-import ua.foxminded.javaspring.consoleMenu.options.print.ItemPrint;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 import java.util.InputMismatchException;
@@ -32,14 +31,13 @@ public class StudentServiceImpl implements StudentService {
     private NewStudentData newStudentData;
     private ConsolePrinter consolePrinter;
     private ItemID<StudentAtCourse> studentAtCourseInputID;
-    private ItemPrint<Course> printAllCourses;
     private ItemID<Course> courseItemID;
 
 
     public StudentServiceImpl(StudentDAO studentDAO, StudentAtCourseDAO studentAtCourseDAO, ItemID<Student> studentItemID,
                               StudentConfirmationHandler verifyValidStudent, NewStudentData newStudentData,
                               ConsolePrinter consolePrinter, ItemID<StudentAtCourse> studentAtCourseInputID,
-                              ItemPrint<Course> printAllCourses, ItemID<Course> courseItemID) {
+                              ItemID<Course> courseItemID) {
         this.studentDAO = studentDAO;
         this.studentAtCourseDAO = studentAtCourseDAO;
         this.studentItemID = studentItemID;
@@ -47,7 +45,6 @@ public class StudentServiceImpl implements StudentService {
         this.newStudentData = newStudentData;
         this.consolePrinter = consolePrinter;
         this.studentAtCourseInputID = studentAtCourseInputID;
-        this.printAllCourses = printAllCourses;
         this.courseItemID = courseItemID;
     }
 
@@ -83,7 +80,7 @@ public class StudentServiceImpl implements StudentService {
             Student student = new Student(studentItemID.inputID());
             if (verifyValidStudent.verifyValidStudent(student)) {
                 System.out.println("Input course ID, choose from list.");
-                printAllCourses.printAllAvailableItems();
+                consolePrinter.printAllCourses();
                 studentAtCourseDAO.addItem(new StudentAtCourse(student, new Course(courseItemID.inputID())));
             }
         } catch (InvalidIdException | InputMismatchException e) {

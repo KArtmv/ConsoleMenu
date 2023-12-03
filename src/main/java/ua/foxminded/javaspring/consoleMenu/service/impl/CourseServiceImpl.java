@@ -11,7 +11,6 @@ import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ItemID;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
-import ua.foxminded.javaspring.consoleMenu.options.print.ItemPrint;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 
 import java.util.List;
@@ -23,21 +22,18 @@ public class CourseServiceImpl implements CourseService {
     private StudentAtCourseDAO studentAtCourseDAO;
     private ConsolePrinter consolePrinter;
     private ItemID<Course> inputID;
-    private ItemPrint<Course> print;
 
     @Autowired
-    public CourseServiceImpl(StudentAtCourseDAO studentAtCourseDAO, ConsolePrinter consolePrinter, ItemID<Course> inputID,
-                             ItemPrint<Course> print) {
+    public CourseServiceImpl(StudentAtCourseDAO studentAtCourseDAO, ConsolePrinter consolePrinter, ItemID<Course> inputID) {
         this.studentAtCourseDAO = studentAtCourseDAO;
         this.consolePrinter = consolePrinter;
         this.inputID = inputID;
-        this.print = print;
     }
 
     @Override
     public void allStudentsFromCourse() {
         try {
-            print.printAllAvailableItems();
+            consolePrinter.printAllCourses();
             System.out.println("Choose and input the ID of the course from the list to view all students enrolled in this course.");
             List<StudentAtCourse> studentsFromCourse = studentAtCourseDAO.allStudentsFromCourse((new Course(inputID.inputID())));
 
