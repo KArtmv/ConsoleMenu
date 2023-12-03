@@ -35,7 +35,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void allStudentsFromCourse(Course course) {
+    public void allStudentsFromCourse() {
         try {
             print.printAllAvailableItems();
             System.out.println("Choose and input the ID of the course from the list to view all students enrolled in this course.");

@@ -32,7 +32,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void counterStudentsAtGroups(Integer count) {
+    public void counterStudentsAtGroups() {
         try {
             System.out.println("Input the number of students enrolled in a group to find groups with that number or fewer students.");
             int receivedAmountOfStudent = consoleInput.inputNumbers();
