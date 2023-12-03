@@ -9,6 +9,14 @@ import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ItemID;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
+import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
+import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
+import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
+import ua.foxminded.javaspring.consoleMenu.options.print.ItemPrint;
+import ua.foxminded.javaspring.consoleMenu.service.CourseService;
+import ua.foxminded.javaspring.consoleMenu.service.GroupService;
+import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 @Component
 public class ConsoleInteractionConfig {
@@ -38,13 +46,18 @@ public class ConsoleInteractionConfig {
         return new ItemID<>(consoleInput, dao);
     }
 
-//    @Bean
-//    public OutputListOfCourses listOfCourses(CourseDAO courseDAO) {
-//        return new OutputListOfCourses(courseDAO);
-//    }
-//
-//    @Bean
-//    public OutputListOfGroup listOfGroup(GroupDAO groupDAO) {
-//        return new OutputListOfGroup(groupDAO);
-//    }
+    @Bean
+    public NewStudentData newStudentData(ConsoleInput consoleInput, ItemID<Group> itemID, ItemPrint<Group> printAllGroups){
+        return new NewStudentData(consoleInput, itemID, printAllGroups);
+    }
+
+    @Bean
+    public MenuInteraction menuInteraction(Menu menu, ConsoleInput consoleInput, StudentService studentService, GroupService groupService, CourseService courseService) {
+        return new MenuInteraction(menu, consoleInput, studentService, courseService, groupService);
+    }
+
+    @Bean
+    public ConsolePrinter consolePrinter(){
+        return new ConsolePrinter();
+    }
 }
