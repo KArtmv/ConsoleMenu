@@ -6,10 +6,10 @@ import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.InputID;
-import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfCourses;
-import ua.foxminded.javaspring.consoleMenu.options.console.output.OutputListOfGroup;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.ItemID;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
 import ua.foxminded.javaspring.consoleMenu.options.controller.courseOptions.AllStudentsFromCourse;
 import ua.foxminded.javaspring.consoleMenu.options.controller.groupOption.OutputStudentsAtGroupByCount;
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentAtCourseOption.AddStudentToCourse;
@@ -18,8 +18,10 @@ import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.AddN
 import ua.foxminded.javaspring.consoleMenu.options.controller.studentOption.DeleteStudentByID;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
+import ua.foxminded.javaspring.consoleMenu.options.print.ItemPrint;
+import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
-import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
+//import ua.foxminded.javaspring.consoleMenu.service.StudentAtCourseService;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 @Component
@@ -33,23 +35,23 @@ public class OptionConfig {
     }
 
     @Bean
-    public AddNewStudent newStudent(InputID<Group> inputID, ConsoleInput consoleInput, StudentService studentService, OutputListOfGroup listOfGroup) {
-        return new AddNewStudent(inputID, consoleInput, studentService, listOfGroup);
+    public AddNewStudent newStudent(StudentService studentService, NewStudentData newStudentData) {
+        return new AddNewStudent(studentService, newStudentData);
     }
 
     @Bean
-    public DeleteStudentByID deleteStudentByID(InputID<Student> inputID, StudentService studentService, StudentAtCourseService enrollmentService, ConsoleInput consoleInput) {
-        return new DeleteStudentByID(inputID, studentService, enrollmentService, consoleInput);
+    public DeleteStudentByID deleteStudentByID(ItemID<Student> inputID, StudentService studentService, StudentConfirmationHandler studentConfirmationHandler) {
+        return new DeleteStudentByID(inputID, studentService, studentConfirmationHandler);
     }
 
     @Bean
-    public AddStudentToCourse addStudentToCourse(OutputListOfCourses courses, StudentAtCourseService studentAtCourseService, InputID<Course> courseInputID, InputID<Student> studentInputID, StudentService studentService, ConsoleInput consoleInput) {
-        return new AddStudentToCourse(courses, studentAtCourseService, courseInputID, studentInputID, studentService, consoleInput);
+    public AddStudentToCourse addStudentToCourse(ItemPrint<Course> courses, StudentService studentService, ItemID<Course> courseInputID, ItemID<Student> studentInputID, StudentConfirmationHandler studentConfirmationHandler) {
+        return new AddStudentToCourse(courses, studentService, courseInputID, studentInputID, studentConfirmationHandler);
     }
 
     @Bean
-    public RemoveStudentFromSpecifyCourse removeStudentFromSpecifyCourse(StudentAtCourseService atCourseService, InputID<StudentAtCourse> atCourseInputID, InputID<Student> studentInputID, StudentService studentService) {
-        return new RemoveStudentFromSpecifyCourse(atCourseService, atCourseInputID, studentInputID, studentService);
+    public RemoveStudentFromSpecifyCourse removeStudentFromSpecifyCourse(ItemID<StudentAtCourse> studentAtCourseItemID, ItemID<Student> studentInputID, StudentService studentService) {
+        return new RemoveStudentFromSpecifyCourse(studentAtCourseItemID, studentInputID, studentService);
     }
 
     @Bean
@@ -58,7 +60,12 @@ public class OptionConfig {
     }
 
     @Bean
-    public AllStudentsFromCourse studentsFromCourse(StudentAtCourseService studentAtCourseService, InputID<Course> inputID, OutputListOfCourses listOfCourses) {
-        return new AllStudentsFromCourse(studentAtCourseService, inputID, listOfCourses);
+    public AllStudentsFromCourse studentsFromCourse(CourseService courseService, ItemID<Course> inputID, ItemPrint<Course> coursePrint) {
+        return new AllStudentsFromCourse(courseService, inputID, coursePrint);
+    }
+
+    @Bean
+    public NewStudentData newStudentData(ConsoleInput consoleInput, ItemID<Group> itemID, ItemPrint<Group> printAllGroups){
+        return new NewStudentData(consoleInput, itemID, printAllGroups);
     }
 }

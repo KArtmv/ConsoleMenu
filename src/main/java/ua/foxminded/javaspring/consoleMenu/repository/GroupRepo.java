@@ -31,9 +31,9 @@ public class GroupRepo implements GroupDAO {
     private static final String SQL_GET_LIST_OF_GROUPS = "select * from groups";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
-    private String SQL_CHECK_IS_TABLE_EXIST;
+    private String sqlCheckIsTableExist;
     @Value("${sqlQuery.IsTableExist.GROUP_TABLE_NAME}")
-    private String GROUP_TABLE_NAME;
+    private String groupTableName;
 
     @Autowired
     public GroupRepo(SQLQueryOfCreateTable queryOfCreateTable, JdbcTemplate jdbcTemplate) {
@@ -58,7 +58,7 @@ public class GroupRepo implements GroupDAO {
 
     @Override
     public boolean isTableExist() {
-        return jdbcTemplate.queryForObject(String.format(SQL_CHECK_IS_TABLE_EXIST, GROUP_TABLE_NAME), Boolean.class);
+        return jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, groupTableName), Boolean.class);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class GroupRepo implements GroupDAO {
     }
 
     @Override
-    public List<Group> listOfItems() {
+    public List<Group> getAll() {
         return jdbcTemplate.query(SQL_GET_LIST_OF_GROUPS, new GroupMapper());
     }
 }

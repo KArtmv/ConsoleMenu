@@ -59,12 +59,13 @@ public class StudentAtCourseServiceImplTest {
 
     @Test
     void addStudentToCourse_shouldReturnTrue_whenStudentIsAddedSuccessfully() {
-        when(studentAtCourseDAO.addStudentToCourse(any(Student.class), any(Course.class))).thenReturn(true);
+        StudentAtCourse studentAtCourse = new StudentAtCourse(studentInitial(),
+                courseInitial());
+        when(studentAtCourseDAO.addItem(any(StudentAtCourse.class))).thenReturn(true);
 
-        assertThat(courseService.addStudentToCourse(studentInitial(),
-                courseInitial())).isTrue();
+        assertThat(courseService.addStudentToCourse(studentAtCourse)).isTrue();
 
-        verify(studentAtCourseDAO).addStudentToCourse(any(Student.class), any(Course.class));
+        verify(studentAtCourseDAO).addItem(any(StudentAtCourse.class));
     }
 
     @Test
