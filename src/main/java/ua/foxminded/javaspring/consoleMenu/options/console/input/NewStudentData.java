@@ -3,15 +3,15 @@ package ua.foxminded.javaspring.consoleMenu.options.console.input;
 import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
-import ua.foxminded.javaspring.consoleMenu.options.print.ItemPrint;
+import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 
 public class NewStudentData {
 
     private ConsoleInput consoleInput;
     private ItemID<Group> itemID;
-    private ItemPrint<Group> printAllGroups;
+    private ConsolePrinter printAllGroups;
 
-    public NewStudentData(ConsoleInput consoleInput, ItemID<Group> itemID, ItemPrint<Group> printAllGroups) {
+    public NewStudentData(ConsoleInput consoleInput, ItemID<Group> itemID, ConsolePrinter printAllGroups) {
         this.consoleInput = consoleInput;
         this.itemID = itemID;
         this.printAllGroups = printAllGroups;
@@ -33,7 +33,7 @@ public class NewStudentData {
 
     private Long getGroupID() throws InvalidIdException {
         System.out.println("Now you should choose a group from list to which should add student.\n Input ID and press enter.");
-        printAllGroups.printAllAvailableItems();
+        printAllGroups.printAllGroups();
         return itemID.inputID();
     }
 }
