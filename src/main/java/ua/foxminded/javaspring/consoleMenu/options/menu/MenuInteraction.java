@@ -2,6 +2,10 @@ package ua.foxminded.javaspring.consoleMenu.options.menu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import ua.foxminded.javaspring.consoleMenu.controller.CourseController;
+import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
+import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
@@ -15,19 +19,20 @@ public class MenuInteraction {
 
     private Menu menu;
     private ConsoleInput consoleInput;
-    private StudentService studentService;
-    private CourseService courseService;
-    private GroupService groupService;
+    private StudentController studentController;
+    private CourseController courseController;
+    private GroupController groupController;
 
     private boolean isExit;
     private static final String OPTION_EXIT = "x";
 
-    public MenuInteraction(Menu menu, ConsoleInput consoleInput, StudentService studentService, CourseService courseService, GroupService groupService) {
+    @Autowired
+    public MenuInteraction(Menu menu, ConsoleInput consoleInput, StudentController studentController, CourseController courseController, GroupController groupController) {
         this.menu = menu;
         this.consoleInput = consoleInput;
-        this.studentService = studentService;
-        this.courseService = courseService;
-        this.groupService = groupService;
+        this.studentController = studentController;
+        this.courseController = courseController;
+        this.groupController = groupController;
     }
 
     public void startMenu() {
@@ -35,6 +40,7 @@ public class MenuInteraction {
             viewMenu();
             chooseOption();
         } while (!isExit);
+        consoleInput.close();
     }
 
     private void viewMenu() {
@@ -45,28 +51,28 @@ public class MenuInteraction {
         try {
             switch (consoleInput.menuInput()) {
                 case "1":
-                    groupService.counterStudentsAtGroups();
+                    groupController.counterStudentsAtGroups();
                     break;
                 case "2":
-                    courseService.allStudentsFromCourse();
+                    courseController.allStudentsFromCourse();
                     break;
                 case "3":
-                    studentService.addNewStudent();
+                    studentController.addNewStudent();
                     break;
                 case "4":
-                    studentService.deleteStudent();
+                    studentController.deleteStudent();
                     break;
                 case "5":
-                    studentService.addStudentToCourse();
+                    studentController.addStudentToCourse();
                     break;
                 case "6":
-                    studentService.removeStudentFromCourse();
+                    studentController.removeStudentFromCourse();
                     break;
                 case OPTION_EXIT:
                     isExit = true;
                     break;
                 default:
-                    LOGGER.info("Invalid option selected. Please try again.");
+                    LOGGER.info("Invalid option selected.");
                     break;
             }
         } catch (InputMismatchException e) {
