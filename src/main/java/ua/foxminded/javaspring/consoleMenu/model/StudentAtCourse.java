@@ -21,6 +21,11 @@ public class StudentAtCourse {
         this.enrollmentID = enrollmentID;
     }
 
+    public StudentAtCourse(Long enrollmentID, Student student) {
+        this.enrollmentID = enrollmentID;
+        this.student = student;
+    }
+
     public Student getStudent() {
         return student;
     }
