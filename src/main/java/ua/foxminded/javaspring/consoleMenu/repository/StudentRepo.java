@@ -30,7 +30,6 @@ public class StudentRepo implements StudentDAO {
             "from students s join studenttocourse sc on s.student_id = sc.student_id\n" +
             "join courses c on sc.course_id = c.course_id\n" +
             "where s.student_id=?";
-    private static final String SQL_CHECK_IS_STUDENT_EXIST = "select student_id from students where student_id=?";
     private static final String SQL_CHECK_IS_STUDENT_TABLE_EMPTY = "SELECT COUNT(*) FROM students";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
@@ -45,7 +44,7 @@ public class StudentRepo implements StudentDAO {
     }
 
     @Override
-    public Optional<Student> getByItemID(Student student) {
+    public Optional<Student> getItemByID(Student student) {
         return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_STUDENT_BY_ID, new StudentMapper(),
                 student.getStudentID()));
     }
@@ -67,13 +66,8 @@ public class StudentRepo implements StudentDAO {
     }
 
     @Override
-    public boolean isValidItemID(Integer studentID) {
-        return jdbcTemplate.query(SQL_CHECK_IS_STUDENT_EXIST, ResultSet::next, studentID);
-    }
-
-    @Override
     public boolean isTableExist() {
-        return jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, studentTableName), Boolean.class);
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, studentTableName), Boolean.class));
     }
 
     @Override
@@ -84,10 +78,5 @@ public class StudentRepo implements StudentDAO {
     @Override
     public boolean isTableEmpty() {
         return jdbcTemplate.queryForObject(SQL_CHECK_IS_STUDENT_TABLE_EMPTY, Integer.class) == 0;
-    }
-
-    @Override
-    public List<Student> getAll() {
-        return null;
     }
 }
