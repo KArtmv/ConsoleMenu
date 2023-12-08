@@ -8,8 +8,5 @@ import java.util.Optional;
 
 public interface StudentDAO extends DAO<Student> {
     List<StudentAtCourse> studentCourses(Student student);
-
     boolean removeStudent(Student student);
-
-    Optional<Student> getByItemID(Student student);
 }
