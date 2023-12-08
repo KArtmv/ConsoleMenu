@@ -1,114 +1,94 @@
 package ua.foxminded.javaspring.consoleMenu.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
+import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
 import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
+import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.ItemID;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
-import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
-import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
-
     private StudentDAO studentDAO;
     private StudentAtCourseDAO studentAtCourseDAO;
-    private ItemID<Student> studentItemID;
-    private StudentConfirmationHandler verifyValidStudent;
-    private NewStudentData newStudentData;
-    private ConsolePrinter consolePrinter;
-    private ItemID<StudentAtCourse> studentAtCourseInputID;
-    private ItemID<Course> courseItemID;
+    private DAO<Group> groupDAO;
+    private DAO<Course> courseDAO;
 
-
-    public StudentServiceImpl(StudentDAO studentDAO, StudentAtCourseDAO studentAtCourseDAO, ItemID<Student> studentItemID,
-                              StudentConfirmationHandler verifyValidStudent, NewStudentData newStudentData,
-                              ConsolePrinter consolePrinter, ItemID<StudentAtCourse> studentAtCourseInputID,
-                              ItemID<Course> courseItemID) {
+    @Autowired
+    public StudentServiceImpl(StudentDAO studentDAO, StudentAtCourseDAO studentAtCourseDAO, DAO<Group> groupDAO, DAO<Course> courseDAO) {
         this.studentDAO = studentDAO;
         this.studentAtCourseDAO = studentAtCourseDAO;
-        this.studentItemID = studentItemID;
-        this.verifyValidStudent = verifyValidStudent;
-        this.newStudentData = newStudentData;
-        this.consolePrinter = consolePrinter;
-        this.studentAtCourseInputID = studentAtCourseInputID;
-        this.courseItemID = courseItemID;
+        this.groupDAO = groupDAO;
+        this.courseDAO = courseDAO;
     }
 
     @Override
-    public void addNewStudent() {
-        System.out.println("Input data of a student.");
+    public boolean addNewStudent(Student student) {
         try {
-            studentDAO.addItem(newStudentData.get());
-            System.out.println("Success, student had been added");
-        } catch (InputMismatchException | InvalidIdException e) {
-            LOGGER.info("Failed getting student data: {}", e.getMessage());
-        }
-    }
-
-    @Override
-    public void deleteStudent() {
-        try {
-            System.out.println("Enter the ID of the student you want to remove.");
-            Student student = new Student(studentItemID.inputID());
-            if (verifyValidStudent.verifyValidStudent(student)) {
-                studentAtCourseDAO.removeStudentFromAllTheirCourses(student);
-                studentDAO.removeStudent(student);
+            if (groupDAO.getItemByID(new Group(student.getGroupID())).isPresent()) {
+                return studentDAO.addItem(student);
             }
-        } catch (InvalidIdException e) {
-            LOGGER.info("Error getting student ID: {}", e.getMessage());
+        } catch (EmptyResultDataAccessException e) {
+            throw new InvalidIdException("Not found group with received ID: " + student.getGroupID());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteStudent(Student student) {
+            studentAtCourseDAO.removeStudentFromAllTheirCourses(student);
+            return studentDAO.removeStudent(student);
+    }
+
+    @Override
+    public boolean addStudentToCourse(StudentAtCourse studentAtCourse) {
+        try {
+            if (courseDAO.getItemByID(studentAtCourse.getCourse()).isPresent()) {
+                return studentAtCourseDAO.addItem(studentAtCourse);
+            }
+        } catch (EmptyResultDataAccessException e) {
+            throw new InvalidIdException("Not found course with received ID: " + studentAtCourse.getCourse().getCourseID());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeStudentFromCourse(StudentAtCourse studentAtCourse) {
+        if (studentDAO.studentCourses(studentAtCourse.getStudent()).stream()
+                .anyMatch(id -> Objects.equals(id.getEnrollmentID(), studentAtCourse.getEnrollmentID()))) {
+            return studentAtCourseDAO.removeStudentFromCourse(studentAtCourse);
+        } else {
+            throw new InvalidIdException(String.format(
+                    "Received enrollment ID: %s, is not found or not relate to given student: ID: %s ",
+                    studentAtCourse.getEnrollmentID(), studentAtCourse.getStudent().getStudentID()));
         }
     }
 
     @Override
-    public void addStudentToCourse() {
+    public Student getStudent(Student student) {
+        Student result = null;
         try {
-            System.out.println("Input student ID.");
-            Student student = new Student(studentItemID.inputID());
-            if (verifyValidStudent.verifyValidStudent(student)) {
-                System.out.println("Input course ID, choose from list.");
-                consolePrinter.printAllCourses();
-                studentAtCourseDAO.addItem(new StudentAtCourse(student, new Course(courseItemID.inputID())));
+            if (studentDAO.getItemByID(student).isPresent()) {
+                result = studentDAO.getItemByID(student).get();
             }
-        } catch (InvalidIdException | InputMismatchException e) {
-            LOGGER.info("Error adding student to course: {}", e.getMessage());
+        } catch (EmptyResultDataAccessException e) {
+            throw new InvalidIdException("Not found student with given ID: " + student.getStudentID());
         }
+        return result;
     }
 
     @Override
-    public void removeStudentFromCourse() {
-        try {
-            System.out.println("Input the ID of student which should be remove from course. Then press enter.");
-            Student student = new Student(studentItemID.inputID());
-            List<StudentAtCourse> allStudentCourses = studentDAO.studentCourses(student);
-
-            if (!CollectionUtils.isEmpty(allStudentCourses)) {
-                System.out.println("Choose enrollment ID from the list to wish remove and press enter.");
-                consolePrinter.viewAllCoursesOfStudent(allStudentCourses);
-                Long receivedID = studentAtCourseInputID.inputID();
-
-                if (allStudentCourses.stream().anyMatch(c -> c.getEnrollmentID().equals(receivedID))) {
-                    studentAtCourseDAO.removeStudentFromCourse(new StudentAtCourse(receivedID));
-                }
-            } else {
-                Student studentWithoutCourses = studentDAO.getByItemID(student).get();
-                System.out.printf("The student: %s %s have not relate to any course.\n", studentWithoutCourses.getFirstName(), studentWithoutCourses.getLastName());
-            }
-        } catch (InvalidIdException e) {
-            LOGGER.info("Error getting ID: {}", e.getMessage());
-        }
+    public List<StudentAtCourse> getAllCoursesOfStudent(Student student) {
+        return studentDAO.studentCourses(student);
     }
 }
