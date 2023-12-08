@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ua.foxminded.javaspring.consoleMenu.dao.CourseDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScripts.SQLQueryOfCreateTable;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
@@ -11,15 +12,16 @@ import ua.foxminded.javaspring.consoleMenu.rowmapper.CourseMapper;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class CourseRepo implements DAO<Course> {
+public class CourseRepo implements DAO<Course>, CourseDAO {
 
     private SQLQueryOfCreateTable queryOfCreateTable;
     private JdbcTemplate jdbcTemplate;
 
     private static final String SQL_ADD_NEW_COURSE = "insert into courses (course_name, course_description) values (?, ?)";
-    private static final String SQL_CHECK_IS_COURSE_ID_EXIST = "select course_id from courses where course_id=?";
+    private static final String SQL_GET_COURSE_BY_ID = "select * from courses where course_id=?";
     private static final String SQL_CHECK_IS_COURSE_TABLE_EMPTY = "SELECT COUNT(*) FROM courses";
     private static final String SQL_GET_LIST_OF_COURSE = "select * from courses";
 
@@ -35,18 +37,18 @@ public class CourseRepo implements DAO<Course> {
     }
 
     @Override
-    public boolean isValidItemID(Integer courseID) {
-        return jdbcTemplate.query(SQL_CHECK_IS_COURSE_ID_EXIST, ResultSet::next, courseID);
-    }
-
-    @Override
     public boolean addItem(Course course) {
         return jdbcTemplate.update(SQL_ADD_NEW_COURSE, course.getCourseName(), course.getCourseDescription()) > 0;
     }
 
     @Override
+    public Optional<Course> getItemByID(Course course) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_COURSE_BY_ID, new CourseMapper(), course.getCourseID()));
+    }
+
+    @Override
     public boolean isTableExist() {
-        return jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, courseTableName), Boolean.class);
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, courseTableName), Boolean.class));
     }
 
     @Override

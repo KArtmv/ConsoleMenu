@@ -13,6 +13,7 @@ import ua.foxminded.javaspring.consoleMenu.rowmapper.StudentAtCourseMapper;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class StudentAtCourseRepo implements StudentAtCourseDAO {
@@ -29,7 +30,7 @@ public class StudentAtCourseRepo implements StudentAtCourseDAO {
     private static final String SQL_REMOVE_STUDENT_FROM_COURSE = "delete from studenttocourse where enrollment_id=?";
     private static final String SQL_REMOVE_STUDENT_FROM_ALL_THEIR_COURSES = "delete from studenttocourse where student_id=?";
     private static final String SQL_CHECK_IS_STUDENT_TO_COURSE_TABLE_EMPTY = "SELECT COUNT(*) FROM studenttocourse";
-    private static final String SQL_CHECK_IS_ENROLLMENT_ID_EXIST = "select enrollment_id from studenttocourse where enrollment_id=?";
+    private static final String SQL_GET_ENROLLMENT_BY_ID = "select * from studenttocourse where enrollment_id=?";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
     private String sqlCheckIsTableExist;
@@ -53,8 +54,8 @@ public class StudentAtCourseRepo implements StudentAtCourseDAO {
     }
 
     @Override
-    public boolean isValidItemID(Integer enrollmentID) {
-        return jdbcTemplate.query(SQL_CHECK_IS_ENROLLMENT_ID_EXIST, ResultSet::next, enrollmentID);
+    public Optional<StudentAtCourse> getItemByID(StudentAtCourse studentAtCourse) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_ENROLLMENT_BY_ID, new StudentAtCourseMapper(), studentAtCourse.getEnrollmentID()));
     }
 
     @Override
@@ -69,7 +70,7 @@ public class StudentAtCourseRepo implements StudentAtCourseDAO {
 
     @Override
     public boolean isTableExist() {
-        return jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, studentToCourseTableName), Boolean.class);
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, studentToCourseTableName), Boolean.class));
     }
 
     @Override
@@ -80,10 +81,5 @@ public class StudentAtCourseRepo implements StudentAtCourseDAO {
     @Override
     public boolean isTableEmpty() {
         return jdbcTemplate.queryForObject(SQL_CHECK_IS_STUDENT_TO_COURSE_TABLE_EMPTY, Integer.class) == 0;
-    }
-
-    @Override
-    public List<StudentAtCourse> getAll() {
-        return null;
     }
 }

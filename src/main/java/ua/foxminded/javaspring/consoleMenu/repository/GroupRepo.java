@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScripts.SQLQueryOfCreateTable;
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
@@ -13,9 +14,10 @@ import ua.foxminded.javaspring.consoleMenu.rowmapper.GroupMapper;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class GroupRepo implements GroupDAO {
+public class GroupRepo implements GroupDAO, DAO<Group> {
 
     private SQLQueryOfCreateTable queryOfCreateTable;
     private JdbcTemplate jdbcTemplate;
@@ -27,7 +29,7 @@ public class GroupRepo implements GroupDAO {
             + "LEFT JOIN students s ON g.group_id = s.group_id\n"
             + "GROUP BY g.group_id\n"
             + "HAVING COUNT(s.student_id) <=?";
-    private static final String SQL_CHECK_IS_GROUP_ID_EXIST = "select group_id from groups where group_id=?";
+    private static final String SQL_GET_GROUP_BY_ID = "select * from groups where group_id=?";
     private static final String SQL_GET_LIST_OF_GROUPS = "select * from groups";
 
     @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
@@ -47,18 +49,18 @@ public class GroupRepo implements GroupDAO {
     }
 
     @Override
-    public boolean isValidItemID(Integer groupID) {
-        return jdbcTemplate.query(SQL_CHECK_IS_GROUP_ID_EXIST, ResultSet::next, groupID);
-    }
-
-    @Override
     public boolean addItem(Group group) {
         return jdbcTemplate.update(SQL_ADD_NEW_GROUP, group.getGroupName()) > 0;
     }
 
     @Override
+    public Optional<Group> getItemByID(Group group) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_GROUP_BY_ID, new GroupMapper(), group.getGroupID()));
+    }
+
+    @Override
     public boolean isTableExist() {
-        return jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, groupTableName), Boolean.class);
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(String.format(sqlCheckIsTableExist, groupTableName), Boolean.class));
     }
 
     @Override
