@@ -24,7 +24,7 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public NewStudentData newStudentData(ConsoleInput consoleInput, ConsolePrinter consolePrinter){
+    public NewStudentData newStudentData(ConsoleInput consoleInput, ConsolePrinter consolePrinter) {
         return new NewStudentData(consoleInput, consolePrinter);
     }
 
@@ -34,12 +34,12 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public ConsolePrinter consolePrinter(CourseService courseService, GroupService groupService){
+    public ConsolePrinter consolePrinter(CourseService courseService, GroupService groupService) {
         return new ConsolePrinter(groupService, courseService);
     }
 
     @Bean
-    public StudentConfirmationHandler studentConfirmationHandler(StudentService studentService, ConsoleInput consoleInput){
+    public StudentConfirmationHandler studentConfirmationHandler(StudentService studentService, ConsoleInput consoleInput) {
         return new StudentConfirmationHandler(studentService, consoleInput);
     }
 }

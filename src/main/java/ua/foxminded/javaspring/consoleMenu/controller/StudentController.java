@@ -51,9 +51,9 @@ public class StudentController {
         try {
             System.out.println("Enter the ID of the student you want to remove.");
             Student student = new Student((long) consoleInput.inputNumbers());
-                if (verifyValidStudent.verifyValidStudent(student) && studentService.deleteStudent(student)) {
-                    System.out.println("Success, student has been removed!");
-                }
+            if (verifyValidStudent.verifyValidStudent(student) && studentService.deleteStudent(student)) {
+                System.out.println("Success, student has been removed!");
+            }
         } catch (InvalidIdException | InputMismatchException e) {
             LOGGER.info("Failed to remove student: {}", e.getMessage());
         }
@@ -67,7 +67,7 @@ public class StudentController {
             if (verifyValidStudent.verifyValidStudent(student)) {
                 System.out.println("Input course ID, choose from list.");
                 consolePrinter.printAllCourses();
-                if (studentService.addStudentToCourse(new StudentAtCourse(student, new Course((long) consoleInput.inputNumbers())))){
+                if (studentService.addStudentToCourse(new StudentAtCourse(student, new Course((long) consoleInput.inputNumbers())))) {
                     System.out.println("Success student has been added to course!");
                 }
             }
@@ -85,9 +85,9 @@ public class StudentController {
             if (!CollectionUtils.isEmpty(allStudentCourses) && verifyValidStudent.verifyValidStudent(student)) {
                 System.out.println("Choose enrollment ID from the list to wish remove and press enter.");
                 consolePrinter.viewAllCoursesOfStudent(allStudentCourses);
-                if (studentService.removeStudentFromCourse(new StudentAtCourse((long) consoleInput.inputNumbers(), student))){
+                if (studentService.removeStudentFromCourse(new StudentAtCourse((long) consoleInput.inputNumbers(), student))) {
                     System.out.printf("Success, student: ID %s, %s %s, has been removed from course %s!\n",
-                            student.getStudentID(), student.getFirstName(), student.getLastName(), allStudentCourses.get(0).getCourse().getCourseName() );
+                            student.getStudentID(), student.getFirstName(), student.getLastName(), allStudentCourses.get(0).getCourse().getCourseName());
                 }
             } else {
                 System.out.printf("The student: %s %s have not relate to any course.\n", student.getFirstName(), student.getLastName());

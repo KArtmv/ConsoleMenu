@@ -39,7 +39,7 @@ public class ConsoleInput {
         }
     }
 
-    public void close(){
+    public void close() {
         sc.close();
     }
 }

@@ -10,7 +10,6 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScripts
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.CourseMapper;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 

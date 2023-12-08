@@ -11,7 +11,6 @@ import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.StudentAtCourseMapper;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.StudentMapper;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 

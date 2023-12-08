@@ -9,5 +9,6 @@ import java.util.List;
 @Service
 public interface GroupService {
     List<CounterStudentsAtGroup> counterStudentsAtGroups(Integer requestedAmountOfStudent);
+
     List<Group> getAllGroups();
 }

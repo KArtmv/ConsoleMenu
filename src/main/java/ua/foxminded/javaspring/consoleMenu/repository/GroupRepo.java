@@ -12,7 +12,6 @@ import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.CountStudentAtGroupMapper;
 import ua.foxminded.javaspring.consoleMenu.rowmapper.GroupMapper;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
