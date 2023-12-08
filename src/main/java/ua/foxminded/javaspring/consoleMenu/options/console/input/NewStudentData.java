@@ -1,22 +1,18 @@
 package ua.foxminded.javaspring.consoleMenu.options.console.input;
 
-import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
-import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 
 public class NewStudentData {
 
     private ConsoleInput consoleInput;
-    private ItemID<Group> itemID;
     private ConsolePrinter printAllGroups;
 
-    public NewStudentData(ConsoleInput consoleInput, ItemID<Group> itemID, ConsolePrinter printAllGroups) {
+    public NewStudentData(ConsoleInput consoleInput, ConsolePrinter printAllGroups) {
         this.consoleInput = consoleInput;
-        this.itemID = itemID;
         this.printAllGroups = printAllGroups;
     }
-    
+
     public Student get(){
         return new Student(getFirstName(), getLastName(), getGroupID());
     }
@@ -31,9 +27,9 @@ public class NewStudentData {
         return consoleInput.inputCharacters();
     }
 
-    private Long getGroupID() throws InvalidIdException {
+    private Long getGroupID() {
         System.out.println("Now you should choose a group from list to which should add student.\n Input ID and press enter.");
         printAllGroups.printAllGroups();
-        return itemID.inputID();
+        return (long) consoleInput.inputNumbers();
     }
 }
