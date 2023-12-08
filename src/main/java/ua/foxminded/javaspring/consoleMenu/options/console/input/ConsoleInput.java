@@ -38,4 +38,8 @@ public class ConsoleInput {
             throw new InputMismatchException(String.format("Input: '%s', does not match the required pattern: '%s'.", s, regex));
         }
     }
+
+    public void close(){
+        sc.close();
+    }
 }
