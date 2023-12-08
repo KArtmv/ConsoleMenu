@@ -2,26 +2,25 @@ package ua.foxminded.javaspring.consoleMenu.options.console.output;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import ua.foxminded.javaspring.consoleMenu.dao.DAO;
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+import ua.foxminded.javaspring.consoleMenu.service.CourseService;
+import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 
 import java.util.List;
 
 public class ConsolePrinter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsolePrinter.class);
-    private DAO<Group> groupDAO;
-    private DAO<Course> courseDAO;
+    private GroupService groupService;
+    private CourseService courseService;
 
-    @Autowired
-    public ConsolePrinter(DAO<Group> groupDAO, DAO<Course> courseDAO) {
-        this.groupDAO = groupDAO;
-        this.courseDAO = courseDAO;
+    public ConsolePrinter(GroupService groupService, CourseService courseService) {
+        this.groupService = groupService;
+        this.courseService = courseService;
     }
 
     public void viewAllCoursesOfStudent(List<StudentAtCourse> allStudentCourses) {
@@ -37,7 +36,8 @@ public class ConsolePrinter {
 
     public void viewAllStudentsFromCourse(List<StudentAtCourse> studentsFromCourse) {
         System.out.printf("At course: %s, study next students:\n", studentsFromCourse.get(0).getCourse().getCourseName());
-        studentsFromCourse.forEach(student -> System.out.printf("%s %s\n", student.getStudent().getFirstName(), student.getStudent().getLastName()));
+        studentsFromCourse.forEach(student ->
+                System.out.printf("%s %s\n", student.getStudent().getFirstName(), student.getStudent().getLastName()));
     }
 
     public void viewAmountStudentAtGroup(List<CounterStudentsAtGroup> studentsAtGroups) {
@@ -47,7 +47,7 @@ public class ConsolePrinter {
     }
 
     public void printAllCourses() {
-        List<Course> courses = courseDAO.getAll();
+        List<Course> courses = courseService.getAllCourses();
         if (!CollectionUtils.isEmpty(courses)) {
             courses.forEach(course -> System.out.printf("ID: %d, Course name: %s,\n   Course description: %s.\n",
                     course.getCourseID(), course.getCourseName(), course.getCourseDescription()));
@@ -57,7 +57,7 @@ public class ConsolePrinter {
     }
 
     public void printAllGroups() {
-        List<Group> groups = groupDAO.getAll();
+        List<Group> groups = groupService.getAllGroups();
         if (!CollectionUtils.isEmpty(groups)) {
             groups.forEach(group -> System.out.printf("ID: %d,  group name: %s.\n", group.getGroupID(), group.getGroupName()));
         } else {
