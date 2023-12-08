@@ -46,8 +46,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean deleteStudent(Student student) {
-            studentAtCourseDAO.removeStudentFromAllTheirCourses(student);
-            return studentDAO.removeStudent(student);
+        studentAtCourseDAO.removeStudentFromAllTheirCourses(student);
+        return studentDAO.removeStudent(student);
     }
 
     @Override

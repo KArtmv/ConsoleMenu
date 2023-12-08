@@ -17,9 +17,9 @@ public class StudentConfirmationHandler {
     }
 
     public boolean verifyValidStudent(Student student) {
-            Student selectedStudent = studentService.getStudent(student);
-            System.out.printf("Confirm that the student: student: ID %s, %s %s is correct.\nInsert 'yes' to confirm or any other key to cancel: ",
-                     selectedStudent.getStudentID(), selectedStudent.getFirstName(), selectedStudent.getLastName());
+        Student selectedStudent = studentService.getStudent(student);
+        System.out.printf("Confirm that the student: student: ID %s, %s %s is correct.\nInsert 'yes' to confirm or any other key to cancel: ",
+                selectedStudent.getStudentID(), selectedStudent.getFirstName(), selectedStudent.getLastName());
 
         return consoleInput.inputCharacters().equalsIgnoreCase("yes");
     }

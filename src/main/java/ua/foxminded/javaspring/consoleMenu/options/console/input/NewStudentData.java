@@ -13,7 +13,7 @@ public class NewStudentData {
         this.printAllGroups = printAllGroups;
     }
 
-    public Student get(){
+    public Student get() {
         return new Student(getFirstName(), getLastName(), getGroupID());
     }
 

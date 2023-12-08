@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface CourseService {
     List<StudentAtCourse> allStudentsFromCourse(Course course);
+
     List<Course> getAllCourses();
 }

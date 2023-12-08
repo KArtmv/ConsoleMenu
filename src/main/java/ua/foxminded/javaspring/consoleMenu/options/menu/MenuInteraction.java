@@ -7,9 +7,6 @@ import ua.foxminded.javaspring.consoleMenu.controller.CourseController;
 import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
 import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
-import ua.foxminded.javaspring.consoleMenu.service.CourseService;
-import ua.foxminded.javaspring.consoleMenu.service.GroupService;
-import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 import java.util.InputMismatchException;
 
