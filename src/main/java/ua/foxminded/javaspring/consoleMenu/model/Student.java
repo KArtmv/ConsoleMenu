@@ -8,6 +8,9 @@ public class Student {
     private Long groupID;
     private String groupName;
 
+    public Student() {
+    }
+
     public Student(Long studentID) {
         this.studentID = studentID;
     }
@@ -63,4 +66,19 @@ public class Student {
         return groupName;
     }
 
+    public void setStudentID(Long studentID) {
+        this.studentID = studentID;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setGroupID(Long groupID) {
+        this.groupID = groupID;
+    }
 }
