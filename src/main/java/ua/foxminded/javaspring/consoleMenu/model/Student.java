@@ -8,6 +8,9 @@ public class Student {
     private Long groupID;
     private String groupName;
 
+    public Student() {
+    }
+
     public Student(Long studentID) {
         this.studentID = studentID;
     }
