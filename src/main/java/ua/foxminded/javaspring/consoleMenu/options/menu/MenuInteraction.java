@@ -37,7 +37,6 @@ public class MenuInteraction {
             viewMenu();
             chooseOption();
         } while (!isExit);
-        consoleInput.close();
     }
 
     private void viewMenu() {
