@@ -27,7 +27,11 @@ public class ConsoleInput {
     }
 
     public String menuInput() throws InputMismatchException {
-        return input(MENU_PATTERN);
+        String s = input(MENU_PATTERN);
+        if (s.equals("x")){
+            sc.close();
+        }
+        return s;
     }
 
     private String input(String regex) {
@@ -37,9 +41,5 @@ public class ConsoleInput {
         } else {
             throw new InputMismatchException(String.format("Input: '%s', does not match the required pattern: '%s'.", s, regex));
         }
-    }
-
-    public void close() {
-        sc.close();
     }
 }
