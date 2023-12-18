@@ -11,7 +11,7 @@ import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
+//import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
@@ -24,22 +24,31 @@ public class StudentController {
     private StudentService studentService;
     private ConsolePrinter consolePrinter;
     private ConsoleInput consoleInput;
-    private NewStudentData newStudentData;
+    private ConsolePrinter printAllGroups;
     private StudentConfirmationHandler verifyValidStudent;
 
     @Autowired
-    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, ConsoleInput consoleInput, NewStudentData newStudentData, StudentConfirmationHandler verifyValidStudent) {
+    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, ConsoleInput consoleInput, ConsolePrinter printAllGroups, StudentConfirmationHandler verifyValidStudent) {
         this.studentService = studentService;
         this.consolePrinter = consolePrinter;
         this.consoleInput = consoleInput;
-        this.newStudentData = newStudentData;
+        this.printAllGroups = printAllGroups;
         this.verifyValidStudent = verifyValidStudent;
     }
 
     public void addNewStudent() {
         try {
             System.out.println("Input data of a new student.");
-            if (studentService.addNewStudent(newStudentData.get())) {
+            Student student = new Student();
+            System.out.println("Input student first name and press enter.");
+            student.setFirstName(consoleInput.inputCharacters());
+            System.out.println("Input student last name and press enter.");
+            student.setLastName(consoleInput.inputCharacters());
+            System.out.println("Now you should choose a group from list to which should add student.\n Input ID and press enter.");
+            printAllGroups.printAllGroups();
+            student.setGroupID((long) consoleInput.inputNumbers());
+
+            if (studentService.addNewStudent(student)) {
                 System.out.println("Success, student had been added");
             }
         } catch (InputMismatchException | InvalidIdException e) {

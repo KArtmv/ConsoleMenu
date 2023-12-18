@@ -7,7 +7,6 @@ import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
 import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
 import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
@@ -21,11 +20,6 @@ public class ConsoleInteractionConfig {
     @Bean
     public ConsoleInput consoleInput() {
         return new ConsoleInput();
-    }
-
-    @Bean
-    public NewStudentData newStudentData(ConsoleInput consoleInput, ConsolePrinter consolePrinter) {
-        return new NewStudentData(consoleInput, consolePrinter);
     }
 
     @Bean
