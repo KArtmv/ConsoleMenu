@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
+import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScripts.SQLQueryOfCreateTable;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class StudentAtCourseRepo implements StudentAtCourseDAO {
+public class StudentAtCourseRepo implements StudentAtCourseDAO, TablesDAO<StudentAtCourse> {
 
     private SQLQueryOfCreateTable queryOfCreateTable;
     private JdbcTemplate jdbcTemplate;
