@@ -3,7 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.options.console.input;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ConsoleInput {
+public class MyScanner {
 
     private static final Scanner sc = new Scanner(System.in);
 
