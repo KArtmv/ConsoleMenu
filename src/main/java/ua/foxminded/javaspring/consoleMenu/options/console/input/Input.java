@@ -8,19 +8,19 @@ import java.util.InputMismatchException;
 
 public class Input {
     private static final String ALPHABETIC_PATTERN = "\\p{Alpha}+";
-    private MyScanner consoleInput;
-    private ConsolePrinter printAllGroups;
+    private MyScanner scanner;
+    private ConsolePrinter consolePrinter;
 
     @Autowired
-    public Input(MyScanner consoleInput, ConsolePrinter printAllGroups) {
-        this.consoleInput = consoleInput;
-        this.printAllGroups = printAllGroups;
+    public Input(MyScanner scanner, ConsolePrinter consolePrinter) {
+        this.scanner = scanner;
+        this.consolePrinter = consolePrinter;
     }
 
     public String inputOptionMenu() {
-        String s = consoleInput.getLine();
+        String s = scanner.getLine();
         if (s.equals("x")) {
-            consoleInput.close();
+            scanner.close();
         }
         return s;
     }
@@ -33,14 +33,14 @@ public class Input {
         System.out.println("Input student last name and press enter.");
         student.setLastName(getString());
         System.out.println("Now you should choose a group from list to which should add student.\n Input ID and press enter.");
-        printAllGroups.printAllGroups();
-        student.setGroupID(consoleInput.getLong());
+        consolePrinter.printAllGroups();
+        student.setGroupID(scanner.getLong());
 
         return student;
     }
 
     private String getString() {
-        String s = consoleInput.getLine();
+        String s = scanner.getLine();
         if (s.matches(ALPHABETIC_PATTERN)) {
             return s;
         } else {
