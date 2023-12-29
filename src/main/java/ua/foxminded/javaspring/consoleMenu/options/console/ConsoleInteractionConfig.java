@@ -6,7 +6,8 @@ import ua.foxminded.javaspring.consoleMenu.controller.CourseController;
 import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
 import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
 import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.Input;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
@@ -18,12 +19,12 @@ import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 public class ConsoleInteractionConfig {
 
     @Bean
-    public ConsoleInput consoleInput() {
-        return new ConsoleInput();
+    public MyScanner scanner() {
+        return new MyScanner();
     }
 
     @Bean
-    public MenuInteraction menuInteraction(Menu menu, ConsoleInput consoleInput, StudentController studentController, GroupController groupController, CourseController courseController) {
+    public MenuInteraction menuInteraction(Menu menu, Input consoleInput, StudentController studentController, GroupController groupController, CourseController courseController) {
         return new MenuInteraction(menu, consoleInput, studentController, courseController, groupController);
     }
 
@@ -33,7 +34,12 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public StudentConfirmationHandler studentConfirmationHandler(StudentService studentService, ConsoleInput consoleInput) {
-        return new StudentConfirmationHandler(studentService, consoleInput);
+    public StudentConfirmationHandler studentConfirmationHandler(StudentService studentService, MyScanner scanner) {
+        return new StudentConfirmationHandler(studentService, scanner);
+    }
+
+    @Bean
+    public Input input(MyScanner scanner, ConsolePrinter consolePrinter){
+        return new Input(scanner, consolePrinter);
     }
 }
