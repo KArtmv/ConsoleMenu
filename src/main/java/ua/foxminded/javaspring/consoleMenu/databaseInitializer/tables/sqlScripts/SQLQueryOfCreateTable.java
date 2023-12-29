@@ -2,10 +2,12 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScript
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 
 @Component
+@PropertySource("classpath:SQLScriptsPath.properties")
 public class SQLQueryOfCreateTable {
 
     private ReadResourcesFile readResourcesFile;
@@ -15,16 +17,16 @@ public class SQLQueryOfCreateTable {
         this.readResourcesFile = readResourcesFile;
     }
 
-    @Value("${sqlQuery.OfCreateTable.SQL_SCRIPT_FILE_STUDENT}")
+    @Value("${sqlQuery.createTable.student}")
     private String SQL_SCRIPT_STUDENT;
 
-    @Value("${sqlQuery.OfCreateTable.SQL_SCRIPT_FILE_GROUP}")
+    @Value("${sqlQuery.createTable.group}")
     private String SQL_SCRIPT_GROUP;
 
-    @Value("${sqlQuery.OfCreateTable.SQL_SCRIPT_FILE_COURSE}")
+    @Value("${sqlQuery.createTable.course}")
     private String SQL_SCRIPT_COURSE;
 
-    @Value("${sqlQuery.OfCreateTable.SQL_SCRIPT_FILE_STUDENT_TO_COURSE}")
+    @Value("${sqlQuery.createTable.SQL_studentAtCourse}")
     private String SQL_SCRIPT_STUDENT_TO_COURSE;
 
     public String getStudentTable() {

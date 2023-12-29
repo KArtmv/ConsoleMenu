@@ -2,12 +2,14 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.source
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 
 import java.util.List;
 
 @Component
+@PropertySource("classpath:SourceDataFilepath.properties")
 public class ResourcesFilesDatabaseData {
 
     private ReadResourcesFile readFile;
@@ -17,32 +19,32 @@ public class ResourcesFilesDatabaseData {
         this.readFile = readFile;
     }
 
-    @Value("${sourceData.DataFilePath.GROUPS_FILE}")
-    private String GROUPS_FILE;
+    @Value("${filepath.groupFile}")
+    private String groupsFile;
 
-    @Value("${sourceData.DataFilePath.COURSES_FILE}")
-    private String COURSES_FILE;
+    @Value("${filepath.courseFile}")
+    private String coursesFile;
 
-    @Value("${sourceData.DataFilePath.FIRST_NAME_FILE}")
-    private String FIRST_NAME_FILE;
+    @Value("${filepath.firstNamesFile}")
+    private String firstNameFile;
 
-    @Value("${sourceData.DataFilePath.LAST_NAME_FILE}")
-    private String LAST_NAME_FILE;
+    @Value("${filepath.lastNamesFile}")
+    private String lastNameFile;
 
     public List<String> getGroups() {
-        return getSourceData(GROUPS_FILE);
+        return getSourceData(groupsFile);
     }
 
     public List<String> getCourses() {
-        return getSourceData(COURSES_FILE);
+        return getSourceData(coursesFile);
     }
 
     public List<String> getFirstNames() {
-        return getSourceData(FIRST_NAME_FILE);
+        return getSourceData(firstNameFile);
     }
 
     public List<String> getLastNames() {
-        return getSourceData(LAST_NAME_FILE);
+        return getSourceData(lastNameFile);
     }
 
     private List<String> getSourceData(String filePath) {
