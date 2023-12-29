@@ -2,11 +2,13 @@ package ua.foxminded.javaspring.consoleMenu.options.console.output;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 
@@ -17,10 +19,13 @@ public class ConsolePrinter {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsolePrinter.class);
     private GroupService groupService;
     private CourseService courseService;
+    private Menu menu;
 
-    public ConsolePrinter(GroupService groupService, CourseService courseService) {
+    @Autowired
+    public ConsolePrinter(GroupService groupService, CourseService courseService, Menu menu) {
         this.groupService = groupService;
         this.courseService = courseService;
+        this.menu = menu;
     }
 
     public void viewAllCoursesOfStudent(List<StudentAtCourse> allStudentCourses) {
@@ -63,5 +68,9 @@ public class ConsolePrinter {
         } else {
             LOGGER.info("Failed to get list of courses.");
         }
+    }
+
+    public void printMenu() {
+        System.out.println(menu.getOptions());
     }
 }

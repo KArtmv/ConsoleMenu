@@ -6,46 +6,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.controller.CourseController;
 import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
 import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
-
-import java.util.InputMismatchException;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.Input;
+import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 
 public class MenuInteraction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuInteraction.class);
 
-    private Menu menu;
-    private ConsoleInput consoleInput;
+    private Input consoleInput;
     private StudentController studentController;
     private CourseController courseController;
     private GroupController groupController;
+    private ConsolePrinter consolePrinter;
 
     private boolean isExit;
     private static final String OPTION_EXIT = "x";
 
     @Autowired
-    public MenuInteraction(Menu menu, ConsoleInput consoleInput, StudentController studentController, CourseController courseController, GroupController groupController) {
-        this.menu = menu;
+    public MenuInteraction(Input consoleInput, StudentController studentController, CourseController courseController, GroupController groupController, ConsolePrinter consolePrinter) {
         this.consoleInput = consoleInput;
         this.studentController = studentController;
         this.courseController = courseController;
         this.groupController = groupController;
+        this.consolePrinter = consolePrinter;
     }
 
     public void startMenu() {
         do {
-            viewMenu();
+            consolePrinter.printMenu();
             chooseOption();
         } while (!isExit);
     }
 
-    private void viewMenu() {
-        System.out.println(menu.getOptions());
-    }
-
     private void chooseOption() {
-        try {
-            switch (consoleInput.menuInput()) {
+            String receivedOption = consoleInput.inputOptionMenu();
+            switch (receivedOption) {
                 case "1":
                     groupController.counterStudentsAtGroups();
                     break;
@@ -68,11 +63,8 @@ public class MenuInteraction {
                     isExit = true;
                     break;
                 default:
-                    LOGGER.info("Invalid option selected.");
+                    LOGGER.error("Invalid option selected: {}", receivedOption);
                     break;
             }
-        } catch (InputMismatchException e) {
-            LOGGER.error("Exception: {}", e.getMessage());
-        }
     }
 }
