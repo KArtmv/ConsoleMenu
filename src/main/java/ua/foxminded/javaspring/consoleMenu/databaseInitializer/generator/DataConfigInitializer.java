@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.RandomNumber;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.*;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
@@ -32,8 +31,8 @@ public class DataConfigInitializer {
     }
 
     @Bean
-    public DataGenerator<Student> studentGenerator(RandomNumber randomNumber, ResourcesFilesDatabaseData resourcesFiles, CountConfig countConfig, DataConduct dataConduct) {
-        return new StudentGenerator(randomNumber, resourcesFiles, countConfig, dataConduct);
+    public DataGenerator<Student> studentGenerator(RandomNumber randomNumber, ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+        return new StudentGenerator(randomNumber, resourcesFiles, dataConduct);
     }
 
     @Bean
@@ -47,7 +46,7 @@ public class DataConfigInitializer {
     }
 
     @Bean
-    public DataGenerator<StudentAtCourse> studentToCourseGenerator(RandomNumber randomNumber, CountConfig countConfig, DataConduct dataConduct) {
-        return new StudentToCourseGenerator(randomNumber, countConfig, dataConduct);
+    public DataGenerator<StudentAtCourse> studentToCourseGenerator(RandomNumber randomNumber, DataConduct dataConduct) {
+        return new StudentToCourseGenerator(randomNumber, dataConduct);
     }
 }
