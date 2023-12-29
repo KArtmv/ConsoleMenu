@@ -24,13 +24,13 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public MenuInteraction menuInteraction(Menu menu, Input consoleInput, StudentController studentController, GroupController groupController, CourseController courseController) {
-        return new MenuInteraction(menu, consoleInput, studentController, courseController, groupController);
+    public MenuInteraction menuInteraction(ConsolePrinter consolePrinter, Input consoleInput, StudentController studentController, GroupController groupController, CourseController courseController) {
+        return new MenuInteraction(consoleInput, studentController, courseController, groupController, consolePrinter);
     }
 
     @Bean
-    public ConsolePrinter consolePrinter(CourseService courseService, GroupService groupService) {
-        return new ConsolePrinter(groupService, courseService);
+    public ConsolePrinter consolePrinter(CourseService courseService, GroupService groupService, Menu menu) {
+        return new ConsolePrinter(groupService, courseService, menu);
     }
 
     @Bean
