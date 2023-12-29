@@ -3,7 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import ua.foxminded.javaspring.consoleMenu.dao.DAO;
+import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
 import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
@@ -21,11 +21,11 @@ public class StudentServiceImpl implements StudentService {
 
     private StudentDAO studentDAO;
     private StudentAtCourseDAO studentAtCourseDAO;
-    private DAO<Group> groupDAO;
-    private DAO<Course> courseDAO;
+    private TablesDAO<Group> groupDAO;
+    private TablesDAO<Course> courseDAO;
 
     @Autowired
-    public StudentServiceImpl(StudentDAO studentDAO, StudentAtCourseDAO studentAtCourseDAO, DAO<Group> groupDAO, DAO<Course> courseDAO) {
+    public StudentServiceImpl(StudentDAO studentDAO, StudentAtCourseDAO studentAtCourseDAO, TablesDAO<Group> groupDAO, TablesDAO<Course> courseDAO) {
         this.studentDAO = studentDAO;
         this.studentAtCourseDAO = studentAtCourseDAO;
         this.groupDAO = groupDAO;
