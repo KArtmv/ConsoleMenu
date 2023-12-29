@@ -1,9 +1,10 @@
 package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.RandomNumber;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.CountConfig;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 
@@ -12,23 +13,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@PropertySource("classpath:AmountLimits.properties")
 public class StudentGenerator implements DataGenerator<Student> {
 
+    @Value("${maxCountOfStudent}")
+    private int maxCountOfStudents;
     private RandomNumber randomNumber;
     private ResourcesFilesDatabaseData resourcesFiles;
     private DataConduct dataConduct;
-    private CountConfig countConfig;
-    private Integer maxCountOfStudents;
-    private Integer countOfGroups;
+    private int countOfGroups;
 
     private Map<String, Student> studentMap = new HashMap<>();
 
     @Autowired
-    public StudentGenerator(RandomNumber randomNumber, ResourcesFilesDatabaseData resourcesFiles, CountConfig countConfig, DataConduct dataConduct) {
+    public StudentGenerator(RandomNumber randomNumber, ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
         this.dataConduct = dataConduct;
         this.randomNumber = randomNumber;
         this.resourcesFiles = resourcesFiles;
-        this.countConfig = countConfig;
     }
 
     @Override
@@ -63,7 +64,6 @@ public class StudentGenerator implements DataGenerator<Student> {
 
     private void getCounters() {
         countOfGroups = dataConduct.getGroups().size();
-        maxCountOfStudents = countConfig.getMaxCountOfStudents();
     }
 
     private Long generateRandomGroupId() {
