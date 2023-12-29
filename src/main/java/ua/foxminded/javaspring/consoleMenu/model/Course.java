@@ -6,6 +6,9 @@ public class Course {
     private String courseName;
     private String courseDescription;
 
+    public Course(){
+    }
+
     public Course(Long courseID) {
         this.courseID = courseID;
     }
@@ -31,5 +34,9 @@ public class Course {
 
     public String getCourseDescription() {
         return courseDescription;
+    }
+
+    public void setCourseID(Long courseID) {
+        this.courseID = courseID;
     }
 }
