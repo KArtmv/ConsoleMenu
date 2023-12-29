@@ -1,22 +1,24 @@
 package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
+@PropertySource("classpath:AmountLimits.properties")
 public class CountConfig {
 
-    @Value("${sourceData.countConfig.MAX_COUNT_COURSES_OF_STUDENT}")
-    private Integer MAX_COUNT_COURSES_OF_STUDENT;
+    @Value("${maxCountCoursesOfStudent}")
+    private Integer maxCountCoursesOfStudent;
 
-    @Value("${sourceData.countConfig.MAX_COUNT_OF_STUDENT}")
-    private Integer MAX_COUNT_OF_STUDENT;
+    @Value("${maxCountOfStudent}")
+    private Integer maxCountOfStudent;
 
     public Integer getMaxCountCoursesOfStudent() {
-        return MAX_COUNT_COURSES_OF_STUDENT;
+        return maxCountCoursesOfStudent;
     }
 
     public Integer getMaxCountOfStudents() {
-        return MAX_COUNT_OF_STUDENT;
+        return maxCountOfStudent;
     }
 }

@@ -2,6 +2,7 @@ package ua.foxminded.javaspring.consoleMenu.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@PropertySource("classpath:SQLQueries.properties")
 public class GroupRepo implements GroupDAO, TablesDAO<Group> {
 
     private SQLQueryOfCreateTable queryOfCreateTable;
@@ -31,9 +33,9 @@ public class GroupRepo implements GroupDAO, TablesDAO<Group> {
     private static final String SQL_GET_GROUP_BY_ID = "select * from groups where group_id=?";
     private static final String SQL_GET_LIST_OF_GROUPS = "select * from groups";
 
-    @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
+    @Value("${sqlQuery.isExistTable}")
     private String sqlCheckIsTableExist;
-    @Value("${sqlQuery.IsTableExist.GROUP_TABLE_NAME}")
+    @Value("${table.group}")
     private String groupTableName;
 
     @Autowired

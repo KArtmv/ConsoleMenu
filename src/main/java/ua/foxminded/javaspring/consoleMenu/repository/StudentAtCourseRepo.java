@@ -2,6 +2,7 @@ package ua.foxminded.javaspring.consoleMenu.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@PropertySource("classpath:SQLQueries.properties")
 public class StudentAtCourseRepo implements StudentAtCourseDAO, TablesDAO<StudentAtCourse> {
 
     private SQLQueryOfCreateTable queryOfCreateTable;
@@ -32,9 +34,9 @@ public class StudentAtCourseRepo implements StudentAtCourseDAO, TablesDAO<Studen
     private static final String SQL_CHECK_IS_STUDENT_TO_COURSE_TABLE_EMPTY = "SELECT COUNT(*) FROM studenttocourse";
     private static final String SQL_GET_ENROLLMENT_BY_ID = "select * from studenttocourse where enrollment_id=?";
 
-    @Value("${sqlQuery.IsTableExist.SQL_CHECK_IS_TABLE_EXIST}")
+    @Value("${sqlQuery.isExistTable}")
     private String sqlCheckIsTableExist;
-    @Value("${sqlQuery.IsTableExist.STUDENT_TO_COURSE_TABLE_NAME}")
+    @Value("${table.enrollment}")
     private String studentToCourseTableName;
 
     @Autowired
