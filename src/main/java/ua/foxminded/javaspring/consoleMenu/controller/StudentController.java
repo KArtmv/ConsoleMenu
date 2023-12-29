@@ -10,8 +10,8 @@ import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.ConsoleInput;
-//import ua.foxminded.javaspring.consoleMenu.options.console.input.NewStudentData;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.Input;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
@@ -23,32 +23,22 @@ public class StudentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
     private StudentService studentService;
     private ConsolePrinter consolePrinter;
-    private ConsoleInput consoleInput;
-    private ConsolePrinter printAllGroups;
+    private MyScanner scanner;
     private StudentConfirmationHandler verifyValidStudent;
+    private Input input;
 
     @Autowired
-    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, ConsoleInput consoleInput, ConsolePrinter printAllGroups, StudentConfirmationHandler verifyValidStudent) {
+    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, MyScanner scanner, StudentConfirmationHandler verifyValidStudent, Input input) {
         this.studentService = studentService;
         this.consolePrinter = consolePrinter;
-        this.consoleInput = consoleInput;
-        this.printAllGroups = printAllGroups;
+        this.scanner = scanner;
         this.verifyValidStudent = verifyValidStudent;
+        this.input = input;
     }
 
     public void addNewStudent() {
         try {
-            System.out.println("Input data of a new student.");
-            Student student = new Student();
-            System.out.println("Input student first name and press enter.");
-            student.setFirstName(consoleInput.inputCharacters());
-            System.out.println("Input student last name and press enter.");
-            student.setLastName(consoleInput.inputCharacters());
-            System.out.println("Now you should choose a group from list to which should add student.\n Input ID and press enter.");
-            printAllGroups.printAllGroups();
-            student.setGroupID((long) consoleInput.inputNumbers());
-
-            if (studentService.addNewStudent(student)) {
+            if (studentService.addNewStudent(input.getStudent())) {
                 System.out.println("Success, student had been added");
             }
         } catch (InputMismatchException | InvalidIdException e) {
@@ -59,7 +49,7 @@ public class StudentController {
     public void deleteStudent() {
         try {
             System.out.println("Enter the ID of the student you want to remove.");
-            Student student = new Student((long) consoleInput.inputNumbers());
+            Student student = new Student(scanner.getLong());
             if (verifyValidStudent.verifyValidStudent(student) && studentService.deleteStudent(student)) {
                 System.out.println("Success, student has been removed!");
             }
@@ -71,12 +61,12 @@ public class StudentController {
     public void addStudentToCourse() {
         try {
             System.out.println("Input student ID which should be add to course.");
-            Student student = new Student((long) consoleInput.inputNumbers());
+            Student student = new Student(scanner.getLong());
 
             if (verifyValidStudent.verifyValidStudent(student)) {
                 System.out.println("Input course ID, choose from list.");
                 consolePrinter.printAllCourses();
-                if (studentService.addStudentToCourse(new StudentAtCourse(student, new Course((long) consoleInput.inputNumbers())))) {
+                if (studentService.addStudentToCourse(new StudentAtCourse(student, new Course(scanner.getLong())))) {
                     System.out.println("Success student has been added to course!");
                 }
             }
@@ -88,13 +78,13 @@ public class StudentController {
     public void removeStudentFromCourse() {
         try {
             System.out.println("Input the ID of student which should be remove from course. Then press enter.");
-            Student student = studentService.getStudent(new Student((long) consoleInput.inputNumbers()));
+            Student student = studentService.getStudent(new Student(scanner.getLong()));
             List<StudentAtCourse> allStudentCourses = studentService.getAllCoursesOfStudent(student);
 
             if (!CollectionUtils.isEmpty(allStudentCourses) && verifyValidStudent.verifyValidStudent(student)) {
                 System.out.println("Choose enrollment ID from the list to wish remove and press enter.");
                 consolePrinter.viewAllCoursesOfStudent(allStudentCourses);
-                if (studentService.removeStudentFromCourse(new StudentAtCourse((long) consoleInput.inputNumbers(), student))) {
+                if (studentService.removeStudentFromCourse(new StudentAtCourse(scanner.getLong(), student))) {
                     System.out.printf("Success, student: ID %s, %s %s, has been removed from course %s!\n",
                             student.getStudentID(), student.getFirstName(), student.getLastName(), allStudentCourses.get(0).getCourse().getCourseName());
                 }
