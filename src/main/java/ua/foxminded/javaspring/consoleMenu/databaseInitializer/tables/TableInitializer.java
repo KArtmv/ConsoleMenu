@@ -1,18 +1,18 @@
 package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.foxminded.javaspring.consoleMenu.dao.DAO;
+import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
 
 import java.util.List;
 
 public class TableInitializer<T> {
 
-    private DAO<T> dao;
+    private TablesDAO<T> dao;
     private DataGenerator<T> generateItems;
 
     @Autowired
-    public TableInitializer(DAO<T> dao, DataGenerator<T> generateItems) {
+    public TableInitializer(TablesDAO<T> dao, DataGenerator<T> generateItems) {
         this.dao = dao;
         this.generateItems = generateItems;
     }
