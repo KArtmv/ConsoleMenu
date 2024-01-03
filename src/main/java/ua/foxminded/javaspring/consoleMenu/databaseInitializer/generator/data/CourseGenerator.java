@@ -6,6 +6,7 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceD
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,11 +25,10 @@ public class CourseGenerator implements DataGenerator<Course> {
     public List<Course> generate() {
         List<String> sourceResult = resourcesFiles.getCourses();
 
-        List<Course> courses = IntStream.range(0, sourceResult.size())
-                .mapToObj(i -> {
-                    String[] courseData = sourceResult.get(i).split("_");
-                    return new Course((long) (i + 1), courseData[0], courseData[1]);
-                }).collect(Collectors.toList());
+        List<Course> courses = sourceResult.stream().map(s -> {
+            String[] courseData = s.split("_");
+            return new Course(courseData[0], courseData[1]);
+        }).collect(Collectors.toList());
 
         dataConduct.setCourses(courses);
         return courses;
