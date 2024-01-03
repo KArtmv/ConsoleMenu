@@ -6,8 +6,8 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceD
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class GroupGenerator implements DataGenerator<Group> {
 
@@ -24,8 +24,8 @@ public class GroupGenerator implements DataGenerator<Group> {
     public List<Group> generate() {
         List<String> groupNames = resourcesFiles.getGroups();
 
-        List<Group> groups = IntStream.range(0, groupNames.size())
-                .mapToObj(i -> new Group((long) (i + 1), groupNames.get(i)))
+        List<Group> groups = groupNames.stream()
+                .map(Group::new)
                 .collect(Collectors.toList());
 
         dataConduct.setGroups(groups);
