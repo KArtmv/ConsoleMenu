@@ -23,7 +23,7 @@ public class TablesConfigInitializer {
     }
 
     @Bean
-    public TableInitializer<Student> studebtTableInitializer(TablesDAO<Student> dao, DataGenerator<Student> studentGenerator) {
+    public TableInitializer<Student> studentTableInitializer(TablesDAO<Student> dao, DataGenerator<Student> studentGenerator) {
         return new TableInitializer<>(dao, studentGenerator);
     }
 
