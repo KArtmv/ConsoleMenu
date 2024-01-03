@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.repository;
+package ua.foxminded.javaspring.consoleMenu.dao.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
