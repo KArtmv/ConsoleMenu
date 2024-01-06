@@ -29,32 +29,32 @@ public class ConsolePrinter {
     }
 
     public void viewAllCoursesOfStudent(List<StudentAtCourse> allStudentCourses) {
-        print(String.format("Student: %s %s, studies at next courses:\n",
+        print(String.format("Student: %s %s, studies at next courses:",
                 allStudentCourses.get(0).getStudent().getFirstName(), allStudentCourses.get(0).getStudent().getLastName()));
 
         allStudentCourses.forEach(studentAtCourse -> print(String.format(
-                "ID: %d, course: %s,\n   Description of course: %s.\n",
+                "ID: %d, course: %s,\n   Description of course: %s.",
                 studentAtCourse.getEnrollmentID(),
                 studentAtCourse.getCourse().getCourseName(),
                 studentAtCourse.getCourse().getCourseDescription())));
     }
 
     public void viewAllStudentsFromCourse(List<StudentAtCourse> studentsFromCourse) {
-        System.out.printf("At course: %s, study next students:\n", studentsFromCourse.get(0).getCourse().getCourseName());
+        print(String.format("At course: %s, study next students:", studentsFromCourse.get(0).getCourse().getCourseName()));
         studentsFromCourse.forEach(student ->
                 print(String.format("%s %s\n", student.getStudent().getFirstName(), student.getStudent().getLastName())));
     }
 
     public void viewAmountStudentAtGroup(List<CounterStudentsAtGroup> studentsAtGroups) {
         studentsAtGroups.forEach(studentsAtGroup ->
-                print(String.format("%d of students at group: %s.\n",
+                print(String.format("%d of students at group: %s.",
                         studentsAtGroup.getStudentsCount(), studentsAtGroup.getGroupName())));
     }
 
     public void printAllCourses() {
         List<Course> courses = courseService.getAllCourses();
         if (!CollectionUtils.isEmpty(courses)) {
-            courses.forEach(course -> print(String.format("ID: %d, Course name: %s,\n   Course description: %s.\n",
+            courses.forEach(course -> print(String.format("ID: %d, Course name: %s,\n   Course description: %s.",
                     course.getCourseID(), course.getCourseName(), course.getCourseDescription())));
         } else {
             LOGGER.info("Failed to get list of courses.");
@@ -64,7 +64,7 @@ public class ConsolePrinter {
     public void printAllGroups() {
         List<Group> groups = groupService.getAllGroups();
         if (!CollectionUtils.isEmpty(groups)) {
-            groups.forEach(group -> print(String.format("ID: %d,  group name: %s.\n", group.getGroupID(), group.getGroupName())));
+            groups.forEach(group -> print(String.format("ID: %d,  group name: %s.", group.getGroupID(), group.getGroupName())));
         } else {
             LOGGER.info("Failed to get list of courses.");
         }

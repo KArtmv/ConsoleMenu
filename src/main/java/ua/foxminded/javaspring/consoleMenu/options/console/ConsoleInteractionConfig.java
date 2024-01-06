@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.controller.CourseController;
 import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
 import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.InputHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.Input;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
@@ -23,7 +23,7 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public MenuInteraction menuInteraction(ConsolePrinter consolePrinter, Input consoleInput, StudentController studentController, GroupController groupController, CourseController courseController) {
+    public MenuInteraction menuInteraction(ConsolePrinter consolePrinter, InputHandler consoleInput, StudentController studentController, GroupController groupController, CourseController courseController) {
         return new MenuInteraction(consoleInput, studentController, courseController, groupController, consolePrinter);
     }
 
@@ -33,7 +33,7 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public Input input(MyScanner scanner, ConsolePrinter consolePrinter, StudentService studentService){
-        return new Input(scanner, consolePrinter, studentService);
+    public InputHandler input(MyScanner scanner, ConsolePrinter consolePrinter, StudentService studentService){
+        return new InputHandler(scanner, consolePrinter, studentService);
     }
 }
