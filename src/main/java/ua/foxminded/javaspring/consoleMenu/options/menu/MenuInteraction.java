@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.controller.CourseController;
 import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
 import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.Input;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.InputHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 
 public class MenuInteraction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuInteraction.class);
 
-    private Input consoleInput;
+    private InputHandler consoleInput;
     private StudentController studentController;
     private CourseController courseController;
     private GroupController groupController;
@@ -23,7 +23,7 @@ public class MenuInteraction {
     private static final String OPTION_EXIT = "x";
 
     @Autowired
-    public MenuInteraction(Input consoleInput, StudentController studentController, CourseController courseController, GroupController groupController, ConsolePrinter consolePrinter) {
+    public MenuInteraction(InputHandler consoleInput, StudentController studentController, CourseController courseController, GroupController groupController, ConsolePrinter consolePrinter) {
         this.consoleInput = consoleInput;
         this.studentController = studentController;
         this.courseController = courseController;

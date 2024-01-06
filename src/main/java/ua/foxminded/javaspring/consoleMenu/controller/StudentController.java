@@ -9,8 +9,8 @@ import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
+import ua.foxminded.javaspring.consoleMenu.options.console.input.InputHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.Input;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
@@ -23,10 +23,10 @@ public class StudentController {
     private StudentService studentService;
     private ConsolePrinter consolePrinter;
     private MyScanner scanner;
-    private Input input;
+    private InputHandler input;
 
     @Autowired
-    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, MyScanner scanner, Input input) {
+    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, MyScanner scanner, InputHandler input) {
         this.studentService = studentService;
         this.consolePrinter = consolePrinter;
         this.scanner = scanner;
