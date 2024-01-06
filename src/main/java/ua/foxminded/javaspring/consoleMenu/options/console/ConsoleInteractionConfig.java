@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.controller.CourseController;
 import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
 import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
-import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.Input;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
@@ -34,12 +33,7 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public StudentConfirmationHandler studentConfirmationHandler(StudentService studentService, MyScanner scanner) {
-        return new StudentConfirmationHandler(studentService, scanner);
-    }
-
-    @Bean
-    public Input input(MyScanner scanner, ConsolePrinter consolePrinter){
-        return new Input(scanner, consolePrinter);
+    public Input input(MyScanner scanner, ConsolePrinter consolePrinter, StudentService studentService){
+        return new Input(scanner, consolePrinter, studentService);
     }
 }
