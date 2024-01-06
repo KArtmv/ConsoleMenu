@@ -9,7 +9,6 @@ import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.options.StudentConfirmationHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.Input;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
@@ -24,15 +23,13 @@ public class StudentController {
     private StudentService studentService;
     private ConsolePrinter consolePrinter;
     private MyScanner scanner;
-    private StudentConfirmationHandler verifyValidStudent;
     private Input input;
 
     @Autowired
-    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, MyScanner scanner, StudentConfirmationHandler verifyValidStudent, Input input) {
+    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, MyScanner scanner, Input input) {
         this.studentService = studentService;
         this.consolePrinter = consolePrinter;
         this.scanner = scanner;
-        this.verifyValidStudent = verifyValidStudent;
         this.input = input;
     }
 
@@ -50,7 +47,7 @@ public class StudentController {
         try {
             System.out.println("Enter the ID of the student you want to remove.");
             Student student = new Student(scanner.getLong());
-            if (verifyValidStudent.verifyValidStudent(student) && studentService.deleteStudent(student)) {
+            if (input.verifyValidStudent(student) && studentService.deleteStudent(student)) {
                 System.out.println("Success, student has been removed!");
             }
         } catch (InvalidIdException | InputMismatchException e) {
@@ -63,7 +60,7 @@ public class StudentController {
             System.out.println("Input student ID which should be add to course.");
             Student student = new Student(scanner.getLong());
 
-            if (verifyValidStudent.verifyValidStudent(student)) {
+            if (input.verifyValidStudent(student)) {
                 System.out.println("Input course ID, choose from list.");
                 consolePrinter.printAllCourses();
                 if (studentService.addStudentToCourse(new StudentAtCourse(student, new Course(scanner.getLong())))) {
@@ -81,7 +78,7 @@ public class StudentController {
             Student student = studentService.getStudent(new Student(scanner.getLong()));
             List<StudentAtCourse> allStudentCourses = studentService.getAllCoursesOfStudent(student);
 
-            if (!CollectionUtils.isEmpty(allStudentCourses) && verifyValidStudent.verifyValidStudent(student)) {
+            if (!CollectionUtils.isEmpty(allStudentCourses) && input.verifyValidStudent(student)) {
                 System.out.println("Choose enrollment ID from the list to wish remove and press enter.");
                 consolePrinter.viewAllCoursesOfStudent(allStudentCourses);
                 if (studentService.removeStudentFromCourse(new StudentAtCourse(scanner.getLong(), student))) {
