@@ -7,14 +7,14 @@ import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 import java.util.InputMismatchException;
 
-public class Input {
+public class InputHandler {
     private static final String ALPHABETIC_PATTERN = "\\p{Alpha}+";
     private MyScanner scanner;
     private ConsolePrinter consolePrinter;
     private StudentService studentService;
 
     @Autowired
-    public Input(MyScanner scanner, ConsolePrinter consolePrinter, StudentService studentService) {
+    public InputHandler(MyScanner scanner, ConsolePrinter consolePrinter, StudentService studentService) {
         this.scanner = scanner;
         this.consolePrinter = consolePrinter;
         this.studentService = studentService;
