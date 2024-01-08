@@ -23,22 +23,20 @@ public class StudentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
     private StudentService studentService;
     private ConsolePrinter consolePrinter;
-    private MyScanner scanner;
-    private InputHandler input;
+    private InputHandler inputHandler;
     private ApplicationMessages messages;
 
     @Autowired
-    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, MyScanner scanner, InputHandler input, ApplicationMessages messages) {
+    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, InputHandler inputHandler, ApplicationMessages messages) {
         this.studentService = studentService;
         this.consolePrinter = consolePrinter;
-        this.scanner = scanner;
-        this.input = input;
+        this.inputHandler = inputHandler;
         this.messages = messages;
     }
 
     public void addNewStudent() {
         try {
-            if (studentService.addNewStudent(input.getDataOfNewStudent())) {
+            if (studentService.addNewStudent(inputHandler.getDataOfNewStudent())) {
                 consolePrinter.print(messages.STUDENT_ADDED);
             }
         } catch (InputMismatchException | InvalidIdException e) {
@@ -49,8 +47,8 @@ public class StudentController {
     public void deleteStudent() {
         try {
             consolePrinter.print(messages.REMOVE_STUDENT_BY_ID);
-            Student student = new Student(scanner.getLong());
-            if (input.verifyValidStudent(student) && studentService.deleteStudent(student)) {
+            Student student = inputHandler.getStudent();
+            if (inputHandler.verifyValidStudent(student) && studentService.deleteStudent(student)) {
                 consolePrinter.print(messages.STUDENT_REMOVED);
             }
         } catch (InvalidIdException | InputMismatchException e) {
@@ -61,12 +59,12 @@ public class StudentController {
     public void addStudentToCourse() {
         try {
             consolePrinter.print(messages.ADD_STUDENT_TO_COURSE);
-            Student student = new Student(scanner.getLong());
+            Student student = inputHandler.getStudent();
 
-            if (input.verifyValidStudent(student)) {
+            if (inputHandler.verifyValidStudent(student)) {
                 consolePrinter.print(messages.ENTER_COURSE_ID);
                 consolePrinter.printAllCourses();
-                if (studentService.addStudentToCourse(new StudentAtCourse(student, new Course(scanner.getLong())))) {
+                if (studentService.addStudentToCourse(new StudentAtCourse(student, inputHandler.getCourse()))) {
                     consolePrinter.print(messages.STUDENT_ADDED_TO_COURSE);
                 }
             }
@@ -78,13 +76,16 @@ public class StudentController {
     public void removeStudentFromCourse() {
         try {
             consolePrinter.print(messages.REMOVE_STUDENT_FROM_COURSE);
-            Student student = studentService.getStudent(new Student(scanner.getLong()));
+            Student student = studentService.getStudent(inputHandler.getStudent());
             List<StudentAtCourse> allStudentCourses = studentService.getAllCoursesOfStudent(student);
 
-            if (!CollectionUtils.isEmpty(allStudentCourses) && input.verifyValidStudent(student)) {
+            if (!CollectionUtils.isEmpty(allStudentCourses) && inputHandler.verifyValidStudent(student)) {
                 consolePrinter.print(messages.CHOOSE_ENROLLMENT_ID);
                 consolePrinter.viewAllCoursesOfStudent(allStudentCourses);
-                if (studentService.removeStudentFromCourse(new StudentAtCourse(scanner.getLong(), student))) {
+                StudentAtCourse enrollmentID = inputHandler.getEnrollment();
+                enrollmentID.setStudent(student);
+
+                if (studentService.removeStudentFromCourse(enrollmentID)) {
                     consolePrinter.print(String.format(messages.STUDENT_REMOVED_FROM_COURSE,
                             student.getStudentID(), student.getFirstName(), student.getLastName(), allStudentCourses.get(0).getCourse().getCourseName()));
                 }
