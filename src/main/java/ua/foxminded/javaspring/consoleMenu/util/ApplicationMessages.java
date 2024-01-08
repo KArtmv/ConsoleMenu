@@ -40,8 +40,8 @@ public class ApplicationMessages {
     public String GROUPS_BY_COUNT;
     @Value("${hasNotGroupWithCount}")
     public String HAS_NOT_GROUPS_WITH_COUNT;
-    @Value("${studentCourses}")
-    public String STUDENTS_COURSES;
+    @Value("${studentsAtCourse}")
+    public String STUDENT_AT_COURSES;
     @Value("${nameStudyingStudent}")
     public String NAME_STUDYING_STUDENT;
     @Value("${courseNameAndDescription}")
