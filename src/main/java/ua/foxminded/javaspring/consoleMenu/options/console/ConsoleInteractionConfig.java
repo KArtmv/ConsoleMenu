@@ -13,6 +13,7 @@ import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
+import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
 
 @Component
 public class ConsoleInteractionConfig {
@@ -28,12 +29,12 @@ public class ConsoleInteractionConfig {
     }
 
     @Bean
-    public ConsolePrinter consolePrinter(CourseService courseService, GroupService groupService, Menu menu) {
-        return new ConsolePrinter(groupService, courseService, menu);
+    public ConsolePrinter consolePrinter(CourseService courseService, GroupService groupService, Menu menu, ApplicationMessages messages) {
+        return new ConsolePrinter(groupService, courseService, menu, messages);
     }
 
     @Bean
-    public InputHandler input(MyScanner scanner, ConsolePrinter consolePrinter, StudentService studentService){
-        return new InputHandler(scanner, consolePrinter, studentService);
+    public InputHandler input(MyScanner scanner, ConsolePrinter consolePrinter, StudentService studentService, ApplicationMessages messages){
+        return new InputHandler(scanner, consolePrinter, studentService, messages);
     }
 }
