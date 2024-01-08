@@ -26,6 +26,8 @@ public class StudentAtCourse {
         this.student = student;
     }
 
+    public StudentAtCourse() {}
+
     public Student getStudent() {
         return student;
     }
@@ -36,5 +38,13 @@ public class StudentAtCourse {
 
     public Long getEnrollmentID() {
         return enrollmentID;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public void setEnrollmentID(Long enrollmentID) {
+        this.enrollmentID = enrollmentID;
     }
 }
