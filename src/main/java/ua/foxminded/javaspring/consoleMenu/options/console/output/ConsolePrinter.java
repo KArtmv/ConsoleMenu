@@ -11,6 +11,7 @@ import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
+import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
 
 import java.util.List;
 
@@ -20,41 +21,43 @@ public class ConsolePrinter {
     private GroupService groupService;
     private CourseService courseService;
     private Menu menu;
+    private ApplicationMessages messages;
 
     @Autowired
-    public ConsolePrinter(GroupService groupService, CourseService courseService, Menu menu) {
+    public ConsolePrinter(GroupService groupService, CourseService courseService, Menu menu, ApplicationMessages messages) {
         this.groupService = groupService;
         this.courseService = courseService;
         this.menu = menu;
+        this.messages = messages;
     }
 
     public void viewAllCoursesOfStudent(List<StudentAtCourse> allStudentCourses) {
-        print(String.format("Student: %s %s, studies at next courses:",
+        print(String.format(messages.NAME_STUDYING_STUDENT,
                 allStudentCourses.get(0).getStudent().getFirstName(), allStudentCourses.get(0).getStudent().getLastName()));
 
         allStudentCourses.forEach(studentAtCourse -> print(String.format(
-                "ID: %d, course: %s,\n   Description of course: %s.",
+                messages.COURSE_NAME_AND_DESCRIPTION,
                 studentAtCourse.getEnrollmentID(),
                 studentAtCourse.getCourse().getCourseName(),
                 studentAtCourse.getCourse().getCourseDescription())));
     }
 
     public void viewAllStudentsFromCourse(List<StudentAtCourse> studentsFromCourse) {
-        print(String.format("At course: %s, study next students:", studentsFromCourse.get(0).getCourse().getCourseName()));
+        print(String.format(messages.STUDENTS_FROM_COURSE, studentsFromCourse.get(0).getCourse().getCourseName()));
         studentsFromCourse.forEach(student ->
-                print(String.format("%s %s\n", student.getStudent().getFirstName(), student.getStudent().getLastName())));
+                print(String.format("%s %s", student.getStudent().getFirstName(), student.getStudent().getLastName())));
     }
 
     public void viewAmountStudentAtGroup(List<CounterStudentsAtGroup> studentsAtGroups) {
         studentsAtGroups.forEach(studentsAtGroup ->
-                print(String.format("%d of students at group: %s.",
+                print(String.format(messages.AMOUNT_STUDENTS_AT_GROUP,
                         studentsAtGroup.getStudentsCount(), studentsAtGroup.getGroupName())));
     }
 
     public void printAllCourses() {
         List<Course> courses = courseService.getAllCourses();
         if (!CollectionUtils.isEmpty(courses)) {
-            courses.forEach(course -> print(String.format("ID: %d, Course name: %s,\n   Course description: %s.",
+            courses.forEach(course -> print(String.format(messages.COURSE_NAME_AND_DESCRIPTION,
                     course.getCourseID(), course.getCourseName(), course.getCourseDescription())));
         } else {
             LOGGER.info("Failed to get list of courses.");
@@ -64,7 +67,7 @@ public class ConsolePrinter {
     public void printAllGroups() {
         List<Group> groups = groupService.getAllGroups();
         if (!CollectionUtils.isEmpty(groups)) {
-            groups.forEach(group -> print(String.format("ID: %d,  group name: %s.", group.getGroupID(), group.getGroupName())));
+            groups.forEach(group -> print(String.format(messages.PRINT_ALL_GROUPS, group.getGroupID(), group.getGroupName())));
         } else {
             LOGGER.info("Failed to get list of courses.");
         }

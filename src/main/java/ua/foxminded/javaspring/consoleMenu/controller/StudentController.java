@@ -13,6 +13,7 @@ import ua.foxminded.javaspring.consoleMenu.options.console.input.InputHandler;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
+import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -24,19 +25,21 @@ public class StudentController {
     private ConsolePrinter consolePrinter;
     private MyScanner scanner;
     private InputHandler input;
+    private ApplicationMessages messages;
 
     @Autowired
-    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, MyScanner scanner, InputHandler input) {
+    public StudentController(StudentService studentService, ConsolePrinter consolePrinter, MyScanner scanner, InputHandler input, ApplicationMessages messages) {
         this.studentService = studentService;
         this.consolePrinter = consolePrinter;
         this.scanner = scanner;
         this.input = input;
+        this.messages = messages;
     }
 
     public void addNewStudent() {
         try {
-            if (studentService.addNewStudent(input.getStudent())) {
-                System.out.println("Success, student had been added");
+            if (studentService.addNewStudent(input.getDataOfNewStudent())) {
+                consolePrinter.print(messages.STUDENT_ADDED);
             }
         } catch (InputMismatchException | InvalidIdException e) {
             LOGGER.info("Failed add student: {}.", e.getMessage());
@@ -45,10 +48,10 @@ public class StudentController {
 
     public void deleteStudent() {
         try {
-            System.out.println("Enter the ID of the student you want to remove.");
+            consolePrinter.print(messages.REMOVE_STUDENT_BY_ID);
             Student student = new Student(scanner.getLong());
             if (input.verifyValidStudent(student) && studentService.deleteStudent(student)) {
-                System.out.println("Success, student has been removed!");
+                consolePrinter.print(messages.STUDENT_REMOVED);
             }
         } catch (InvalidIdException | InputMismatchException e) {
             LOGGER.info("Failed to remove student: {}", e.getMessage());
@@ -57,14 +60,14 @@ public class StudentController {
 
     public void addStudentToCourse() {
         try {
-            System.out.println("Input student ID which should be add to course.");
+            consolePrinter.print(messages.ADD_STUDENT_TO_COURSE);
             Student student = new Student(scanner.getLong());
 
             if (input.verifyValidStudent(student)) {
-                System.out.println("Input course ID, choose from list.");
+                consolePrinter.print(messages.ENTER_COURSE_ID);
                 consolePrinter.printAllCourses();
                 if (studentService.addStudentToCourse(new StudentAtCourse(student, new Course(scanner.getLong())))) {
-                    System.out.println("Success student has been added to course!");
+                    consolePrinter.print(messages.STUDENT_ADDED_TO_COURSE);
                 }
             }
         } catch (InvalidIdException | InputMismatchException e) {
@@ -74,19 +77,19 @@ public class StudentController {
 
     public void removeStudentFromCourse() {
         try {
-            System.out.println("Input the ID of student which should be remove from course. Then press enter.");
+            consolePrinter.print(messages.REMOVE_STUDENT_FROM_COURSE);
             Student student = studentService.getStudent(new Student(scanner.getLong()));
             List<StudentAtCourse> allStudentCourses = studentService.getAllCoursesOfStudent(student);
 
             if (!CollectionUtils.isEmpty(allStudentCourses) && input.verifyValidStudent(student)) {
-                System.out.println("Choose enrollment ID from the list to wish remove and press enter.");
+                consolePrinter.print(messages.CHOOSE_ENROLLMENT_ID);
                 consolePrinter.viewAllCoursesOfStudent(allStudentCourses);
                 if (studentService.removeStudentFromCourse(new StudentAtCourse(scanner.getLong(), student))) {
-                    System.out.printf("Success, student: ID %s, %s %s, has been removed from course %s!\n",
-                            student.getStudentID(), student.getFirstName(), student.getLastName(), allStudentCourses.get(0).getCourse().getCourseName());
+                    consolePrinter.print(String.format(messages.STUDENT_REMOVED_FROM_COURSE,
+                            student.getStudentID(), student.getFirstName(), student.getLastName(), allStudentCourses.get(0).getCourse().getCourseName()));
                 }
             } else {
-                System.out.printf("The student: %s %s have not relate to any course.\n", student.getFirstName(), student.getLastName());
+                consolePrinter.print(String.format(messages.STUDENT_HAS_NOT_COURSE , student.getFirstName(), student.getLastName()));
             }
         } catch (InvalidIdException | InputMismatchException e) {
             LOGGER.info("Removing student from course is failed: {}", e.getMessage());
