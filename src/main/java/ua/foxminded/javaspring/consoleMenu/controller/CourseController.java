@@ -11,6 +11,7 @@ import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
+import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -22,19 +23,21 @@ public class CourseController {
     private CourseService courseService;
     private MyScanner scanner;
     private ConsolePrinter consolePrinter;
+    private ApplicationMessages messages;
 
     @Autowired
-    public CourseController(CourseService courseService, MyScanner scanner, ConsolePrinter consolePrinter) {
+    public CourseController(CourseService courseService, MyScanner scanner, ConsolePrinter consolePrinter, ApplicationMessages messages) {
         this.courseService = courseService;
         this.scanner = scanner;
         this.consolePrinter = consolePrinter;
+        this.messages = messages;
     }
 
     public void allStudentsFromCourse() {
         LOGGER.info("Run allStudentsFromCourse.");
         try {
             consolePrinter.printAllCourses();
-            System.out.println("Choose and input the ID of the course from the list to view all students enrolled in this course.");
+            consolePrinter.print(messages.STUDENTS_COURSES);
             Course course = new Course();
             course.setCourseID(scanner.getLong());
             LOGGER.info("Received course ID: {}", course.getCourseID());
