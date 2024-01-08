@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class StudentGenerator implements DataGenerator<Student> {
 
+    public static final AtomicLong ATOMIC_LONG = new AtomicLong(1);
     private static final Random RANDOM = new Random();
     @Value("${maxCountOfStudent}")
     private int maxCountOfStudents;
@@ -42,6 +43,7 @@ public class StudentGenerator implements DataGenerator<Student> {
             String key = firstName + lastName;
             if (!firstName.equals(lastName) && !studentMap.containsKey(key)) {
                 studentMap.put(key, new Student(
+                                ATOMIC_LONG.getAndIncrement(),
                                 firstName,
                                 lastName,
                                 generateRandomGroupId()));
