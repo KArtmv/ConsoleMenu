@@ -1,7 +1,10 @@
 package ua.foxminded.javaspring.consoleMenu.options.console.input;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import ua.foxminded.javaspring.consoleMenu.model.Course;
+import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
+import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
@@ -62,5 +65,27 @@ public class InputHandler {
         return scanner.getLine().equalsIgnoreCase("yes");
     }
 
+    public Course getCourse(){
+        Course course = new Course();
+        course.setCourseID(scanner.getLong());
+        return course;
+    }
 
+    public Group getGroup(){
+        Group group = new Group();
+        group.setGroupID(scanner.getLong());
+        return group;
+    }
+
+    public Student getStudent(){
+        Student student = new Student();
+        student.setStudentID(scanner.getLong());
+        return student;
+    }
+
+    public StudentAtCourse getEnrollment(){
+        StudentAtCourse studentAtCourse = new StudentAtCourse();
+        studentAtCourse.setEnrollmentID(scanner.getLong());
+        return studentAtCourse;
+    }
 }
