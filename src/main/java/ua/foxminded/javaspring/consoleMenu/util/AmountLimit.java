@@ -7,8 +7,16 @@ import org.springframework.stereotype.Component;
 public class AmountLimit {
 
     @Value("${maxCountCoursesOfStudent}")
-    public int maxCountCoursesOfStudent;
+    private int maxCountCoursesOfStudent;
 
     @Value("${maxCountOfStudent}")
-    public int maxCountOfStudents;
+    private int maxCountOfStudents;
+
+    public int getMaxCountCoursesOfStudent() {
+        return maxCountCoursesOfStudent;
+    }
+
+    public int getMaxCountOfStudents() {
+        return maxCountOfStudents;
+    }
 }
