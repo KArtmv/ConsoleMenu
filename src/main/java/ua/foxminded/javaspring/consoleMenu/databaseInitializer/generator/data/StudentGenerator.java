@@ -60,7 +60,7 @@ public class StudentGenerator implements DataGenerator<Student> {
     }
 
     private void initVariables() {
-        maxCountOfStudents = amountLimit.maxCountOfStudents;
+        maxCountOfStudents = amountLimit.getMaxCountOfStudents();
         countOfGroups = dataConduct.getGroups().size();
     }
 }

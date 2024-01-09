@@ -54,6 +54,6 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
 
     private void initVariables() {
         countCourses = dataConduct.getCourses().size();
-        maxCountCoursesOfStudent = amountLimits.maxCountCoursesOfStudent;
+        maxCountCoursesOfStudent = amountLimits.getMaxCountCoursesOfStudent();
     }
 }
