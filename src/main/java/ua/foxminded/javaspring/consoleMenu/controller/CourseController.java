@@ -34,12 +34,12 @@ public class CourseController {
     }
 
     public void allStudentsFromCourse() {
-        LOGGER.info("Run allStudentsFromCourse.");
+        LOGGER.info("Run allStudentsFromCourse method.");
         try {
             consolePrinter.printAllCourses();
             consolePrinter.print(messages.STUDENT_AT_COURSES);
             Course course = inputHandler.getCourse();
-            LOGGER.info("Received course ID: {}", course.getCourseID());
+            LOGGER.debug("Received course ID: {}", course.getCourseID());
             List<StudentAtCourse> studentsFromCourse = courseService.allStudentsFromCourse(course);
 
             if (!CollectionUtils.isEmpty(studentsFromCourse)) {
