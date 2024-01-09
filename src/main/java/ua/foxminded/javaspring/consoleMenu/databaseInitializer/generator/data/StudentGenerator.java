@@ -1,34 +1,37 @@
 package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
+import ua.foxminded.javaspring.consoleMenu.util.AmountLimit;
+import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class StudentGenerator implements DataGenerator<Student> {
 
-    public static final AtomicLong ATOMIC_LONG = new AtomicLong(1);
-    private static final Random RANDOM = new Random();
-    @Value("${maxCountOfStudent}")
+    private static final AtomicLong ATOMIC_LONG = new AtomicLong(1);
     private int maxCountOfStudents;
+    private AmountLimit amountLimit;
+    private MyRandom random;
     private ResourcesFilesDatabaseData resourcesFiles;
     private DataConduct dataConduct;
     private int countOfGroups;
     private Map<String, Student> studentMap = new HashMap<>();
 
     @Autowired
-    public StudentGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+    public StudentGenerator(AmountLimit amountLimit, MyRandom random, ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+        this.amountLimit = amountLimit;
+        this.random = random;
         this.dataConduct = dataConduct;
         this.resourcesFiles = resourcesFiles;
     }
 
     @Override
     public List<Student> generate() {
-        getCounters();
+        initVariables();
 
         List<String> firstNames = resourcesFiles.getFirstNames();
         List<String> lastNames = resourcesFiles.getLastNames();
@@ -37,8 +40,8 @@ public class StudentGenerator implements DataGenerator<Student> {
         int countLastNames = lastNames.size();
 
         while (studentMap.size() < maxCountOfStudents) {
-            String firstName = firstNames.get(RANDOM.nextInt(countFirstNames - 1) + 1);
-            String lastName = lastNames.get(RANDOM.nextInt(countLastNames - 1) + 1);
+            String firstName = firstNames.get(random.getInt(countFirstNames));
+            String lastName = lastNames.get(random.getInt(countLastNames));
 
             String key = firstName + lastName;
             if (!firstName.equals(lastName) && !studentMap.containsKey(key)) {
@@ -46,7 +49,7 @@ public class StudentGenerator implements DataGenerator<Student> {
                                 ATOMIC_LONG.getAndIncrement(),
                                 firstName,
                                 lastName,
-                                generateRandomGroupId()));
+                                random.getLong(countOfGroups)));
             }
         }
         List<Student> generatedStudents = new ArrayList<>(studentMap.values());
@@ -56,11 +59,8 @@ public class StudentGenerator implements DataGenerator<Student> {
         return generatedStudents;
     }
 
-    private void getCounters() {
+    private void initVariables() {
+        maxCountOfStudents = amountLimit.maxCountOfStudents;
         countOfGroups = dataConduct.getGroups().size();
-    }
-
-    private Long generateRandomGroupId() {
-        return RANDOM.longs(1, (countOfGroups + 1)).limit(1).findFirst().getAsLong();
     }
 }
