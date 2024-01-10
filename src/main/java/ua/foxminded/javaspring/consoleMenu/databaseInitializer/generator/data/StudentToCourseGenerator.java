@@ -45,7 +45,7 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
     }
 
     private void randomlyCoursesIndex() {
-        int amountStudentCourses = random.getInt(maxCountCoursesOfStudent + 1);
+        int amountStudentCourses = random.getInt(maxCountCoursesOfStudent);
 
         while (INDICES_COURSES_OF_STUDENT.size() < amountStudentCourses) {
             INDICES_COURSES_OF_STUDENT.add(random.getLong(countCourses));
