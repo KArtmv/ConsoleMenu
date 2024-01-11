@@ -1,18 +1,30 @@
-package ua.foxminded.javaspring.consoleMenu.data;
+package ua.foxminded.javaspring.consoleMenu.util;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class RandomNumberTest {
+class MyRandomTest {
+
+    int bound = 10;
+    MyRandom random = new MyRandom();
+    @Test
+    void generateBetweenOneAnd_shouldReturnIntegerValue_whenIsCalled() {
+        assertAll(
+                () -> assertThat(random.getInt(bound)).isNotNegative().isLessThanOrEqualTo(bound),
+                () -> assertThat(random.getInt(bound)).isNotNegative().isLessThanOrEqualTo(bound),
+                () -> assertThat(random.getInt(bound)).isNotNegative().isLessThanOrEqualTo(bound)
+                );
+    }
 
     @Test
-    public void generateBetweenOneAnd_shouldReturnIntegerValue_whenIsCalled() {
-        RandomNumber randomNumber = new RandomNumber();
+    void getLong_shouldReturnRandomLongNumber_whenIsCalled(){
+        assertAll(
+                () -> assertThat(random.getLong(bound)).isNotNegative().isLessThan(bound),
+                () -> assertThat(random.getLong(bound)).isNotNegative().isLessThan(bound),
+                () -> assertThat(random.getLong(bound)).isNotNegative().isLessThan(bound)
+        );
 
-        for (int inputNumber = 1; inputNumber <= 20; inputNumber++) {
-            int result = randomNumber.generateBetweenOneAndInputNumber(inputNumber);
-            assertThat((result >= 1) && (result <= inputNumber)).isTrue();
-        }
     }
 }
