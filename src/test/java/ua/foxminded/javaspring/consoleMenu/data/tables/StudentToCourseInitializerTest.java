@@ -8,38 +8,27 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
-import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryIsTableExist;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
+import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
+
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.TableInitializer;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class StudentToCourseInitializerTest {
-
+class StudentToCourseInitializerTest {
     @Mock
-    private StudentAtCourseDAO studentAtCourseDAO;
-
+    private TablesDAO<StudentAtCourse> dao;
     @Mock
-    private DataConduct dataConduct;
-
-    @Mock
-    private SQLQueryIsTableExist queryIsTableExist;
-
-    @Mock
-    private SQLQueryOfCreateTable queryOfCreateTable;
+    private DataGenerator<StudentAtCourse> generateItems;
 
     @InjectMocks
-    private StudentToCourseInitializer initializer;
+    private TableInitializer<StudentAtCourse> initializer;
 
     private InitializeObject initializeObject = new InitializeObject();
-
-    private static final String sqlQueryTableExist = "IsTableExist";
 
     @BeforeEach
     void init() {
@@ -50,35 +39,29 @@ public class StudentToCourseInitializerTest {
     void initialize_shouldCreateCourseAndInsertIntoDatabaseTable_whenStudentToCourseTableExist() {
         List<StudentAtCourse> studentAtCourses = initializeObject.studentAtCourseListInit();
 
-        when(queryIsTableExist.queryForStudentToCourseTable()).thenReturn(sqlQueryTableExist);
-        when(studentAtCourseDAO.isStudentToCourseTableExist(sqlQueryTableExist)).thenReturn(true);
-        when(studentAtCourseDAO.isStudentToCourseTableEmpty()).thenReturn(true);
-        when(dataConduct.createRelationStudentCourse()).thenReturn(studentAtCourses);
+        when(dao.isTableExist()).thenReturn(true);
+        when(dao.isTableEmpty()).thenReturn(true);
+        when(generateItems.generate()).thenReturn(studentAtCourses);
 
         initializer.initialize();
 
-        verify(queryIsTableExist).queryForStudentToCourseTable();
-        verify(studentAtCourseDAO).isStudentToCourseTableExist(sqlQueryTableExist);
-        verify(studentAtCourseDAO).isStudentToCourseTableEmpty();
-        verify(dataConduct).createRelationStudentCourse();
+        verify(dao).isTableExist();
+        verify(dao).isTableEmpty();
+        verify(generateItems).generate();
+        verify(dao, times(studentAtCourses.size())).addItem(any(StudentAtCourse.class));
     }
 
     @Test
     void initialize_shouldCreateTableCourseAndInsertIntoDatabaseTable_whenStudentToCourseTableNotExist() {
         List<StudentAtCourse> studentAtCourses = initializeObject.studentAtCourseListInit();
-        String sqlQueryCreateTable = "CreateTableQuery";
 
-        when(queryIsTableExist.queryForStudentToCourseTable()).thenReturn(sqlQueryTableExist);
-        when(studentAtCourseDAO.isStudentToCourseTableExist(sqlQueryTableExist)).thenReturn(false);
-        when(queryOfCreateTable.getStudentToCourseTable()).thenReturn(sqlQueryCreateTable);
-        when(dataConduct.createRelationStudentCourse()).thenReturn(studentAtCourses);
+        when(dao.isTableExist()).thenReturn(false);
+        when(generateItems.generate()).thenReturn(studentAtCourses);
 
         initializer.initialize();
 
-        verify(queryIsTableExist).queryForStudentToCourseTable();
-        verify(studentAtCourseDAO).isStudentToCourseTableExist(sqlQueryTableExist);
-        verify(queryOfCreateTable).getStudentToCourseTable();
-        verify(studentAtCourseDAO).createStudentToCourseTable(sqlQueryCreateTable);
-        verify(dataConduct).createRelationStudentCourse();
+        verify(dao).isTableExist();
+        verify(generateItems).generate();
+        verify(dao, times(studentAtCourses.size())).addItem(any(StudentAtCourse.class));
     }
 }
