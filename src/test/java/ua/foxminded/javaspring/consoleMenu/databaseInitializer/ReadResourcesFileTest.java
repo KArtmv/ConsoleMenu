@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.data;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
