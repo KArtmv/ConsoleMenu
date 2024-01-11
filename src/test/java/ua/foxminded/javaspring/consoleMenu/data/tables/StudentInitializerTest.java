@@ -8,38 +8,27 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
-import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryIsTableExist;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
+import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
+
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.TableInitializer;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class StudentInitializerTest {
-
+class StudentInitializerTest {
     @Mock
-    private StudentDAO studentDAO;
-
+    private TablesDAO<Student> dao;
     @Mock
-    private DataConduct dataConduct;
-
-    @Mock
-    private SQLQueryIsTableExist queryIsTableExist;
-
-    @Mock
-    private SQLQueryOfCreateTable queryOfCreateTable;
+    private DataGenerator<Student> generateItems;
 
     @InjectMocks
-    private StudentInitializer initializer;
+    private TableInitializer<Student> initializer;
 
     private InitializeObject initializeObject = new InitializeObject();
-
-    private static final String sqlQueryTableExist = "IsTableExist";
 
     @BeforeEach
     void init() {
@@ -50,35 +39,29 @@ public class StudentInitializerTest {
     void initialize_shouldCreateCourseAndInsertIntoDatabaseTable_whenGroupTableExist() {
         List<Student> students = initializeObject.studentsListInit();
 
-        when(queryIsTableExist.queryForStudentTable()).thenReturn(sqlQueryTableExist);
-        when(studentDAO.isTableExist(sqlQueryTableExist)).thenReturn(true);
-        when(studentDAO.isTableEmpty()).thenReturn(true);
-        when(dataConduct.createStudents()).thenReturn(students);
+        when(dao.isTableExist()).thenReturn(true);
+        when(dao.isTableEmpty()).thenReturn(true);
+        when(generateItems.generate()).thenReturn(students);
 
         initializer.initialize();
 
-        verify(queryIsTableExist).queryForStudentTable();
-        verify(studentDAO).isTableExist(sqlQueryTableExist);
-        verify(studentDAO).isTableEmpty();
-        verify(dataConduct).createStudents();
+        verify(dao).isTableExist();
+        verify(dao).isTableEmpty();
+        verify(generateItems).generate();
+        verify(dao, times(students.size())).addItem(any(Student.class));
     }
 
     @Test
     void initialize_shouldCreateTableCourseAndInsertIntoDatabaseTable_whenGroupTableNotExist() {
         List<Student> students = initializeObject.studentsListInit();
-        String sqlQueryCreateTable = "CreateTableQuery";
 
-        when(queryIsTableExist.queryForStudentTable()).thenReturn(sqlQueryTableExist);
-        when(studentDAO.isTableExist(sqlQueryTableExist)).thenReturn(false);
-        when(queryOfCreateTable.getStudentTable()).thenReturn(sqlQueryCreateTable);
-        when(dataConduct.createStudents()).thenReturn(students);
+        when(dao.isTableExist()).thenReturn(false);
+        when(generateItems.generate()).thenReturn(students);
 
         initializer.initialize();
 
-        verify(queryIsTableExist).queryForStudentTable();
-        verify(studentDAO).isTableExist(sqlQueryTableExist);
-        verify(queryOfCreateTable).getStudentTable();
-        verify(studentDAO).createStudentTable(sqlQueryCreateTable);
-        verify(dataConduct).createStudents();
+        verify(dao).isTableExist();
+        verify(generateItems).generate();
+        verify(dao, times(students.size())).addItem(any(Student.class));
     }
 }

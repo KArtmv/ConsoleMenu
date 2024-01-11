@@ -8,38 +8,28 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
-import ua.foxminded.javaspring.consoleMenu.data.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryIsTableExist;
-import ua.foxminded.javaspring.consoleMenu.data.tables.sqlScripts.SQLQueryOfCreateTable;
+import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.TableInitializer;
+import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class GroupInitializerTest {
-
-    @Mock
-    private GroupDAO groupDAO;
+class GroupInitializerTest {
 
     @Mock
-    private DataConduct dataConduct;
-
+    private TablesDAO<Group> dao;
     @Mock
-    private SQLQueryIsTableExist queryIsTableExist;
-
-    @Mock
-    private SQLQueryOfCreateTable queryOfCreateTable;
+    private DataGenerator<Group> generateItems;
 
     @InjectMocks
-    private GroupInitializer initializer;
-
+    private TableInitializer<Group> initializer;
     private InitializeObject initializeObject = new InitializeObject();
-
-    private static final String sqlQueryTableExist = "IsTableExist";
 
     @BeforeEach
     void init() {
@@ -50,35 +40,29 @@ public class GroupInitializerTest {
     void initialize_shouldCreateCourseAndInsertIntoDatabaseTable_whenGroupTableExist() {
         List<Group> groups = initializeObject.groupsListInit();
 
-        when(queryIsTableExist.queryForGroupTable()).thenReturn(sqlQueryTableExist);
-        when(groupDAO.isTableExist(sqlQueryTableExist)).thenReturn(true);
-        when(groupDAO.isGroupTableEmpty()).thenReturn(true);
-        when(dataConduct.createGroups()).thenReturn(groups);
+        when(dao.isTableExist()).thenReturn(true);
+        when(dao.isTableEmpty()).thenReturn(true);
+        when(generateItems.generate()).thenReturn(groups);
 
         initializer.initialize();
 
-        verify(queryIsTableExist).queryForGroupTable();
-        verify(groupDAO).isTableExist(sqlQueryTableExist);
-        verify(groupDAO).isGroupTableEmpty();
-        verify(dataConduct).createGroups();
+        verify(dao).isTableExist();
+        verify(dao).isTableEmpty();
+        verify(generateItems).generate();
+        verify(dao, times(groups.size())).addItem(any(Group.class));
     }
 
     @Test
     void initialize_shouldCreateTableCourseAndInsertIntoDatabaseTable_whenGroupTableNotExist() {
         List<Group> groups = initializeObject.groupsListInit();
-        String sqlQueryCreateTable = "CreateTableQuery";
 
-        when(queryIsTableExist.queryForGroupTable()).thenReturn(sqlQueryTableExist);
-        when(groupDAO.isTableExist(sqlQueryTableExist)).thenReturn(false);
-        when(queryOfCreateTable.getGroupTable()).thenReturn(sqlQueryCreateTable);
-        when(dataConduct.createGroups()).thenReturn(groups);
+        when(dao.isTableExist()).thenReturn(false);
+        when(generateItems.generate()).thenReturn(groups);
 
         initializer.initialize();
 
-        verify(queryIsTableExist).queryForGroupTable();
-        verify(groupDAO).isTableExist(sqlQueryTableExist);
-        verify(queryOfCreateTable).getGroupTable();
-        verify(groupDAO).createGroupTable(sqlQueryCreateTable);
-        verify(dataConduct).createGroups();
+        verify(dao).isTableExist();
+        verify(generateItems).generate();
+        verify(dao, times(groups.size())).addItem(any(Group.class));
     }
 }
