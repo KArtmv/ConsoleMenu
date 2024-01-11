@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,7 +28,6 @@ import static org.mockito.Mockito.when;
 class ReadResourcesFileTest {
     @Mock
     private Resource resource;
-
     @Mock
     private ResourceLoader resourceLoader;
 
