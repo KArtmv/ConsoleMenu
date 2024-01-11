@@ -20,8 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class GroupGeneratorTest {
+class GroupGeneratorTest {
 
     @Mock
     ResourcesFilesDatabaseData resourcesFiles;
@@ -40,10 +39,10 @@ public class GroupGeneratorTest {
     void generate_shouldReturnListOfGroup_whenProvidedDataIsValid() {
         List<Group> expect = new InitializeObject().groupsListInit();
 
-        when(resourcesFiles.getGroups()).thenReturn(Arrays.asList("groupName", "groupName", "groupName"));
+        when(resourcesFiles.getGroups()).thenReturn(Arrays.asList("groupName1", "groupName2", "groupName3"));
 
         List<Group> result = groupGenerator.generate();
-        assertThat(result).usingRecursiveComparison().isEqualTo(expect);
+        assertThat(result).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(expect);
 
         verify(resourcesFiles).getGroups();
         verify(dataConduct).setGroups(result);

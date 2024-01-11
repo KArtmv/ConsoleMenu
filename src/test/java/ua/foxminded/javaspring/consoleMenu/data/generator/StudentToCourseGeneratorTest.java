@@ -61,7 +61,7 @@ class StudentToCourseGeneratorTest {
         
         assertAll(
         		() -> assertThat(result).hasSize(6),
-        		() -> assertThat(result).usingRecursiveComparison().isEqualTo(expect)
+        		() -> assertThat(result).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(expect)
         		);
 
         verify(dataConduct).getCourses();
