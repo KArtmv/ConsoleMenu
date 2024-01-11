@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReadResourcesFile {
 
@@ -33,12 +34,9 @@ public class ReadResourcesFile {
     public List<String> getData(String filePath) {
         List<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(getDataResource(filePath)))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
+            lines = reader.lines().collect(Collectors.toList());
         } catch (IOException e) {
-            LOGGER.info("Failed to read file: " + filePath);
+            LOGGER.debug("Failed to read file: {}.", e.getMessage());
         }
         return lines;
     }
@@ -48,7 +46,7 @@ public class ReadResourcesFile {
         try {
             inputStream = resourceLoader.getResource(filePath).getInputStream();
         } catch (IOException e) {
-            LOGGER.info("Failed to get resource from InputStream by read file:" + e);
+            LOGGER.debug("Failed to get resource: {}.", e.getMessage());
         }
         return inputStream;
     }
