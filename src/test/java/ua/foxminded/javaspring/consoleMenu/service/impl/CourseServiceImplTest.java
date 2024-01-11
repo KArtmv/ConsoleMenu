@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.dao.CourseDAO;
+import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.service.impl.CourseServiceImpl;
 
@@ -16,9 +17,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CourseServiceImplTest {
+class CourseServiceImplTest {
 
+    @Mock
+    private StudentAtCourseDAO studentAtCourseDAO;
     @Mock
     private CourseDAO courseDAO;
 
