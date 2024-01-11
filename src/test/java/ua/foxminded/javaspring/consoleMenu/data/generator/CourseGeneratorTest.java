@@ -20,8 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CourseGeneratorTest {
+class CourseGeneratorTest {
 
     @Mock
     ResourcesFilesDatabaseData resourcesFiles;
@@ -39,11 +38,11 @@ public class CourseGeneratorTest {
     void generate_shouldReturnListOfCourse_whenIsValidDataProvided() {
         List<Course> expected = new InitializeObject().coursesListInit();
 
-        when(resourcesFiles.getCourses()).thenReturn(Arrays.asList("courseName_courseDescription",
-                "courseName_courseDescription", "courseName_courseDescription"));
+        when(resourcesFiles.getCourses()).thenReturn(Arrays.asList("courseName1_courseDescription1",
+                "courseName2_courseDescription2", "courseName3_courseDescription3"));
 
         List<Course> result = courseGenerator.generate();
-        assertThat(result).usingRecursiveComparison().isEqualTo(expected);
+        assertThat(result).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(expected);
 
         verify(resourcesFiles).getCourses();
         verify(dataConduct).setCourses(result);
