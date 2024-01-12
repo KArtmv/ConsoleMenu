@@ -13,7 +13,7 @@ public class InitializeObject {
     public List<Student> studentsListInit() {
         List<Student> students = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
-            students.add(new Student((long) id, "firstName", "lastName", (long) id));
+            students.add(new Student((long) id, "firstname" + id, "lastName" + id, (long) id));
         }
         return students;
     }
@@ -21,7 +21,7 @@ public class InitializeObject {
     public List<Course> coursesListInit() {
         List<Course> courses = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
-            courses.add(new Course((long) id, "courseName", "courseDescription"));
+            courses.add(new Course("courseName" + id, "courseDescription" + id));
         }
         return courses;
     }
@@ -29,7 +29,7 @@ public class InitializeObject {
     public List<Group> groupsListInit() {
         List<Group> groups = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
-            groups.add(new Group((long) id, "groupName"));
+            groups.add(new Group("groupName" + id));
         }
         return groups;
     }
@@ -37,8 +37,8 @@ public class InitializeObject {
     public List<StudentAtCourse> studentAtCourseListInit() {
         List<StudentAtCourse> studentAtCourses = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
-            studentAtCourses.add(new StudentAtCourse((long) id, new Student((long) id, "firstname", "lastName"),
-                    new Course((long) id, "courseName", "courseDescription")));
+            studentAtCourses.add(new StudentAtCourse((long) id, new Student((long) id, "firstname" + id, "lastName" + id),
+                    new Course((long) id, "courseName" + id, "courseDescription" + id)));
         }
         return studentAtCourses;
     }
