@@ -3,6 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.dao.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.javaspring.consoleMenu.dao.CourseDAO;
@@ -44,7 +45,11 @@ public class CourseRepo implements TablesDAO<Course>, CourseDAO {
 
     @Override
     public Optional<Course> getItemByID(Course course) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_COURSE_BY_ID, new CourseMapper(), course.getCourseID()));
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_COURSE_BY_ID, new CourseMapper(), course.getCourseID()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
