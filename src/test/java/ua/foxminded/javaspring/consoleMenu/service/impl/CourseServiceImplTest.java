@@ -2,36 +2,25 @@ package ua.foxminded.javaspring.consoleMenu.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.dao.CourseDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
+import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.service.impl.CourseServiceImpl;
+import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class CourseServiceImplTest {
 
@@ -45,66 +34,45 @@ class CourseServiceImplTest {
     @InjectMocks
     private CourseServiceImpl courseService;
 
-    public static Stream<Arguments> optionalGenerate() {
-        return Stream.of(
-                Arguments.of(Optional.of(course)),
-                Arguments.of(Optional.empty())
-        );
-    }
-
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
     }
 
-//    @Test
-    @ParameterizedTest
-    @MethodSource("optionalGenerate")
-    void allStudentsFromCourse_shouldReturnListOfStudentsToEnrollmentWithCourse_whenCourseIsExist(Optional<Course> course) {
-        Course course2 = new Course(1L);
-//        Optional<Course> optional = Optional.of(course2);
+    @Test
+    void allStudentsFromCourse_shouldReturnListOfStudentsToEnrollmentWithCourse_whenCourseIsExist() {
+        List<StudentAtCourse> expect = new ArrayList<>();
+        expect.add(new StudentAtCourse(new Student("firstName1", "lastName1"), course));
+        expect.add(new StudentAtCourse(new Student("firstName2", "lastName2"), course));
+        expect.add(new StudentAtCourse(new Student("firstName3", "lastName3"), course));
 
-        List<StudentAtCourse> studentsAtCourse = new ArrayList<>();
-        studentsAtCourse.add(new StudentAtCourse(new Student("firstName1", "lastName1"), course2));
-        studentsAtCourse.add(new StudentAtCourse(new Student("firstName2", "lastName2"), course2));
-        studentsAtCourse.add(new StudentAtCourse(new Student("firstName3", "lastName3"), course2));
+        when(courseDAO.getItemByID(course)).thenReturn(Optional.of(course));
+        when(studentAtCourseDAO.allStudentsFromCourse(course)).thenReturn(expect);
 
-//        doReturn(course).when(courseDAO).getItemByID(any(Course.class))/*.orElseThrow(NoSuchElementException::new)*/;
-//        doReturn(studentsAtCourse).when(studentAtCourseDAO).allStudentsFromCourse(course2);
-//
-        assertThat(courseService.allStudentsFromCourse(course2)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(studentsAtCourse).;
-//
-////        assertAll(
-//                assertThat(Optional.ofNullable(courseService.allStudentsFromCourse(course2)).orElseThrow(NoSuchElementException::new));
-////        );
+        assertThat(courseService.allStudentsFromCourse(course)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(expect);
 
+        verify(courseDAO).getItemByID(course);
+        verify(studentAtCourseDAO).allStudentsFromCourse(course);
+  }
 
-        when(courseDAO.getItemByID(course2)).thenReturn(course).thenThrow();
-        when(studentAtCourseDAO.allStudentsFromCourse(course2).orElseThrow(studentsAtCourse);
-//
-//        assertAll(
-//
-//        () ->  assertThat(course).isPresent(),
-//        () ->  course.ifPresent(course1 -> assertThat(courseService.allStudentsFromCourse(course.get()))
-//                .usingRecursiveComparison()
-//                .ignoringCollectionOrder()
-//                .isEqualTo(studentsAtCourse)),
-//
-//        () -> assertThrows(NoSuchElementException.class, () -> courseService.allStudentsFromCourse(course.get())));
+    @Test
+    void allStudentsFromCourse_shouldThrowsException_whenCourseIDIsNotExist() {
+        when(courseDAO.getItemByID(course)).thenReturn(Optional.empty());
 
+        assertThrows(InvalidIdException.class, () ->
+            courseService.allStudentsFromCourse(course));
 
-
-
-
-
+        verify(courseDAO).getItemByID(course);
     }
 
-//    @Test
-//    void isValidCourseID_shouldReturnTrue_whenCourseIDIsValid() {
-//        when(courseDAO.isValidCourseID(any(Course.class))).thenReturn(true);
-//
-//        assertThat(courseService.isValidCourseID(new Course(1L))).isTrue();
-//
-//        verify(courseDAO).isValidCourseID(any(Course.class));
-//    }
+    @Test
+    void getAllCourses_shouldReturnListOfCourses_whenRequest(){
+        List<Course> courses = new InitializeObject().coursesListInit();
+
+        when(courseDAO.getAll()).thenReturn(courses);
+
+        assertThat(courseService.getAllCourses()).isEqualTo(courses);
+
+        verify(courseDAO).getAll();
+    }
 }
