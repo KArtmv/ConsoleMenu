@@ -48,9 +48,9 @@ class StudentGeneratorTest {
         List<Group> groups = new InitializeObject().groupsListInit();
 
         List<Student> expect = new ArrayList<>();
-        expect.add(new Student(1L, "firstName0", "lastName2", 2L));
-        expect.add(new Student(2L, "firstName2", "lastName1", 3L));
-        expect.add(new Student(3L, "firstName1", "lastName0", 1L));
+        expect.add(new Student(1L, "firstName0", "lastName2", new Group(2L)));
+        expect.add(new Student(2L, "firstName2", "lastName1", new Group(3L)));
+        expect.add(new Student(3L, "firstName1", "lastName0", new Group(1L)));
 
 
 
