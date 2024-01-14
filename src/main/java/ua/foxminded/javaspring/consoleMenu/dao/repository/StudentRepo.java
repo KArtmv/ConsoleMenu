@@ -3,6 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.dao.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
@@ -47,8 +48,12 @@ public class StudentRepo implements StudentDAO, TablesDAO<Student> {
 
     @Override
     public Optional<Student> getItemByID(Student student) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_STUDENT_BY_ID, new StudentMapper(),
-                student.getStudentID()));
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_STUDENT_BY_ID, new StudentMapper(),
+                    student.getStudentID()));
+        } catch (EmptyResultDataAccessException e){
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -64,7 +69,7 @@ public class StudentRepo implements StudentDAO, TablesDAO<Student> {
     @Override
     public boolean addItem(Student student) {
         return jdbcTemplate.update(SQL_ADD_NEW_STUDENT, student.getFirstName(), student.getLastName(),
-                student.getGroupID()) > 0;
+                student.getGroup().getGroupID()) > 0;
     }
 
     @Override
