@@ -5,8 +5,7 @@ public class Student {
     private Long studentID;
     private String firstName;
     private String lastName;
-    private Long groupID;
-    private String groupName;
+    private Group group;
 
     public Student() {
     }
@@ -15,10 +14,10 @@ public class Student {
         this.studentID = studentID;
     }
 
-    public Student(String firstName, String lastName, Long groupID) {
+    public Student(String firstName, String lastName, Group group) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.groupID = groupID;
+        this.group = group;
     }
 
     public Student(String firstName, String lastName) {
@@ -32,18 +31,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public Student(Long studentID, String firstName, String lastName, Long groupID) {
+    public Student(Long studentID, String firstName, String lastName, Group group) {
         this.studentID = studentID;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.groupID = groupID;
-    }
-
-    public Student(Long studentID, String firstName, String lastName, String groupName) {
-        this.studentID = studentID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.groupName = groupName;
+        this.group = group;
     }
 
     public Long getStudentID() {
@@ -58,14 +50,6 @@ public class Student {
         return lastName;
     }
 
-    public Long getGroupID() {
-        return groupID;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
     public void setStudentID(Long studentID) {
         this.studentID = studentID;
     }
@@ -78,7 +62,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public void setGroupID(Long groupID) {
-        this.groupID = groupID;
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }
