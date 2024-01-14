@@ -42,20 +42,20 @@ class StudentToCourseGeneratorTest {
         List<Student> students =  initializeObject.studentsListInit();
         List<Course> courses = initializeObject.coursesListInit();
         int maxCountCoursesOfStudent = 3;
-        
+
         List<StudentAtCourse> expect = new ArrayList<>();
-        expect.add(new StudentAtCourse(new Student(1L, "firstname1", "lastName1", 1L), new Course(1L)));
-        expect.add(new StudentAtCourse(new Student(1L, "firstname1", "lastName1", 1L), new Course(2L)));
-        expect.add(new StudentAtCourse(new Student(2L, "firstname2", "lastName2", 2L), new Course(1L)));
-        expect.add(new StudentAtCourse(new Student(3L, "firstname3", "lastName3", 3L), new Course(1L)));
-        expect.add(new StudentAtCourse(new Student(3L, "firstname3", "lastName3", 3L), new Course(2L)));
-        expect.add(new StudentAtCourse(new Student(3L, "firstname3", "lastName3", 3L), new Course(3L)));
+        expect.add(new StudentAtCourse(students.get(0), courses.get(0)));
+        expect.add(new StudentAtCourse(students.get(0), courses.get(1)));
+        expect.add(new StudentAtCourse(students.get(1), courses.get(0)));
+        expect.add(new StudentAtCourse(students.get(2), courses.get(0)));
+        expect.add(new StudentAtCourse(students.get(2), courses.get(1)));
+        expect.add(new StudentAtCourse(students.get(2), courses.get(2)));
 
         when(dataConduct.getCourses()).thenReturn(courses);
         when(dataConduct.getStudents()).thenReturn(students);
         when(amountLimit.getMaxCountCoursesOfStudent()).thenReturn(maxCountCoursesOfStudent);
         when(random.getInt(maxCountCoursesOfStudent)).thenReturn(2).thenReturn(1).thenReturn(3);
-        when(random.getLong(courses.size())).thenReturn(1L, 2L).thenReturn(1L).thenReturn(1L, 2L, 3L);
+        when(random.getInt(courses.size())).thenReturn(0, 1).thenReturn(0).thenReturn(0, 1, 2);
 
         List<StudentAtCourse> result = studentToCourseGenerator.generate();
         
@@ -67,7 +67,7 @@ class StudentToCourseGeneratorTest {
         verify(dataConduct).getCourses();
         verify(dataConduct).getStudents();
         verify(amountLimit).getMaxCountCoursesOfStudent();
-        verify(random, times(3)).getInt(courses.size());
-        verify(random, times(6)).getLong(maxCountCoursesOfStudent);
+        verify(random, times(3)).getInt(maxCountCoursesOfStudent);
+        verify(random, times(6)).getInt(courses.size());
     }
 }
