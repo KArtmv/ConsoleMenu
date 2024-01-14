@@ -43,7 +43,7 @@ public class GroupController {
                 consolePrinter.viewAmountStudentAtGroup(studentsAtGroups);
             }
         } catch (InputMismatchException e) {
-            LOGGER.info("Error getting numbers:" + e.getMessage());
+            LOGGER.error("Error getting numbers: {}", e.getMessage());
         }
     }
 }
