@@ -3,6 +3,8 @@ package ua.foxminded.javaspring.consoleMenu.dao.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
@@ -56,7 +58,11 @@ public class GroupRepo implements GroupDAO, TablesDAO<Group> {
 
     @Override
     public Optional<Group> getItemByID(Group group) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_GROUP_BY_ID, new GroupMapper(), group.getGroupID()));
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_GET_GROUP_BY_ID, new GroupMapper(), group.getGroupID()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
