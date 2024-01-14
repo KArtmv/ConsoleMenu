@@ -3,9 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
-import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
-import ua.foxminded.javaspring.consoleMenu.dao.StudentDAO;
+import ua.foxminded.javaspring.consoleMenu.dao.*;
 import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
@@ -15,17 +13,18 @@ import ua.foxminded.javaspring.consoleMenu.service.StudentService;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
     private StudentDAO studentDAO;
     private StudentAtCourseDAO studentAtCourseDAO;
-    private TablesDAO<Group> groupDAO;
-    private TablesDAO<Course> courseDAO;
+    private GroupDAO groupDAO;
+    private CourseDAO courseDAO;
 
     @Autowired
-    public StudentServiceImpl(StudentDAO studentDAO, StudentAtCourseDAO studentAtCourseDAO, TablesDAO<Group> groupDAO, TablesDAO<Course> courseDAO) {
+    public StudentServiceImpl(StudentDAO studentDAO, StudentAtCourseDAO studentAtCourseDAO, GroupDAO groupDAO, CourseDAO courseDAO) {
         this.studentDAO = studentDAO;
         this.studentAtCourseDAO = studentAtCourseDAO;
         this.groupDAO = groupDAO;
@@ -34,14 +33,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean addNewStudent(Student student) {
-        try {
-            if (groupDAO.getItemByID(new Group(student.getGroupID())).isPresent()) {
+            if (groupDAO.getItemByID(student.getGroup()).isPresent()) {
                 return studentDAO.addItem(student);
+            } else {
+                throw new InvalidIdException("Not found group with received ID: " + student.getGroup().getGroupID());
             }
-        } catch (EmptyResultDataAccessException e) {
-            throw new InvalidIdException("Not found group with received ID: " + student.getGroupID());
-        }
-        return false;
     }
 
     @Override
@@ -52,14 +48,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean addStudentToCourse(StudentAtCourse studentAtCourse) {
-        try {
             if (courseDAO.getItemByID(studentAtCourse.getCourse()).isPresent()) {
                 return studentAtCourseDAO.addItem(studentAtCourse);
-            }
-        } catch (EmptyResultDataAccessException e) {
+            } else  {
             throw new InvalidIdException("Not found course with received ID: " + studentAtCourse.getCourse().getCourseID());
         }
-        return false;
     }
 
     @Override
@@ -76,15 +69,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudent(Student student) {
-        Student result = null;
-        try {
-            if (studentDAO.getItemByID(student).isPresent()) {
-                result = studentDAO.getItemByID(student).get();
-            }
-        } catch (EmptyResultDataAccessException e) {
-            throw new InvalidIdException("Not found student with given ID: " + student.getStudentID());
-        }
-        return result;
+        return studentDAO.getItemByID(student).orElseThrow(() -> new InvalidIdException("Not found student with given ID: " + student.getStudentID()));
     }
 
     @Override
