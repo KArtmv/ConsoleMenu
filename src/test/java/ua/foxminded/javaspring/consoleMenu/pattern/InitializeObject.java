@@ -13,14 +13,14 @@ public class InitializeObject {
     public List<Student> studentsListInit() {
         List<Student> students = new ArrayList<>();
         for (int id = 1; id <= 3; id++) {
-            students.add(new Student((long) id, "firstname" + id, "lastName" + id, (long) id));
+            students.add(new Student((long) id, "firstname" + id, "lastName" + id, new Group((long) id)));
         }
         return students;
     }
 
     public List<Course> coursesListInit() {
         List<Course> courses = new ArrayList<>();
-        for (int id = 1; id <= 3; id++) {
+        for (int id = 1; id <= 4; id++) {
             courses.add(new Course("courseName" + id, "courseDescription" + id));
         }
         return courses;
