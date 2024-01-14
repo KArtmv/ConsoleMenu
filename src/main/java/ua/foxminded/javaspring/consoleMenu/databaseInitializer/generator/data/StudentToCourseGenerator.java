@@ -16,8 +16,9 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
     private DataConduct dataConduct;
     private AmountLimit amountLimits;
     private MyRandom random;
-    private Set<Long> INDICES_COURSES_OF_STUDENT = new HashSet<>();
+    private Set<Integer> INDICES_COURSES_OF_STUDENT = new HashSet<>();
     private List<StudentAtCourse> studentAtCourses = new ArrayList<>();
+    private List<Course> availebleCourses;
 
     @Autowired
     public StudentToCourseGenerator(DataConduct dataConduct, AmountLimit amountLimits, MyRandom random) {
@@ -39,7 +40,7 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
         randomlyCoursesIndex();
 
         INDICES_COURSES_OF_STUDENT.forEach(index ->
-                studentAtCourses.add(new StudentAtCourse(student, new Course(index))));
+                studentAtCourses.add(new StudentAtCourse(student, availebleCourses.get(index))));
 
         INDICES_COURSES_OF_STUDENT.clear();
     }
@@ -48,12 +49,12 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
         int amountStudentCourses = random.getInt(maxCountCoursesOfStudent);
 
         while (INDICES_COURSES_OF_STUDENT.size() < amountStudentCourses) {
-            INDICES_COURSES_OF_STUDENT.add(random.getLong(countCourses));
+            INDICES_COURSES_OF_STUDENT.add(random.getInt(availebleCourses.size()));
         }
     }
 
     private void initVariables() {
-        countCourses = dataConduct.getCourses().size();
+        availebleCourses = dataConduct.getCourses();
         maxCountCoursesOfStudent = amountLimits.getMaxCountCoursesOfStudent();
     }
 }
