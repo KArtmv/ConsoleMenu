@@ -43,7 +43,7 @@ public class InputHandler {
         student.setLastName(getString());
         consolePrinter.print(messages.ADD_GROUP_TO_STUDENT);
         consolePrinter.printAllGroups();
-        student.setGroupID(scanner.getLong());
+        student.setGroup(getGroup());
 
         return student;
     }
