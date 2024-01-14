@@ -3,6 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.util.AmountLimit;
 import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
@@ -49,7 +50,7 @@ public class StudentGenerator implements DataGenerator<Student> {
                                 ATOMIC_LONG.getAndIncrement(),
                                 firstName,
                                 lastName,
-                                random.getLong(countOfGroups)));
+                                new Group(random.getLong(countOfGroups))));
             }
         }
         List<Student> generatedStudents = new ArrayList<>(studentMap.values());
