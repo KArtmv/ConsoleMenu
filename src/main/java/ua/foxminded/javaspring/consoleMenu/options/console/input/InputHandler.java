@@ -88,4 +88,8 @@ public class InputHandler {
         studentAtCourse.setEnrollmentID(scanner.getLong());
         return studentAtCourse;
     }
+
+    public Integer getRequiredAmountOfStudents(){
+        return scanner.getInt();
+    }
 }
