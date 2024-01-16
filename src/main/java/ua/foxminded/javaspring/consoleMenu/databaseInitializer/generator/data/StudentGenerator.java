@@ -1,11 +1,11 @@
 package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
-import ua.foxminded.javaspring.consoleMenu.util.AmountLimit;
 import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
 
 import java.util.*;
@@ -14,8 +14,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class StudentGenerator implements DataGenerator<Student> {
 
     private static final AtomicLong ATOMIC_LONG = new AtomicLong(1);
+    @Value("${maxCountOfStudent}")
     private int maxCountOfStudents;
-    private AmountLimit amountLimit;
     private MyRandom random;
     private ResourcesFilesDatabaseData resourcesFiles;
     private DataConduct dataConduct;
@@ -23,8 +23,7 @@ public class StudentGenerator implements DataGenerator<Student> {
     private Map<String, Student> studentMap = new HashMap<>();
 
     @Autowired
-    public StudentGenerator(AmountLimit amountLimit, MyRandom random, ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
-        this.amountLimit = amountLimit;
+    public StudentGenerator(MyRandom random, ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
         this.random = random;
         this.dataConduct = dataConduct;
         this.resourcesFiles = resourcesFiles;
@@ -61,7 +60,6 @@ public class StudentGenerator implements DataGenerator<Student> {
     }
 
     private void initVariables() {
-        maxCountOfStudents = amountLimit.getMaxCountOfStudents();
         countOfGroups = dataConduct.getGroups().size();
     }
 }
