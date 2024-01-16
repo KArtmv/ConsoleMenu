@@ -20,7 +20,7 @@ public class InitializeObject {
 
     public List<Course> coursesListInit() {
         List<Course> courses = new ArrayList<>();
-        for (int id = 1; id <= 4; id++) {
+        for (int id = 1; id <= 3; id++) {
             courses.add(new Course("courseName" + id, "courseDescription" + id));
         }
         return courses;
