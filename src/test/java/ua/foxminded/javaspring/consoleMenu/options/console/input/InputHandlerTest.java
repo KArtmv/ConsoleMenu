@@ -66,7 +66,7 @@ class InputHandlerTest {
     }
 
     @Test
-    void getDataOfNewStudent_shouldThrowsInputMismatchException_whenEnteredValidData() {
+    void getDataOfNewStudent_shouldThrowsInputMismatchException_whenEnteredNotValidData() {
         when(scanner.getLine()).thenReturn("firstName").thenReturn("last547Name");
 
         assertThrows(InputMismatchException.class, () -> inputHandler.getDataOfNewStudent());
