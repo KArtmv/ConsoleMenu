@@ -101,12 +101,11 @@ public class StudentController {
                 LOGGER.debug("Received enrollment id: {}.", enrollmentID.getEnrollmentID());
 
                 if (studentService.removeStudentFromCourse(enrollmentID)) {
-                    consolePrinter.print(String.format(messages.STUDENT_REMOVED_FROM_COURSE,
-                            student.getStudentID(), student.getFirstName(), student.getLastName(), allStudentCourses.get(0).getCourse().getCourseName()));
+                    consolePrinter.print(messages.STUDENT_REMOVED_FROM_COURSE);
                     LOGGER.debug("Student removed from course.");
                 }
             } else {
-                consolePrinter.print(String.format(messages.STUDENT_HAS_NOT_COURSE , student.getFirstName(), student.getLastName()));
+                consolePrinter.print(messages.STUDENT_HAS_NOT_COURSE);
                 LOGGER.debug("Student has not any course.");
             }
         } catch (InvalidIdException | InputMismatchException e) {
