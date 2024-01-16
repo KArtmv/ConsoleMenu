@@ -12,7 +12,6 @@ import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.util.AmountLimit;
 import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
 
 @Component
@@ -30,8 +29,8 @@ public class DataConfigInitializer {
     }
 
     @Bean
-    public DataGenerator<Student> studentGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct, MyRandom random, AmountLimit amountLimit) {
-        return new StudentGenerator(amountLimit, random, resourcesFiles, dataConduct);
+    public DataGenerator<Student> studentGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct, MyRandom random) {
+        return new StudentGenerator(random, resourcesFiles, dataConduct);
     }
 
     @Bean
@@ -45,8 +44,8 @@ public class DataConfigInitializer {
     }
 
     @Bean
-    public DataGenerator<StudentAtCourse> studentToCourseGenerator(DataConduct dataConduct, AmountLimit amountLimits, MyRandom random) {
-        return new StudentToCourseGenerator(dataConduct, amountLimits, random);
+    public DataGenerator<StudentAtCourse> studentToCourseGenerator(DataConduct dataConduct, MyRandom random) {
+        return new StudentToCourseGenerator(dataConduct, random);
     }
 
     @Bean
