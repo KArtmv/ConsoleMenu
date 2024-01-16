@@ -39,7 +39,7 @@ class CourseGeneratorTest {
         List<Course> expected = new InitializeObject().coursesListInit();
 
         when(resourcesFiles.getCourses()).thenReturn(Arrays.asList("courseName1_courseDescription1",
-                "courseName2_courseDescription2", "courseName3_courseDescription3", "courseName4_courseDescription4"));
+                "courseName2_courseDescription2", "courseName3_courseDescription3"));
 
         List<Course> result = courseGenerator.generate();
         assertThat(result).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(expected);

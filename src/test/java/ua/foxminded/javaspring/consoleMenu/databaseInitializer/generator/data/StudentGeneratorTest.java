@@ -5,19 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.StudentGenerator;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
-import ua.foxminded.javaspring.consoleMenu.util.AmountLimit;
 import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -25,8 +23,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class StudentGeneratorTest {
-    @Mock
-    private AmountLimit amountLimit;
     @Mock
     private MyRandom random;
     @Mock
@@ -43,6 +39,8 @@ class StudentGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfStudents_whenIsOk() {
+        ReflectionTestUtils.setField(studentGenerator, "maxCountOfStudents", 3);
+
         List<String> firstNames = Arrays.asList("firstName0", "firstName1", "firstName2");
         List<String> lastNames = Arrays.asList("lastName0", "lastName1", "lastName2", "lastName3");
         List<Group> groups = new InitializeObject().groupsListInit();
@@ -52,12 +50,9 @@ class StudentGeneratorTest {
         expect.add(new Student(2L, "firstName2", "lastName1", new Group(3L)));
         expect.add(new Student(3L, "firstName1", "lastName0", new Group(1L)));
 
-
-
         when(resourcesFiles.getFirstNames()).thenReturn(firstNames);
         when(resourcesFiles.getLastNames()).thenReturn(lastNames);
         when(dataConduct.getGroups()).thenReturn(groups);
-        when(amountLimit.getMaxCountOfStudents()).thenReturn(3);
         when(random.getInt(firstNames.size())).thenReturn(0).thenReturn( 2).thenReturn( 1);
         when(random.getInt(lastNames.size())).thenReturn(2).thenReturn( 1).thenReturn( 0);
         when(random.getLong(groups.size())).thenReturn(2L).thenReturn( 3L).thenReturn( 1L);
@@ -68,7 +63,6 @@ class StudentGeneratorTest {
                 () -> assertThat(result).hasSize(3),
                 () -> assertThat(result).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(expect)
         );
-
 
         verify(dataConduct).getGroups();
         verify(dataConduct).setStudents(result);
