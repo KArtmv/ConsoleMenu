@@ -78,7 +78,7 @@ class InputHandlerTest {
 
     @Test
     void verifyValidStudent() {
-        ReflectionTestUtils.setField(messages, "VERIFY_STUDENT", "Student: %s %s!");
+        ReflectionTestUtils.setField(messages, "confirmStudentDetails", "Student: %s %s!");
         Student student = new Student("firstName", "lastName");
 
         when(studentService.getStudent(any(Student.class))).thenReturn(student);

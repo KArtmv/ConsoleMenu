@@ -53,8 +53,8 @@ class ConsolePrinterTest {
 
     @Test
     void viewAllCoursesOfStudent_ShouldPrintStudentAndCourseInformation_WhenStudentHasCourses() {
-        ReflectionTestUtils.setField(messages, "NAME_STUDYING_STUDENT", "Student: %s %s.");
-        ReflectionTestUtils.setField(messages, "COURSE_NAME_AND_DESCRIPTION", "Course: ID %s, %s. Description: %s.");
+        ReflectionTestUtils.setField(messages, "printStudentEnrolledInCourses", "Student: %s %s.");
+        ReflectionTestUtils.setField(messages, "printCourseDetails", "Course: ID %s, %s. Description: %s.");
 
         List<StudentAtCourse> studentCourses = Collections.singletonList(new StudentAtCourse(10L, student, course));
 
@@ -69,7 +69,7 @@ class ConsolePrinterTest {
 
     @Test
     void viewAllStudentsFromCourse_ShouldPrintCourseAndStudentInformation_WhenStudentsExistInCourse() {
-        ReflectionTestUtils.setField(messages, "STUDENTS_FROM_COURSE", "Course: %s.");
+        ReflectionTestUtils.setField(messages, "printStudentsEnrolledInCourse", "Course: %s.");
 
         List<StudentAtCourse> studentsAtCourse = Collections.singletonList(new StudentAtCourse(student, course));
 
@@ -84,7 +84,7 @@ class ConsolePrinterTest {
 
     @Test
     void viewAmountStudentAtGroup_ShouldPrintCountOfStudentsAndGroupName_WhenCounterStudentsExist() {
-        ReflectionTestUtils.setField(messages, "AMOUNT_STUDENTS_AT_GROUP", "Count of student: %s, group: %s.");
+        ReflectionTestUtils.setField(messages, "printGroupByCountEnrollmentStudents", "Count of student: %s, group: %s.");
 
         List<CounterStudentsAtGroup> counterStudents = Collections.singletonList(new CounterStudentsAtGroup(1, "someGroup"));
 
@@ -99,7 +99,7 @@ class ConsolePrinterTest {
 
     @Test
     void printAllCourses_ShouldPrintCourseInformation_WhenCoursesExist() {
-        ReflectionTestUtils.setField(messages, "COURSE_NAME_AND_DESCRIPTION", "ID: %s, Course: %s, description: %s.");
+        ReflectionTestUtils.setField(messages, "printCourseDetails", "ID: %s, Course: %s, description: %s.");
         System.setOut(new PrintStream(outputStream));
 
         List<Course> courses = Collections.singletonList(new Course(1L, "courseName", "courseDescription"));
@@ -116,7 +116,7 @@ class ConsolePrinterTest {
 
     @Test
     void printAllGroups_ShouldPrintGroupInformation_WhenGroupsExist() {
-        ReflectionTestUtils.setField(messages, "PRINT_ALL_GROUPS", "ID: %s, Group: %s.");
+        ReflectionTestUtils.setField(messages, "printAllGroups", "ID: %s, Group: %s.");
         System.setOut(new PrintStream(outputStream));
 
         List<Group> groups = Collections.singletonList(new Group(1L, "groupName"));
