@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.util.console;
+package ua.foxminded.javaspring.consoleMenu.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

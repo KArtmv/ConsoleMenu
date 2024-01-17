@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.options.console.output;
+package ua.foxminded.javaspring.consoleMenu.util.console.output;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
