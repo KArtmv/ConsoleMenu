@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.*;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.filesourse.SourceFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
@@ -30,17 +30,17 @@ public class DataConfigInitializer {
     }
 
     @Bean
-    public DataGenerator<Student> studentGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct, MyRandom random) {
+    public DataGenerator<Student> studentGenerator(SourceFilesDatabaseData resourcesFiles, DataConduct dataConduct, MyRandom random) {
         return new StudentGenerator(random, resourcesFiles, dataConduct);
     }
 
     @Bean
-    public DataGenerator<Course> courseGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+    public DataGenerator<Course> courseGenerator(SourceFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
         return new CourseGenerator(resourcesFiles, dataConduct);
     }
 
     @Bean
-    public DataGenerator<Group> groupGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+    public DataGenerator<Group> groupGenerator(SourceFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
         return new GroupGenerator(resourcesFiles, dataConduct);
     }
 

@@ -2,21 +2,19 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.filesourse.SourceFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class CourseGenerator implements DataGenerator<Course> {
 
-    private ResourcesFilesDatabaseData resourcesFiles;
+    private SourceFilesDatabaseData resourcesFiles;
     private DataConduct dataConduct;
 
     @Autowired
-    public CourseGenerator(ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+    public CourseGenerator(SourceFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
         this.resourcesFiles = resourcesFiles;
         this.dataConduct = dataConduct;
     }

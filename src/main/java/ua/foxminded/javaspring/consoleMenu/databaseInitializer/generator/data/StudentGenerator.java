@@ -3,7 +3,7 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.filesourse.SourceFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
@@ -17,13 +17,13 @@ public class StudentGenerator implements DataGenerator<Student> {
     @Value("${maxCountOfStudent}")
     private int maxCountOfStudents;
     private MyRandom random;
-    private ResourcesFilesDatabaseData resourcesFiles;
+    private SourceFilesDatabaseData resourcesFiles;
     private DataConduct dataConduct;
     private int countOfGroups;
     private Map<String, Student> studentMap = new HashMap<>();
 
     @Autowired
-    public StudentGenerator(MyRandom random, ResourcesFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
+    public StudentGenerator(MyRandom random, SourceFilesDatabaseData resourcesFiles, DataConduct dataConduct) {
         this.random = random;
         this.dataConduct = dataConduct;
         this.resourcesFiles = resourcesFiles;

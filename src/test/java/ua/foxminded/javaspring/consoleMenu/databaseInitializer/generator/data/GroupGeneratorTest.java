@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.filesourse.SourceFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 class GroupGeneratorTest {
 
     @Mock
-    ResourcesFilesDatabaseData resourcesFiles;
+    SourceFilesDatabaseData resourcesFiles;
     @Mock
     DataConduct dataConduct;
 

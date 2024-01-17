@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
+import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.filesourse.SourceFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.DataInitializer;
@@ -28,7 +28,7 @@ class StudentGeneratorTest {
     @Mock
     DataConduct dataConduct;
     @Mock
-    ResourcesFilesDatabaseData resourcesFiles;
+    SourceFilesDatabaseData resourcesFiles;
     @InjectMocks
     private StudentGenerator studentGenerator;
 

@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.filesourse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,12 +10,12 @@ import java.util.List;
 
 @Component
 @PropertySource("classpath:SourceDataFilepath.properties")
-public class ResourcesFilesDatabaseData {
+public class SourceFilesDatabaseData {
 
     private ReadResourcesFile readFile;
 
     @Autowired
-    public ResourcesFilesDatabaseData(ReadResourcesFile readFile) {
+    public SourceFilesDatabaseData(ReadResourcesFile readFile) {
         this.readFile = readFile;
     }
 
