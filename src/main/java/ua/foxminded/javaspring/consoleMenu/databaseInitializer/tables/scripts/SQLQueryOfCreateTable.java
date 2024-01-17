@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.sqlScripts;
+package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.scripts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
