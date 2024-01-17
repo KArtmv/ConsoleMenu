@@ -53,7 +53,7 @@ class StudentControllerTest {
 
         verify(inputHandler).getDataOfNewStudent();
         verify(studentService).addNewStudent(student);
-        verify(consolePrinter).print(messages.STUDENT_ADDED);
+        verify(consolePrinter).print(messages.printStudentAddedSuccess);
     }
 
     @Test

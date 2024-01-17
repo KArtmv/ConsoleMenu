@@ -54,7 +54,7 @@ class CourseControllerTest {
         courseController.allStudentsFromCourse();
 
         verify(consolePrinter).printAllCourses();
-        verify(consolePrinter).print(messages.STUDENT_AT_COURSES);
+        verify(consolePrinter).print(messages.inputCourseIdToViewEnrolledStudents);
         verify(inputHandler).getCourse();
         verify(courseService).allStudentsFromCourse(course);
         verify(consolePrinter).viewAllStudentsFromCourse(studentsFromCourse);
@@ -82,7 +82,7 @@ class CourseControllerTest {
         courseController.allStudentsFromCourse();
 
         verify(consolePrinter).printAllCourses();
-        verify(consolePrinter).print(messages.STUDENT_AT_COURSES);
+        verify(consolePrinter).print(messages.inputCourseIdToViewEnrolledStudents);
         verify(inputHandler).getCourse();
         verify(courseService).allStudentsFromCourse(course);
     }
@@ -94,7 +94,7 @@ class CourseControllerTest {
         courseController.allStudentsFromCourse();
 
         verify(consolePrinter).printAllCourses();
-        verify(consolePrinter).print(messages.STUDENT_AT_COURSES);
+        verify(consolePrinter).print(messages.inputCourseIdToViewEnrolledStudents);
         verify(inputHandler).getCourse();
     }
 }
