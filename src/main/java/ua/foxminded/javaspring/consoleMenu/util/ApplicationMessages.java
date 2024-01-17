@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:ApplicationMessages.properties")
+@PropertySource("classpath:applicationMessages.properties")
 public class ApplicationMessages {
 
     @Value("${addNewStudent}")

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 
 @Component
-@PropertySource("classpath:SQLScriptsPath.properties")
+@PropertySource("classpath:sqlScriptsPath.properties")
 public class SQLQueryOfCreateTable {
 
     private ReadResourcesFile readResourcesFile;

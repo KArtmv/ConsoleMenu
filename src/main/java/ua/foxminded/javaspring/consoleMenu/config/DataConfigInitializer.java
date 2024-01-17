@@ -16,7 +16,7 @@ import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
 
 @Component
-@PropertySource("classpath:AmountLimits.properties")
+@PropertySource("classpath:amountLimits.properties")
 public class DataConfigInitializer {
 
     @Bean

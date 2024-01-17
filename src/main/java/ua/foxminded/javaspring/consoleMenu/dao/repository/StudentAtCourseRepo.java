@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@PropertySource("classpath:SQLQueries.properties")
+@PropertySource("classpath:sqlQueries.properties")
 public class StudentAtCourseRepo implements StudentAtCourseDAO, TablesDAO<StudentAtCourse> {
 
     private SQLQueryOfCreateTable queryOfCreateTable;

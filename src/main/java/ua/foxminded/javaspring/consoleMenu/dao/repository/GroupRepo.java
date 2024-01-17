@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@PropertySource("classpath:SQLQueries.properties")
+@PropertySource("classpath:sqlQueries.properties")
 public class GroupRepo implements GroupDAO, TablesDAO<Group> {
 
     private SQLQueryOfCreateTable queryOfCreateTable;

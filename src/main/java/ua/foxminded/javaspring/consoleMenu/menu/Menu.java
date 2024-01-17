@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile;
 
 @Component
-@PropertySource("classpath:SourceDataFilepath.properties")
+@PropertySource("classpath:sourceDataFilepath.properties")
 public class Menu {
 
     private ReadResourcesFile readFile;

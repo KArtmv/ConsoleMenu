@@ -9,7 +9,7 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.ReadResourcesFile
 import java.util.List;
 
 @Component
-@PropertySource("classpath:SourceDataFilepath.properties")
+@PropertySource("classpath:sourceDataFilepath.properties")
 public class SourceFilesDatabaseData {
 
     private ReadResourcesFile readFile;
