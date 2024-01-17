@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.options.menu;
+package ua.foxminded.javaspring.consoleMenu.menu;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

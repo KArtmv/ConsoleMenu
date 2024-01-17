@@ -7,7 +7,7 @@ import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
+import ua.foxminded.javaspring.consoleMenu.menu.MenuInteraction;
 
 import javax.annotation.PostConstruct;
 

@@ -8,11 +8,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 import ua.foxminded.javaspring.consoleMenu.model.*;
-import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
+import ua.foxminded.javaspring.consoleMenu.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
-import ua.foxminded.javaspring.consoleMenu.util.console.output.ConsolePrinter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
