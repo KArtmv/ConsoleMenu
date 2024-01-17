@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.options.console.input;
+package ua.foxminded.javaspring.consoleMenu.util;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

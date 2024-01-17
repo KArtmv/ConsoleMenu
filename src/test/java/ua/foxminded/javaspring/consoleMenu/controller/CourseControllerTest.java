@@ -1,30 +1,24 @@
 package ua.foxminded.javaspring.consoleMenu.controller;
 
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
-import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.InputHandler;
-import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
+import ua.foxminded.javaspring.consoleMenu.util.console.input.InputHandler;
+import ua.foxminded.javaspring.consoleMenu.util.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class CourseControllerTest {

@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.InputHandler;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
-import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
+import ua.foxminded.javaspring.consoleMenu.util.console.input.InputHandler;
+import ua.foxminded.javaspring.consoleMenu.util.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
 

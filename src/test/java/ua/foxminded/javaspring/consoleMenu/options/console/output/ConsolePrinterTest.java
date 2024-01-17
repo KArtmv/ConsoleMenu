@@ -9,20 +9,17 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 import ua.foxminded.javaspring.consoleMenu.model.*;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;
 import ua.foxminded.javaspring.consoleMenu.service.GroupService;
 import ua.foxminded.javaspring.consoleMenu.util.ApplicationMessages;
+import ua.foxminded.javaspring.consoleMenu.util.console.output.ConsolePrinter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
