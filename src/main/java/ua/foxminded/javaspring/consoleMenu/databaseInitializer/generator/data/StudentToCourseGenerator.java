@@ -27,7 +27,7 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
 
     @Override
     public List<StudentAtCourse> generate() {
-        initVariables();
+        countCourses = dataConduct.getCourses().size();
         List<Student> students = dataConduct.getStudents();
         students.forEach(this::addToCourseByIndex);
 
@@ -49,9 +49,5 @@ public class StudentToCourseGenerator implements DataGenerator<StudentAtCourse> 
         while (INDICES_COURSES_OF_STUDENT.size() < amountStudentCourses) {
             INDICES_COURSES_OF_STUDENT.add(random.getLong(countCourses));
         }
-    }
-
-    private void initVariables() {
-        countCourses = dataConduct.getCourses().size();
     }
 }

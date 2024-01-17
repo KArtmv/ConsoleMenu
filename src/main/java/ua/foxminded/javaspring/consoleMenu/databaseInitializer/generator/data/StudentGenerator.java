@@ -31,8 +31,7 @@ public class StudentGenerator implements DataGenerator<Student> {
 
     @Override
     public List<Student> generate() {
-        initVariables();
-
+        countOfGroups = dataConduct.getGroups().size();
         List<String> firstNames = resourcesFiles.getFirstNames();
         List<String> lastNames = resourcesFiles.getLastNames();
 
@@ -57,9 +56,5 @@ public class StudentGenerator implements DataGenerator<Student> {
         dataConduct.setStudents(generatedStudents);
 
         return generatedStudents;
-    }
-
-    private void initVariables() {
-        countOfGroups = dataConduct.getGroups().size();
     }
 }
