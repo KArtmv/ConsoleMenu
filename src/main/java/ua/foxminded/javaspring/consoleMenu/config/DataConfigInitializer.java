@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.configs;
+package ua.foxminded.javaspring.consoleMenu.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;

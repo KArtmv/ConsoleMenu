@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.service;
+package ua.foxminded.javaspring.consoleMenu.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
