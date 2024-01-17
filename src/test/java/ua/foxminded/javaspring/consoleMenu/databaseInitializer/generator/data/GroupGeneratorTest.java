@@ -2,16 +2,13 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.GroupGenerator;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +34,7 @@ class GroupGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfGroup_whenProvidedDataIsValid() {
-        List<Group> expect = new InitializeObject().groupsListInit();
+        List<Group> expect = new DataInitializer().groupsListInit();
 
         when(resourcesFiles.getGroups()).thenReturn(Arrays.asList("groupName1", "groupName2", "groupName3"));
 

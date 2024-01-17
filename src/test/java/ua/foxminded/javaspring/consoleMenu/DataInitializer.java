@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.pattern;
+package ua.foxminded.javaspring.consoleMenu;
 
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
@@ -8,7 +8,7 @@ import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InitializeObject {
+public class DataInitializer {
 
     public List<Student> studentsListInit() {
         List<Student> students = new ArrayList<>();

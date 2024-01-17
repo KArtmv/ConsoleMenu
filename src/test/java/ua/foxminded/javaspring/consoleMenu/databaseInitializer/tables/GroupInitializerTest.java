@@ -2,18 +2,13 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.TableInitializer;
-import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
 import java.util.List;
 
@@ -29,7 +24,7 @@ class GroupInitializerTest {
 
     @InjectMocks
     private TableInitializer<Group> initializer;
-    private InitializeObject initializeObject = new InitializeObject();
+    private DataInitializer dataInitializer = new DataInitializer();
 
     @BeforeEach
     void init() {
@@ -38,7 +33,7 @@ class GroupInitializerTest {
 
     @Test
     void initialize_shouldCreateCourseAndInsertIntoDatabaseTable_whenGroupTableExist() {
-        List<Group> groups = initializeObject.groupsListInit();
+        List<Group> groups = dataInitializer.groupsListInit();
 
         when(dao.isTableExist()).thenReturn(true);
         when(dao.isTableEmpty()).thenReturn(true);
@@ -54,7 +49,7 @@ class GroupInitializerTest {
 
     @Test
     void initialize_shouldCreateTableCourseAndInsertIntoDatabaseTable_whenGroupTableNotExist() {
-        List<Group> groups = initializeObject.groupsListInit();
+        List<Group> groups = dataInitializer.groupsListInit();
 
         when(dao.isTableExist()).thenReturn(false);
         when(generateItems.generate()).thenReturn(groups);

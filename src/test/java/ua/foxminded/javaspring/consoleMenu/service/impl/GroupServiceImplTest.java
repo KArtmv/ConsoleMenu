@@ -2,16 +2,13 @@ package ua.foxminded.javaspring.consoleMenu.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.dao.GroupDAO;
 import ua.foxminded.javaspring.consoleMenu.model.CounterStudentsAtGroup;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
-import ua.foxminded.javaspring.consoleMenu.service.impl.GroupServiceImpl;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +51,7 @@ class GroupServiceImplTest {
 
     @Test
     void getAllGroups_shouldReturnListAvailableGroups_whenInvoke() {
-        List<Group> groups = new InitializeObject().groupsListInit();
+        List<Group> groups = new DataInitializer().groupsListInit();
 
         when(groupDAO.getAll()).thenReturn(groups);
 

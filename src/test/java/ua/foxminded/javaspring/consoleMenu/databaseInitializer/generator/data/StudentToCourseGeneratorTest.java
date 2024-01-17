@@ -10,7 +10,7 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataCon
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
 
 import java.util.ArrayList;
@@ -37,9 +37,9 @@ class StudentToCourseGeneratorTest {
     void generate_shouldReturnListOfStudentAtCourse_whenIsCorrect() {
         ReflectionTestUtils.setField(studentToCourseGenerator, "maxCountCoursesOfStudent", 3);
 
-        InitializeObject initializeObject = new InitializeObject();
-        List<Student> students =  initializeObject.studentsListInit();
-        List<Course> courses = initializeObject.coursesListInit();
+        DataInitializer dataInitializer = new DataInitializer();
+        List<Student> students =  dataInitializer.studentsListInit();
+        List<Course> courses = dataInitializer.coursesListInit();
 
         List<StudentAtCourse> expect = new ArrayList<>();
         expect.add(new StudentAtCourse(students.get(0), new Course(1L)));

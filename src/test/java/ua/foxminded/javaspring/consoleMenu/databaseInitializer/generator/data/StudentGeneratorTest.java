@@ -10,7 +10,7 @@ import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataCon
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 import ua.foxminded.javaspring.consoleMenu.util.MyRandom;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ class StudentGeneratorTest {
 
         List<String> firstNames = Arrays.asList("firstName0", "firstName1", "firstName2");
         List<String> lastNames = Arrays.asList("lastName0", "lastName1", "lastName2", "lastName3");
-        List<Group> groups = new InitializeObject().groupsListInit();
+        List<Group> groups = new DataInitializer().groupsListInit();
 
         List<Student> expect = new ArrayList<>();
         expect.add(new Student(1L, "firstName0", "lastName2", new Group(2L)));

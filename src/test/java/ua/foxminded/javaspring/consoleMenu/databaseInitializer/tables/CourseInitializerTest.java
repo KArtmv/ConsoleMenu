@@ -7,9 +7,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.TableInitializer;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ class CourseInitializerTest {
 
     @InjectMocks
     private TableInitializer<Course> initializer;
-    private InitializeObject initializeObject = new InitializeObject();
+    private DataInitializer dataInitializer = new DataInitializer();
 
     @BeforeEach
     void init() {
@@ -33,7 +32,7 @@ class CourseInitializerTest {
 
     @Test
     void initialize_shouldCreateCourseAndInsertIntoDatabaseTable_whenCourseTableExistAndEmpty() {
-        List<Course> courses = initializeObject.coursesListInit();
+        List<Course> courses = dataInitializer.coursesListInit();
 
         when(dao.isTableExist()).thenReturn(true);
         when(dao.isTableEmpty()).thenReturn(true);
@@ -49,7 +48,7 @@ class CourseInitializerTest {
 
     @Test
     void initialize_shouldCreateTableCourseAndInsertIntoDatabaseTable_whenCourseTableNotExist() {
-        List<Course> courses = initializeObject.coursesListInit();
+        List<Course> courses = dataInitializer.coursesListInit();
 
         when(dao.isTableExist()).thenReturn(false);
         when(generateItems.generate()).thenReturn(courses);

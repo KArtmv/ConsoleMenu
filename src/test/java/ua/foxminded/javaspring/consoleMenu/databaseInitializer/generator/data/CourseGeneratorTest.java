@@ -2,16 +2,13 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.DataConduct;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.CourseGenerator;
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.sourceData.ResourcesFilesDatabaseData;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +33,7 @@ class CourseGeneratorTest {
 
     @Test
     void generate_shouldReturnListOfCourse_whenIsValidDataProvided() {
-        List<Course> expected = new InitializeObject().coursesListInit();
+        List<Course> expected = new DataInitializer().coursesListInit();
 
         when(resourcesFiles.getCourses()).thenReturn(Arrays.asList("courseName1_courseDescription1",
                 "courseName2_courseDescription2", "courseName3_courseDescription3"));

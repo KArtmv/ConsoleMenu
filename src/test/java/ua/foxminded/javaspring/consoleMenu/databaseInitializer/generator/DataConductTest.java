@@ -4,17 +4,15 @@ import org.junit.jupiter.api.Test;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Group;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DataConductTest {
 
-    public static final InitializeObject INITIALIZE_OBJECT = new InitializeObject();
+    public static final DataInitializer INITIALIZE_OBJECT = new DataInitializer();
     public static final DataConduct DATA_CONDUCT = new DataConduct();
 
     @Test

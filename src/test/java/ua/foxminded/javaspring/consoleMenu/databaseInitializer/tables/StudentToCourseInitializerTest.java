@@ -2,18 +2,14 @@ package ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import ua.foxminded.javaspring.consoleMenu.dao.StudentAtCourseDAO;
 import ua.foxminded.javaspring.consoleMenu.dao.TablesDAO;
 
 import ua.foxminded.javaspring.consoleMenu.databaseInitializer.generator.data.DataGenerator;
-import ua.foxminded.javaspring.consoleMenu.databaseInitializer.tables.TableInitializer;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
 import java.util.List;
 
@@ -28,7 +24,7 @@ class StudentToCourseInitializerTest {
     @InjectMocks
     private TableInitializer<StudentAtCourse> initializer;
 
-    private InitializeObject initializeObject = new InitializeObject();
+    private DataInitializer dataInitializer = new DataInitializer();
 
     @BeforeEach
     void init() {
@@ -37,7 +33,7 @@ class StudentToCourseInitializerTest {
 
     @Test
     void initialize_shouldCreateCourseAndInsertIntoDatabaseTable_whenStudentToCourseTableExist() {
-        List<StudentAtCourse> studentAtCourses = initializeObject.studentAtCourseListInit();
+        List<StudentAtCourse> studentAtCourses = dataInitializer.studentAtCourseListInit();
 
         when(dao.isTableExist()).thenReturn(true);
         when(dao.isTableEmpty()).thenReturn(true);
@@ -53,7 +49,7 @@ class StudentToCourseInitializerTest {
 
     @Test
     void initialize_shouldCreateTableCourseAndInsertIntoDatabaseTable_whenStudentToCourseTableNotExist() {
-        List<StudentAtCourse> studentAtCourses = initializeObject.studentAtCourseListInit();
+        List<StudentAtCourse> studentAtCourses = dataInitializer.studentAtCourseListInit();
 
         when(dao.isTableExist()).thenReturn(false);
         when(generateItems.generate()).thenReturn(studentAtCourses);

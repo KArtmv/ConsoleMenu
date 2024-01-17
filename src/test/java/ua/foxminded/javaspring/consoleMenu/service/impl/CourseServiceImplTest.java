@@ -11,7 +11,7 @@ import ua.foxminded.javaspring.consoleMenu.exception.InvalidIdException;
 import ua.foxminded.javaspring.consoleMenu.model.Course;
 import ua.foxminded.javaspring.consoleMenu.model.Student;
 import ua.foxminded.javaspring.consoleMenu.model.StudentAtCourse;
-import ua.foxminded.javaspring.consoleMenu.pattern.InitializeObject;
+import ua.foxminded.javaspring.consoleMenu.DataInitializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ class CourseServiceImplTest {
 
     @Test
     void getAllCourses_shouldReturnListOfCourses_whenRequest(){
-        List<Course> courses = new InitializeObject().coursesListInit();
+        List<Course> courses = new DataInitializer().coursesListInit();
 
         when(courseDAO.getAll()).thenReturn(courses);
 
