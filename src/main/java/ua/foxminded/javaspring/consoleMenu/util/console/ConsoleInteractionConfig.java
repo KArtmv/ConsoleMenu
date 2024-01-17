@@ -1,13 +1,13 @@
-package ua.foxminded.javaspring.consoleMenu.options.console;
+package ua.foxminded.javaspring.consoleMenu.util.console;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import ua.foxminded.javaspring.consoleMenu.controller.CourseController;
 import ua.foxminded.javaspring.consoleMenu.controller.GroupController;
 import ua.foxminded.javaspring.consoleMenu.controller.StudentController;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.InputHandler;
-import ua.foxminded.javaspring.consoleMenu.options.console.input.MyScanner;
-import ua.foxminded.javaspring.consoleMenu.options.console.output.ConsolePrinter;
+import ua.foxminded.javaspring.consoleMenu.util.console.input.InputHandler;
+import ua.foxminded.javaspring.consoleMenu.util.MyScanner;
+import ua.foxminded.javaspring.consoleMenu.util.console.output.ConsolePrinter;
 import ua.foxminded.javaspring.consoleMenu.options.menu.Menu;
 import ua.foxminded.javaspring.consoleMenu.options.menu.MenuInteraction;
 import ua.foxminded.javaspring.consoleMenu.service.CourseService;

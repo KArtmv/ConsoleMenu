@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.consoleMenu.options.console.output;
+package ua.foxminded.javaspring.consoleMenu.util.console.output;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
