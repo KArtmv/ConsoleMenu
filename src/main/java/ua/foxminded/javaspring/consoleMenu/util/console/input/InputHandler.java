@@ -37,12 +37,12 @@ public class InputHandler {
 
     public Student getDataOfNewStudent(){
         Student student = new Student();
-        consolePrinter.print(messages.ADD_NEW_STUDENT);
-        consolePrinter.print(messages.INPUT_FIRST_NAME);
+        consolePrinter.print(messages.inputNewStudentData);
+        consolePrinter.print(messages.inputStudentFirstName);
         student.setFirstName(getString());
-        consolePrinter.print(messages.INPUT_LAST_NAME);
+        consolePrinter.print(messages.inputStudentLastName);
         student.setLastName(getString());
-        consolePrinter.print(messages.ADD_GROUP_TO_STUDENT);
+        consolePrinter.print(messages.addStudentToGroup);
         consolePrinter.printAllGroups();
         student.setGroup(getGroup());
 
@@ -60,7 +60,7 @@ public class InputHandler {
 
     public boolean verifyValidStudent(Student student) {
         Student selectedStudent = studentService.getStudent(student);
-        consolePrinter.print(String.format(messages.VERIFY_STUDENT,
+        consolePrinter.print(String.format(messages.confirmStudentDetails,
                 selectedStudent.getStudentID(), selectedStudent.getFirstName(), selectedStudent.getLastName()));
 
         return scanner.getLine().equalsIgnoreCase("yes");

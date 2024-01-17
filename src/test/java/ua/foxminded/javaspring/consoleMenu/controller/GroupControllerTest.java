@@ -49,7 +49,7 @@ class GroupControllerTest {
 
         groupController.counterStudentsAtGroups();
 
-        verify(consolePrinter).print(messages.GROUPS_BY_COUNT);
+        verify(consolePrinter).print(messages.inputGroupSizeToFindGroups);
         verify(inputHandler).getRequiredAmountOfStudents();
         verify(groupService).counterStudentsAtGroups(requiredAmountOfStudent);
         verify(consolePrinter).viewAmountStudentAtGroup(counterStudentsAtGroups);
@@ -61,7 +61,7 @@ class GroupControllerTest {
 
         groupController.counterStudentsAtGroups();
 
-        verify(consolePrinter).print(messages.GROUPS_BY_COUNT);
+        verify(consolePrinter).print(messages.inputGroupSizeToFindGroups);
         verify(inputHandler).getRequiredAmountOfStudents();
     }
 }

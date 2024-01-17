@@ -9,49 +9,49 @@ import org.springframework.stereotype.Component;
 public class ApplicationMessages {
 
     @Value("${addNewStudent}")
-    public String ADD_NEW_STUDENT;
+    public String inputNewStudentData;
     @Value("${inputFirsName}")
-    public String INPUT_FIRST_NAME;
+    public String inputStudentFirstName;
     @Value("${inputLastName}")
-    public String INPUT_LAST_NAME;
+    public String inputStudentLastName;
     @Value("${addGroupToStudent}")
-    public String ADD_GROUP_TO_STUDENT;
+    public String addStudentToGroup;
     @Value("${studentAdded}")
-    public String STUDENT_ADDED;
+    public String printStudentAddedSuccess;
     @Value("${studentRemoved}")
-    public String STUDENT_REMOVED;
+    public String printStudentRemovedSuccess;
     @Value("${enterCourseID}")
-    public String ENTER_COURSE_ID;
+    public String inputCourseId;
     @Value("${studentAddedToCourse}")
-    public String STUDENT_ADDED_TO_COURSE;
+    public String printStudentAddedToCourseSuccess;
     @Value("${addStudentToCourse}")
-    public String ADD_STUDENT_TO_COURSE;
+    public String inputStudentIdToAddToCourse;
     @Value("${removeStudentFromCourse}")
-    public String REMOVE_STUDENT_FROM_COURSE;
+    public String inputStudentIdToRemoveFromCourse;
     @Value("${chooseEnrollmentId}")
-    public String CHOOSE_ENROLLMENT_ID;
+    public String chooseEnrollmentIdToRemove;
     @Value("${studentRemovedFromCourse}")
-    public String STUDENT_REMOVED_FROM_COURSE;
+    public String printStudentRemovedFromCourseSuccess;
     @Value("${studentHasNotCourse}")
-    public String STUDENT_HAS_NOT_COURSE;
+    public String printStudentNotEnrolledInAnyCourse;
     @Value("${removeStudentByID}")
-    public String REMOVE_STUDENT_BY_ID;
+    public String inputStudentIdToRemove;
     @Value("${groupsByCount}")
-    public String GROUPS_BY_COUNT;
+    public String inputGroupSizeToFindGroups;
     @Value("${hasNotGroupWithCount}")
-    public String HAS_NOT_GROUPS_WITH_COUNT;
+    public String printNoGroupWithSize;
     @Value("${studentsAtCourse}")
-    public String STUDENT_AT_COURSES;
+    public String inputCourseIdToViewEnrolledStudents;
     @Value("${nameStudyingStudent}")
-    public String NAME_STUDYING_STUDENT;
+    public String printStudentEnrolledInCourses;
     @Value("${courseNameAndDescription}")
-    public String COURSE_NAME_AND_DESCRIPTION;
+    public String printCourseDetails;
     @Value("${studentsFromCourse}")
-    public String STUDENTS_FROM_COURSE;
+    public String printStudentsEnrolledInCourse;
     @Value("${amountStudentAtGroup}")
-    public String AMOUNT_STUDENTS_AT_GROUP;
+    public String printGroupByCountEnrollmentStudents;
     @Value("${printAllGroups}")
-    public String PRINT_ALL_GROUPS;
+    public String printAllGroups;
     @Value("${verifyStudent}")
-    public String VERIFY_STUDENT;
+    public String confirmStudentDetails;
 }

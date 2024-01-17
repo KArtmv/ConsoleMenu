@@ -37,7 +37,7 @@ public class CourseController {
         LOGGER.info("Run allStudentsFromCourse method.");
         try {
             consolePrinter.printAllCourses();
-            consolePrinter.print(messages.STUDENT_AT_COURSES);
+            consolePrinter.print(messages.inputCourseIdToViewEnrolledStudents);
             Course course = inputHandler.getCourse();
             LOGGER.debug("Received course ID: {}", course.getCourseID());
             List<StudentAtCourse> studentsFromCourse = courseService.allStudentsFromCourse(course);

@@ -33,13 +33,13 @@ public class GroupController {
     public void counterStudentsAtGroups() {
         LOGGER.info("Run method: counterStudentsAtGroups");
         try {
-            consolePrinter.print(messages.GROUPS_BY_COUNT);
+            consolePrinter.print(messages.inputGroupSizeToFindGroups);
             int requestedAmountOfStudent = inputHandler.getRequiredAmountOfStudents();
             List<CounterStudentsAtGroup> studentsAtGroups = groupService.counterStudentsAtGroups(requestedAmountOfStudent);
             LOGGER.debug("Received request to find less or equals amount of students by Groups: {}", requestedAmountOfStudent);
 
             if (CollectionUtils.isEmpty(studentsAtGroups)) {
-                consolePrinter.print(String.format(messages.HAS_NOT_GROUPS_WITH_COUNT , requestedAmountOfStudent));
+                consolePrinter.print(String.format(messages.printNoGroupWithSize, requestedAmountOfStudent));
             } else {
                 studentsAtGroups.sort((a, b) -> Long.compare(b.getStudentsCount(), a.getStudentsCount()));
                 consolePrinter.viewAmountStudentAtGroup(studentsAtGroups);
